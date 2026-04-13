@@ -1,0 +1,207 @@
+@prefix : <http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/> .
+
+<http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasColorPalette
+:hasColorPalette rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Aesthetics ;
+                 rdfs:range :Color_Palette .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasCreator
+:hasCreator rdf:type owl:ObjectProperty ;
+            rdfs:domain :Aesthetics ;
+            rdfs:range :Agent .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasIconicFigure
+:hasIconicFigure rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Aesthetics ;
+                 rdfs:range :Person .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasLocationOfOrigin
+:hasLocationOfOrigin rdf:type owl:ObjectProperty ;
+                     rdfs:domain :Aesthetics ;
+                     rdfs:range :Location .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasMotif
+:hasMotif rdf:type owl:ObjectProperty ;
+          rdfs:domain :Aesthetics ;
+          rdfs:range :Motif .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasPrimaryPlatform
+:hasPrimaryPlatform rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain :Aesthetics ;
+                    rdfs:range :Platform .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasRelatedBrand
+:hasRelatedBrand rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Aesthetics ;
+                 rdfs:range :Brand .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasSubgenre
+:hasSubgenre rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :relatedTo ;
+             owl:inverseOf :isSubgenreOf ;
+             rdfs:domain :Aesthetics ;
+             rdfs:range :Aesthetics .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasTheme
+:hasTheme rdf:type owl:ObjectProperty ;
+          rdfs:domain :Aesthetics ;
+          rdfs:range :Theme .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasValue
+:hasValue rdf:type owl:ObjectProperty ;
+          rdfs:domain :Aesthetics ;
+          rdfs:range :Value .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#holdsRoleInTime
+:holdsRoleInTime rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Aesthetics .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#influenced
+:influenced rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :relatedTo ;
+            owl:inverseOf :influencedBy .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#influencedBy
+:influencedBy rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :relatedTo ;
+              rdfs:domain :Aesthetics ;
+              rdfs:range :Aesthetics .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#isSubgenreOf
+:isSubgenreOf rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :relatedTo ;
+              rdfs:domain :Aesthetics ;
+              rdfs:range :Aesthetics .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#overlapsWith
+:overlapsWith rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf :relatedTo ;
+              rdf:type owl:SymmetricProperty ;
+              rdfs:domain :Aesthetics ;
+              rdfs:range :Aesthetics .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#relatedTo
+:relatedTo rdf:type owl:ObjectProperty ,
+                    owl:SymmetricProperty ;
+           rdfs:domain :Aesthetics ;
+           rdfs:range :Aesthetics .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#URL
+:URL rdf:type owl:DatatypeProperty ;
+     rdfs:domain :Aesthetics ;
+     rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#alternateName
+:alternateName rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Aesthetics ;
+               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Aesthetics ;
+      rdfs:range xsd:anyURI .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Aesthetics
+:Aesthetics rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Agent
+:Agent rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Brand
+:Brand rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Color
+:Color rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Color_Palette
+:Color_Palette rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Country
+:Country rdf:type owl:Class ;
+         rdfs:subClassOf :Location .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Group
+:Group rdf:type owl:Class ;
+       rdfs:subClassOf :Agent .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Location
+:Location rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Media
+:Media rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Motif
+:Motif rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Music
+:Music rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Person
+:Person rdf:type owl:Class ;
+        rdfs:subClassOf :Agent .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Platform
+:Platform rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Theme
+:Theme rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Value
+:Value rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
