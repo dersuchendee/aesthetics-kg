@@ -1,2 +1,2 @@
-# aesthetics-kg
+# Aesthetics-KG
 Aesthetics KG
