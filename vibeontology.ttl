@@ -50,12 +50,6 @@
               rdfs:range :Aesthetic .
 
 
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasAestheticDimension
-:hasAestheticDimension rdf:type owl:ObjectProperty ;
-                       rdfs:domain :Aesthetic ;
-                       rdfs:range :AestheticDimension .
-
-
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasColorPalette
 :hasColorPalette rdf:type owl:ObjectProperty ;
                  rdfs:domain :Aesthetic ;
@@ -85,6 +79,13 @@
                      rdfs:subPropertyOf :hasLocation ;
                      rdfs:domain :Aesthetic ;
                      rdfs:range :Location .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasMember
+:hasMember rdf:type owl:ObjectProperty ;
+           owl:inverseOf :isMemberOf ;
+           rdfs:domain :Collection ;
+           rdfs:range owl:Thing .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasMotif
@@ -120,14 +121,15 @@
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasRelatedBrand
 :hasRelatedBrand rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :relatedTo ;
                  rdfs:domain :Aesthetic ;
                  rdfs:range :Brand .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasRelatedMedia
 :hasRelatedMedia rdf:type owl:ObjectProperty ;
-                 rdfs:domain :Aesthetic ;
-                 rdfs:range :Media .
+                 rdfs:subPropertyOf :relatedTo ;
+                 rdfs:domain :Aesthetic .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasSubgenre
@@ -164,6 +166,12 @@
               rdfs:subPropertyOf :relatedTo ;
               rdfs:domain :Aesthetic ;
               rdfs:range :Aesthetic .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#isMemberOf
+:isMemberOf rdf:type owl:ObjectProperty ;
+            rdfs:domain owl:Thing ;
+            rdfs:range :Collection .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#isRoleInTimeOf
@@ -303,26 +311,29 @@
            rdfs:subClassOf <http://www.w3.org/2004/02/skos/core#Concept> .
 
 
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#AestheticDimension
-:AestheticDimension rdf:type owl:Class .
-
-
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Agent
 :Agent rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Artwork
+:Artwork rdf:type owl:Class ;
+         rdfs:subClassOf :Work .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Brand
 :Brand rdf:type owl:Class .
 
 
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Collection
+:Collection rdf:type owl:Class .
+
+
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Color
-:Color rdf:type owl:Class ;
-       rdfs:subClassOf :VisualDimension .
+:Color rdf:type owl:Class .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#ColorPalette
-:ColorPalette rdf:type owl:Class ;
-              rdfs:subClassOf :VisualDimension .
+:ColorPalette rdf:type owl:Class .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Country
@@ -332,7 +343,7 @@
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Fashion
 :Fashion rdf:type owl:Class ;
-         rdfs:subClassOf :AestheticDimension .
+         rdfs:subClassOf :Work .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Group
@@ -340,17 +351,22 @@
        rdfs:subClassOf :Agent .
 
 
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Image
+:Image rdf:type owl:Class ;
+       rdfs:subClassOf :Work .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#LiteraryWork
+:LiteraryWork rdf:type owl:Class ;
+              rdfs:subClassOf :Work .
+
+
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Location
 :Location rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Media
-:Media rdf:type owl:Class .
-
-
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Motif
-:Motif rdf:type owl:Class ;
-       rdfs:subClassOf :AestheticDimension .
+:Motif rdf:type owl:Class .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#MusicArtistRole
@@ -360,7 +376,7 @@
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#MusicWork
 :MusicWork rdf:type owl:Class ;
-           rdfs:subClassOf :Media .
+           rdfs:subClassOf :Work .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#PeriodDefinition
@@ -394,8 +410,7 @@
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Theme
-:Theme rdf:type owl:Class ;
-       rdfs:subClassOf :AestheticDimension .
+:Theme rdf:type owl:Class .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#TimeIndexedRole
@@ -413,12 +428,11 @@
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Video
 :Video rdf:type owl:Class ;
-       rdfs:subClassOf :Media .
+       rdfs:subClassOf :Work .
 
 
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#VisualDimension
-:VisualDimension rdf:type owl:Class ;
-                 rdfs:subClassOf :AestheticDimension .
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Work
+:Work rdf:type owl:Class .
 
 
 ###  http://www.w3.org/2004/02/skos/core#Concept
