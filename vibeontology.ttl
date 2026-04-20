@@ -5,7 +5,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vibe: <http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/> .
-@base <http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal> .
+@base <http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#> .
 
 <http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal> rdf:type owl:Ontology .
 
@@ -319,7 +319,11 @@ vibe:startYear rdf:type owl:DatatypeProperty ;
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/Aesthetic
 vibe:Aesthetic rdf:type owl:Class ;
-               rdfs:subClassOf <http://www.w3.org/2004/02/skos/core#Concept> ;
+               rdfs:subClassOf <http://www.w3.org/2004/02/skos/core#Concept> ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty vibe:hasMember ;
+                                 owl:minCardinality "1"^^xsd:nonNegativeInteger
+                               ] ;
                rdfs:comment """An Aesthetic is a culturally emergent, open-ended category that groups a collection of heterogeneous elements (e.g., images, colors, objects, sounds, texts) perceived as coherently expressing a recognizable style, affect, or orientation. It is not defined by necessary and sufficient conditions, but by shared associations and family resemblances established by a community.
 Example: Frutiger Aero groups glossy textures, bright gradients, nature imagery, and optimistic “future” cues into a recognizable early-2000s style."""@en ;
                rdfs:label "Aesthetic"@en .
