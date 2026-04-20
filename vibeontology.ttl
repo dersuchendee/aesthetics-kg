@@ -9,6 +9,14 @@
 <http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal> rdf:type owl:Ontology .
 
 #################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#gYear
+xsd:gYear rdf:type rdfs:Datatype .
+
+
+#################################################################
 #    Object Properties
 #################################################################
 
@@ -21,7 +29,8 @@
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#associationDimension
 :associationDimension rdf:type owl:ObjectProperty ;
                       rdfs:domain :RepresentativeAssociation ;
-                      rdfs:range owl:Thing .
+                      rdfs:range owl:Thing ;
+                      rdfs:comment "Classifies the kind of association. Expected values are the named individuals: motifDimension, themeDimension, valueDimension, colorDimension, platformDimension, musicDimension, fashionDimension, iconicFigureDimension."@en .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#atTime
@@ -38,15 +47,15 @@
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#follows
 :follows rdf:type owl:ObjectProperty ;
+         owl:inverseOf :precedes ;
+         rdf:type owl:TransitiveProperty ;
          rdfs:domain :Aesthetic ;
          rdfs:range :Aesthetic .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#forAesthetic
 :forAesthetic rdf:type owl:ObjectProperty ;
-              rdfs:domain :PeriodDefinition ,
-                          :RepresentativeAssociation ,
-                          :TimeIndexedRole ;
+              rdfs:domain :RepresentativeAssociation ;
               rdfs:range :Aesthetic .
 
 
@@ -90,7 +99,7 @@
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasMotif
 :hasMotif rdf:type owl:ObjectProperty ;
-          rdfs:domain :Aesthetic ;
+          rdfs:domain :Artwork ;
           rdfs:range :Motif .
 
 
@@ -126,10 +135,11 @@
                  rdfs:range :Brand .
 
 
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasRelatedMedia
-:hasRelatedMedia rdf:type owl:ObjectProperty ;
-                 rdfs:subPropertyOf :relatedTo ;
-                 rdfs:domain :Aesthetic .
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasRelatedWork
+:hasRelatedWork rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :relatedTo ;
+                rdfs:domain :Aesthetic ;
+                rdfs:range :Artwork .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasSubgenre
@@ -143,7 +153,7 @@
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#hasTheme
 :hasTheme rdf:type owl:ObjectProperty ;
-          rdfs:domain :Aesthetic ;
+          rdfs:domain :Artwork ;
           rdfs:range :Theme .
 
 
@@ -177,8 +187,7 @@
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#isRoleInTimeOf
 :isRoleInTimeOf rdf:type owl:ObjectProperty ;
                 rdfs:domain :TimeIndexedRole ;
-                rdfs:range :Aesthetic ,
-                           :Platform .
+                rdfs:range :Platform .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#isSubgenreOf
@@ -197,7 +206,8 @@
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#precedes
-:precedes rdf:type owl:ObjectProperty ;
+:precedes rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty ;
           rdfs:domain :Aesthetic ;
           rdfs:range :Aesthetic .
 
@@ -206,7 +216,7 @@
 :relatedTo rdf:type owl:ObjectProperty ,
                     owl:SymmetricProperty ;
            rdfs:domain :Aesthetic ;
-           rdfs:range :Aesthetic .
+           rdfs:range owl:Thing .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#source
@@ -272,7 +282,7 @@
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#endYear
 :endYear rdf:type owl:DatatypeProperty ;
          rdfs:domain :TimeInterval ;
-         rdfs:range xsd:dateTime .
+         rdfs:range xsd:gYear .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#name
@@ -285,13 +295,13 @@
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#representativenessType
 :representativenessType rdf:type owl:DatatypeProperty ;
                         rdfs:domain :RepresentativeAssociation ;
-                        rdfs:range rdfs:Literal .
+                        rdfs:range xsd:string .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#startYear
 :startYear rdf:type owl:DatatypeProperty ;
            rdfs:domain :TimeInterval ;
-           rdfs:range xsd:dateTime .
+           rdfs:range xsd:gYear .
 
 
 ###  http://www.w3.org/2004/02/skos/core#altLabel
@@ -315,13 +325,27 @@
 :Agent rdf:type owl:Class .
 
 
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#ArchitecturalWork
+:ArchitecturalWork rdf:type owl:Class ;
+                   rdfs:subClassOf :Artwork .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#ArtistRole
+:ArtistRole rdf:type owl:Class ;
+            rdfs:subClassOf :Role .
+
+
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Artwork
-:Artwork rdf:type owl:Class ;
-         rdfs:subClassOf :Work .
+:Artwork rdf:type owl:Class .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Brand
 :Brand rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#City
+:City rdf:type owl:Class ;
+      rdfs:subClassOf :Location .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Collection
@@ -341,9 +365,13 @@
          rdfs:subClassOf :Location .
 
 
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#DigitalPlace
+:DigitalPlace rdf:type owl:Class ;
+              rdfs:subClassOf :Location .
+
+
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Fashion
-:Fashion rdf:type owl:Class ;
-         rdfs:subClassOf :Work .
+:Fashion rdf:type owl:Class .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Group
@@ -351,14 +379,24 @@
        rdfs:subClassOf :Agent .
 
 
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#IconicFigure
+:IconicFigure rdf:type owl:Class ;
+              rdfs:subClassOf :Role .
+
+
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Image
 :Image rdf:type owl:Class ;
-       rdfs:subClassOf :Work .
+       rdfs:subClassOf :Artwork .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#InteriorDesign
+:InteriorDesign rdf:type owl:Class ;
+                rdfs:subClassOf :ArchitecturalWork .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#LiteraryWork
 :LiteraryWork rdf:type owl:Class ;
-              rdfs:subClassOf :Work .
+              rdfs:subClassOf :Artwork .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Location
@@ -369,32 +407,38 @@
 :Motif rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#MusicArtistRole
-:MusicArtistRole rdf:type owl:Class ;
-                 rdfs:subClassOf :Role .
-
-
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#MusicWork
 :MusicWork rdf:type owl:Class ;
-           rdfs:subClassOf :Work .
+           rdfs:subClassOf :Artwork .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Painting
+:Painting rdf:type owl:Class ;
+          rdfs:subClassOf :Artwork .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#PeriodDefinition
-:PeriodDefinition rdf:type owl:Class .
+:PeriodDefinition rdf:type owl:Class ;
+                  rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                    owl:onProperty :timeInterval ;
+                                    owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                  ] .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Person
 :Person rdf:type owl:Class ;
-        rdfs:subClassOf :Agent .
+        rdfs:subClassOf :Agent ;
+        owl:disjointWith :Platform ,
+                         :TimeInterval .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Platform
 :Platform rdf:type owl:Class .
 
 
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#PrimaryPlatformRole
-:PrimaryPlatformRole rdf:type owl:Class ;
-                     rdfs:subClassOf :Role .
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#PrimaryRole
+:PrimaryRole rdf:type owl:Class ;
+             rdfs:subClassOf :Role .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#RepresentativeAssociation
@@ -414,7 +458,19 @@
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#TimeIndexedRole
-:TimeIndexedRole rdf:type owl:Class .
+:TimeIndexedRole rdf:type owl:Class ;
+                 rdfs:subClassOf [ rdf:type owl:Restriction ;
+                                   owl:onProperty :atTime ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :forAesthetic ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty :withRole ;
+                                   owl:minCardinality "1"^^xsd:nonNegativeInteger
+                                 ] .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#TimeInterval
@@ -428,15 +484,47 @@
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Video
 :Video rdf:type owl:Class ;
-       rdfs:subClassOf :Work .
-
-
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Work
-:Work rdf:type owl:Class .
+       rdfs:subClassOf :Artwork .
 
 
 ###  http://www.w3.org/2004/02/skos/core#Concept
 <http://www.w3.org/2004/02/skos/core#Concept> rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#colorDimension
+:colorDimension rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#fashionDimension
+:fashionDimension rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#iconicFigureDimension
+:iconicFigureDimension rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#motifDimension
+:motifDimension rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#musicDimension
+:musicDimension rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#platformDimension
+:platformDimension rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#themeDimension
+:themeDimension rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#valueDimension
+:valueDimension rdf:type owl:NamedIndividual .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
