@@ -317,10 +317,6 @@ vibe:startYear rdf:type owl:DatatypeProperty ;
 #    Classes
 #################################################################
 
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Activity
-:Activity rdf:type owl:Class .
-
-
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Album
 :Album rdf:type owl:Class ;
        rdfs:subClassOf vibe:MusicWork .
@@ -331,17 +327,9 @@ vibe:startYear rdf:type owl:DatatypeProperty ;
        rdfs:subClassOf vibe:Artwork .
 
 
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Beauty
-:Beauty rdf:type owl:Class .
-
-
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Film
 :Film rdf:type owl:Class ;
       rdfs:subClassOf vibe:Artwork .
-
-
-###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#FoodItem
-:FoodItem rdf:type owl:Class .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#Song
@@ -357,6 +345,11 @@ vibe:startYear rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal#VideoGame
 :VideoGame rdf:type owl:Class ;
            rdfs:subClassOf :Anime .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/Activity
+vibe:Activity rdf:type owl:Class ;
+              rdfs:label "Activity"@en .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/Aesthetic
@@ -392,6 +385,11 @@ vibe:ArtistRole rdf:type owl:Class ;
 vibe:Artwork rdf:type owl:Class ;
              rdfs:comment "An Artwork is a creative artifact produced within any expressive medium, including visual (images, paintings, sculpture, architecture, film, videogames), auditory (music), textual (literature), or embodied/industrial forms (fashion). It is treated as a generic work entity independent of medium-specific taxonomies."@en ;
              rdfs:label "Artwork"@en .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/Beauty
+vibe:Beauty rdf:type owl:Class ;
+            rdfs:label "Beauty"@en .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/Brand
@@ -440,6 +438,11 @@ vibe:DigitalPlace rdf:type owl:Class ;
 vibe:Fashion rdf:type owl:Class ;
              rdfs:comment "Fashion is a domain of embodied and material expression involving clothing, styling, and adornment practices, through which cultural meanings, identities, and aesthetic orientations are communicated."@en ;
              rdfs:label "Fashion"@en .
+
+
+###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/FoodItem
+vibe:FoodItem rdf:type owl:Class ;
+              rdfs:label "Food Item"@en .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/Group
