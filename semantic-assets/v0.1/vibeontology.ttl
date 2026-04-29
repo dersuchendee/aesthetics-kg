@@ -362,6 +362,7 @@ vibe:Brand rdf:type owl:Class ;
 vibe:City rdf:type owl:Class ;
           rdfs:subClassOf vibe:Location ;
           rdfs:label "City"@en .
+          rdfs:label "市"@ja .
 
 
 ###  http://www.semanticweb.org/annasofialippolis/ontologies/2026/3/vibeontologyproposal/Collection
