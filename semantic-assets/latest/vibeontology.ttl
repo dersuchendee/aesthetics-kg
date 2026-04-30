@@ -475,15 +475,6 @@ vibe:startYear rdf:type owl:DatatypeProperty ;
 <http://www.w3.org/2004/02/skos/core#Concept> rdf:type owl:Class .
 
 
-###  https://w3id.org/vibe-ontology#Region
-:Region rdf:type owl:Class ;
-        rdfs:subClassOf vibe:Location ;
-        rdfs:comment "A geographical area."@en ,
-                     "Un'area geografica."@it ;
-        rdfs:label "Region"@en ,
-                   "Regione"@it .
-
-
 ###  https://w3id.org/vibe-ontology/Activity
 vibe:Activity rdf:type owl:Class ;
               rdfs:comment "An action or practice carried out by individuals or groups, potentially associated with an aesthetic or subcultural context."@en ,
@@ -766,6 +757,15 @@ vibe:PrimaryRole rdf:type owl:Class ;
                               "Un ruolo che indica un’associazione primaria o centrale in un contesto."@it ;
                  rdfs:label "Primary Role"@en ,
                             "Ruolo primario"@it .
+
+
+###  https://w3id.org/vibe-ontology/Region
+vibe:Region rdf:type owl:Class ;
+            rdfs:subClassOf vibe:Location ;
+            rdfs:comment "A geographical area."@en ,
+                         "Un'area geografica."@it ;
+            rdfs:label "Region"@en ,
+                       "Regione"@it .
 
 
 ###  https://w3id.org/vibe-ontology/RepresentativeAssociation
