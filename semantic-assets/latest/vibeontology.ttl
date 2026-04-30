@@ -5,7 +5,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix vibe: <https://w3id.org/vibe-ontology/> .
-@base <https://w3id.org/vibe-ontology> .
+@base <https://w3id.org/vibe-ontology#> .
 
 <https://w3id.org/vibe-ontology> rdf:type owl:Ontology ;
                                   rdfs:comment "Ontologia per modellare le estetiche come categorie emergenti basate su collezioni e associazioni rappresentative."@it ,
@@ -42,6 +42,8 @@ xsd:gYear rdf:type rdfs:Datatype .
 vibe:associatedSubculture rdf:type owl:ObjectProperty ;
                           rdfs:domain vibe:Aesthetic ;
                           rdfs:range vibe:Subculture ;
+                          rdfs:comment "Collega un'Estetica a una Sottocultura che le è socialmente associata o ha contribuito alla sua emergenza e stabilizzazione."@it ,
+                                       "Links an Aesthetic to a Subculture that is socially associated with it or contributed to its emergence and stabilization."@en ;
                           rdfs:label "associated subculture"@en ,
                                      "sottocultura associata"@it .
 
@@ -50,7 +52,8 @@ vibe:associatedSubculture rdf:type owl:ObjectProperty ;
 vibe:associationDimension rdf:type owl:ObjectProperty ;
                           rdfs:domain vibe:RepresentativeAssociation ;
                           rdfs:range owl:Thing ;
-                          rdfs:comment "Classifies the kind of association. Expected values are the named individuals: motifDimension, themeDimension, valueDimension, colorDimension, platformDimension, musicDimension, fashionDimension, iconicFigureDimension."@en ;
+                          rdfs:comment "Classifica il tipo di associazione codificata da una RepresentativeAssociation. I valori attesi sono gli individui: motifDimension, themeDimension, valueDimension, colorDimension, platformDimension, musicDimension, fashionDimension, iconicFigureDimension."@it ,
+                                       "Classifies the kind of association. Expected values are the named individuals: motifDimension, themeDimension, valueDimension, colorDimension, platformDimension, musicDimension, fashionDimension, iconicFigureDimension."@en ;
                           rdfs:label "association dimension"@en ,
                                      "dimensione dell’associazione"@it .
 
@@ -59,6 +62,8 @@ vibe:associationDimension rdf:type owl:ObjectProperty ;
 vibe:atTime rdf:type owl:ObjectProperty ;
             rdfs:domain vibe:TimeIndexedRole ;
             rdfs:range vibe:TimeInterval ;
+            rdfs:comment "Specifica l'intervallo temporale durante il quale un TimeIndexedRole è valido."@it ,
+                         "Specifies the temporal interval during which a TimeIndexedRole is valid."@en ;
             rdfs:label "al tempo"@it ,
                        "at time"@en .
 
@@ -67,6 +72,8 @@ vibe:atTime rdf:type owl:ObjectProperty ;
 vibe:coinedBy rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:Aesthetic ;
               rdfs:range vibe:Agent ;
+              rdfs:comment "Collega un'Estetica all'Agente che l'ha coniata o che vi ha dato il nome per la prima volta."@it ,
+                           "Relates an Aesthetic to the Agent who coined or first named it."@en ;
               rdfs:label "coined by"@en ,
                          "coniato da"@it .
 
@@ -77,6 +84,8 @@ vibe:follows rdf:type owl:ObjectProperty ;
              rdf:type owl:TransitiveProperty ;
              rdfs:domain vibe:Aesthetic ;
              rdfs:range vibe:Aesthetic ;
+             rdfs:comment "Indica che un'Estetica segue temporalmente o stilisticamente un'altra. Questa proprietà è transitiva."@it ,
+                          "Indicates that one Aesthetic temporally or stylistically follows another. This property is transitive."@en ;
              rdfs:label "follows"@en ,
                         "segue"@it .
 
@@ -85,6 +94,8 @@ vibe:follows rdf:type owl:ObjectProperty ;
 vibe:forAesthetic rdf:type owl:ObjectProperty ;
                   rdfs:domain vibe:RepresentativeAssociation ;
                   rdfs:range vibe:Aesthetic ;
+                  rdfs:comment "Collega una AssociazioneRappresentativa all'Estetica che essa qualifica."@it ,
+                               "Links a RepresentativeAssociation to the Aesthetic it qualifies."@en ;
                   rdfs:label "for aesthetic"@en ,
                              "per estetica"@it .
 
@@ -93,6 +104,8 @@ vibe:forAesthetic rdf:type owl:ObjectProperty ;
 vibe:hasColorPalette rdf:type owl:ObjectProperty ;
                      rdfs:domain vibe:Aesthetic ;
                      rdfs:range vibe:ColorPalette ;
+                     rdfs:comment "Associates an Aesthetic with a characteristic ColorPalette that contributes to its visual identity."@en ,
+                                  "Associa un'Estetica a una palette di colori caratteristica che contribuisce alla sua identità visiva." ;
                      rdfs:label "ha palette di colori"@it ,
                                 "has color palette"@en .
 
@@ -101,6 +114,8 @@ vibe:hasColorPalette rdf:type owl:ObjectProperty ;
 vibe:hasCreator rdf:type owl:ObjectProperty ;
                 rdfs:domain vibe:Aesthetic ;
                 rdfs:range vibe:Agent ;
+                rdfs:comment "Collega un'Estetica all'Agente che l'ha creata o a cui essa deve la propria origine."@it ,
+                             "Relates an Aesthetic to the Agent who created or gave rise to it."@en ;
                 rdfs:label "ha creatore"@it ,
                            "has creator"@en .
 
@@ -109,6 +124,8 @@ vibe:hasCreator rdf:type owl:ObjectProperty ;
 vibe:hasIconicFigure rdf:type owl:ObjectProperty ;
                      rdfs:domain vibe:Aesthetic ;
                      rdfs:range vibe:Agent ;
+                     rdfs:comment "Associa un'Estetica a un Agente considerato suo rappresentante emblematico."@it ,
+                                  "Associates an Aesthetic with an Agent who is considered an emblematic or iconic representative of it."@en ;
                      rdfs:label "ha figura iconica"@it ,
                                 "has iconic figure"@en .
 
@@ -117,6 +134,8 @@ vibe:hasIconicFigure rdf:type owl:ObjectProperty ;
 vibe:hasLocation rdf:type owl:ObjectProperty ;
                  rdfs:domain owl:Thing ;
                  rdfs:range vibe:Location ;
+                 rdfs:comment "Associa qualsiasi entità a una collocazione spaziale, fisica o digitale."@it ,
+                              "Associates any entity with a physical or digital spatial location."@en ;
                  rdfs:label "ha luogo"@it ,
                             "has location"@en .
 
@@ -126,6 +145,8 @@ vibe:hasLocationOfOrigin rdf:type owl:ObjectProperty ;
                          rdfs:subPropertyOf vibe:hasLocation ;
                          rdfs:domain vibe:Aesthetic ;
                          rdfs:range vibe:Location ;
+                         rdfs:comment "Specifica la collocazione geografica o digitale in cui un'Estetica ha avuto origine."@it ,
+                                      "Specifies the geographic or digital location where an Aesthetic first originated."@en ;
                          rdfs:label "ha luogo di origine"@it ,
                                     "has location of origin"@en .
 
@@ -135,6 +156,8 @@ vibe:hasMember rdf:type owl:ObjectProperty ;
                owl:inverseOf vibe:isMemberOf ;
                rdfs:domain vibe:Collection ;
                rdfs:range owl:Thing ;
+               rdfs:comment "Collega una Collezione a una delle entità che la costituiscono. L'appartenenza non implica esaustività né necessità."@it ,
+                            "Relates a Collection to one of its constituent entities. Membership does not imply exhaustiveness or strict necessity."@en ;
                rdfs:label "ha membro"@it ,
                           "has member"@en .
 
@@ -143,6 +166,8 @@ vibe:hasMember rdf:type owl:ObjectProperty ;
 vibe:hasMotif rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:Artwork ;
               rdfs:range vibe:Motif ;
+              rdfs:comment "Associa un'Opera d'arte a un motivo ricorrente e riconoscibile."@it ,
+                           "Associates an Artwork with a recurrent and recognizable motif it exhibits."@en ;
               rdfs:label "ha motivo"@it ,
                          "has motif"@en .
 
@@ -151,6 +176,8 @@ vibe:hasMotif rdf:type owl:ObjectProperty ;
 vibe:hasOriginPeriod rdf:type owl:ObjectProperty ;
                      rdfs:domain vibe:Aesthetic ;
                      rdfs:range vibe:TimeInterval ;
+                     rdfs:comment "Specifica l'intervallo temporale durante il quale un'Estetica è emersa per la prima volta."@it ,
+                                  "Specifies the time interval during which an Aesthetic first emerged."@en ;
                      rdfs:label "ha periodo di origine"@it ,
                                 "has origin period"@en .
 
@@ -159,15 +186,19 @@ vibe:hasOriginPeriod rdf:type owl:ObjectProperty ;
 vibe:hasPeriodDefinition rdf:type owl:ObjectProperty ;
                          rdfs:domain owl:Thing ;
                          rdfs:range vibe:PeriodDefinition ;
+                         rdfs:comment "Associa un'entità a una Definizione di periodo che la colloca in un contesto temporale."@it ,
+                                      "Associates an entity with a PeriodDefinition that situates it within a temporal context."@en ;
                          rdfs:label "ha definizione di periodo"@it ,
                                     "has period definition"@en .
 
 
 ###  https://w3id.org/vibe-ontology/hasPlatform
 vibe:hasPlatform rdf:type owl:ObjectProperty ;
-                 rdfs:subPropertyOf vibe:hasPeriodDefinition ;
+                 rdfs:subPropertyOf vibe:relatedTo ;
                  rdfs:domain vibe:Aesthetic ;
                  rdfs:range vibe:Platform ;
+                 rdfs:comment "Associa un'Estetica a una Piattaforma su cui essa circola o è stata diffusa."@it ,
+                              "Associates an Aesthetic with a Platform on which it circulates or has been disseminated."@en ;
                  rdfs:label "ha piattaforma"@it ,
                             "has platform"@en .
 
@@ -177,6 +208,8 @@ vibe:hasPrimaryPlatform rdf:type owl:ObjectProperty ;
                         rdfs:subPropertyOf vibe:hasPlatform ;
                         rdfs:domain vibe:Aesthetic ;
                         rdfs:range vibe:Platform ;
+                        rdfs:comment "Specifica la Piattaforma principale attraverso cui un'Estetica è prevalentemente diffusa o ha acquisito visibilità."@it ,
+                                     "Specifies the main Platform through which an Aesthetic is primarily disseminated or has gained visibility."@en ;
                         rdfs:label "ha piattaforma principale"@it ,
                                    "has primary platform"@en .
 
@@ -186,6 +219,8 @@ vibe:hasRelatedBrand rdf:type owl:ObjectProperty ;
                      rdfs:subPropertyOf vibe:relatedTo ;
                      rdfs:domain vibe:Aesthetic ;
                      rdfs:range vibe:Brand ;
+                     rdfs:comment "Associa un'Estetica a un Brand che le è caratteristico o culturalmente affine."@it ,
+                                  "Associates an Aesthetic with a Brand that is characteristic of or culturally aligned with it."@en ;
                      rdfs:label "ha brand associato"@it ,
                                 "has related brand"@en .
 
@@ -195,6 +230,8 @@ vibe:hasRelatedWork rdf:type owl:ObjectProperty ;
                     rdfs:subPropertyOf vibe:relatedTo ;
                     rdfs:domain vibe:Aesthetic ;
                     rdfs:range vibe:Artwork ;
+                    rdfs:comment "Associa un'Estetica a un'Opera considerata rappresentativa o tematicamente correlata."@it ,
+                                 "Associates an Aesthetic with an Artwork considered representative of or thematically related to it."@en ;
                     rdfs:label "ha opera associata"@it ,
                                "has related work"@en .
 
@@ -205,6 +242,8 @@ vibe:hasSubgenre rdf:type owl:ObjectProperty ;
                  owl:inverseOf vibe:isSubgenreOf ;
                  rdfs:domain vibe:Aesthetic ;
                  rdfs:range vibe:Aesthetic ;
+                 rdfs:comment "Collega un'Estetica a un'Estetica più specifica che ne costituisce una sottovariante."@it ,
+                              "Relates an Aesthetic to a more specific Aesthetic that constitutes one of its subvariants."@en ;
                  rdfs:label "ha sottogenere"@it ,
                             "has subgenre"@en .
 
@@ -213,6 +252,8 @@ vibe:hasSubgenre rdf:type owl:ObjectProperty ;
 vibe:hasTheme rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:Artwork ;
               rdfs:range vibe:Theme ;
+              rdfs:comment "Associa un'Opera a un Tema che esprime, veicola o mette in primo piano."@it ,
+                           "Associates an Artwork with a Theme it conveys, expresses, or foregrounds."@en ;
               rdfs:label "ha tema"@it ,
                          "has theme"@en .
 
@@ -221,6 +262,8 @@ vibe:hasTheme rdf:type owl:ObjectProperty ;
 vibe:hasValue rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:Aesthetic ;
               rdfs:range vibe:Value ;
+              rdfs:comment "Associa un'Estetica a un Valore che ne caratterizza l'orientamento."@it ,
+                           "Associates an Aesthetic with an abstract Value that characterizes its orientation."@en ;
               rdfs:label "ha valore"@it ,
                          "has value"@en .
 
@@ -231,6 +274,8 @@ vibe:influenced rdf:type owl:ObjectProperty ;
                 owl:inverseOf vibe:influencedBy ;
                 rdfs:domain vibe:Aesthetic ;
                 rdfs:range vibe:Aesthetic ;
+                rdfs:comment "Collega un'Estetica a un'altra Estetica che essa ha influenzato in termini di stile, motivi o valori, o altro."@it ,
+                             "Relates an Aesthetic to another Aesthetic that it has influenced in terms of style, motifs, values, or other."@en ;
                 rdfs:label "ha influenzato"@it ,
                            "influenced"@en .
 
@@ -240,6 +285,8 @@ vibe:influencedBy rdf:type owl:ObjectProperty ;
                   rdfs:subPropertyOf vibe:relatedTo ;
                   rdfs:domain vibe:Aesthetic ;
                   rdfs:range vibe:Aesthetic ;
+                  rdfs:comment "Collega un'Estetica a un'altra Estetica da cui essa ha tratto influenza stilistica, tematica o culturale."@it ,
+                               "Relates an Aesthetic to another Aesthetic from which it has drawn stylistic, thematic, or cultural influence."@en ;
                   rdfs:label "influenced by"@en ,
                              "influenzato da"@it .
 
@@ -248,6 +295,8 @@ vibe:influencedBy rdf:type owl:ObjectProperty ;
 vibe:isMemberOf rdf:type owl:ObjectProperty ;
                 rdfs:domain owl:Thing ;
                 rdfs:range vibe:Collection ;
+                rdfs:comment "Collega un'entità alla Collezione di cui è membro costituente."@it ,
+                             "Relates an entity to the Collection of which it is a constituent member."@en ;
                 rdfs:label "is member of"@en ,
                            "è membro di"@it .
 
@@ -256,6 +305,8 @@ vibe:isMemberOf rdf:type owl:ObjectProperty ;
 vibe:isRoleInTimeOf rdf:type owl:ObjectProperty ;
                     rdfs:domain vibe:TimeIndexedRole ;
                     rdfs:range vibe:Platform ;
+                    rdfs:comment "Collega un TimeIndexedRole alla Piattaforma il cui ruolo temporalmente situato viene descritto."@it ,
+                                 "Links a TimeIndexedRole to the Platform whose temporally situated role is being described."@en ;
                     rdfs:label "is role in time of"@en ,
                                "è ruolo nel tempo di"@it .
 
@@ -265,6 +316,8 @@ vibe:isSubgenreOf rdf:type owl:ObjectProperty ;
                   rdfs:subPropertyOf vibe:relatedTo ;
                   rdfs:domain vibe:Aesthetic ;
                   rdfs:range vibe:Aesthetic ;
+                  rdfs:comment "Collega un'Estetica a un'Estetica più ampia di cui essa è una sottovariante più specifica."@it ,
+                               "Relates an Aesthetic to a broader Aesthetic of which it is a more specific subvariant."@en ;
                   rdfs:label "is subgenre of"@en ,
                              "è sottogenere di"@it .
 
@@ -275,6 +328,8 @@ vibe:overlapsWith rdf:type owl:ObjectProperty ;
                   rdf:type owl:SymmetricProperty ;
                   rdfs:domain vibe:Aesthetic ;
                   rdfs:range vibe:Aesthetic ;
+                  rdfs:comment "Indica che due Estetiche condividono elementi o associazioni significativi, senza che l'una sia sottogenere dell'altra. Questa proprietà è simmetrica."@it ,
+                               "Indicates that two Aesthetics share significant elements or associations without either being a subgenre of the other. This property is symmetric."@en ;
                   rdfs:label "overlaps with"@en ,
                              "si sovrappone a"@it .
 
@@ -284,6 +339,8 @@ vibe:precedes rdf:type owl:ObjectProperty ,
                        owl:TransitiveProperty ;
               rdfs:domain vibe:Aesthetic ;
               rdfs:range vibe:Aesthetic ;
+              rdfs:comment "Indica che un'Estetica precede temporalmente o stilisticamente un'altra. Questa proprietà è transitiva."@it ,
+                           "Indicates that one Aesthetic temporally or stylistically precedes another. This property is transitive."@en ;
               rdfs:label "precede"@it ,
                          "precedes"@en .
 
@@ -293,6 +350,8 @@ vibe:relatedTo rdf:type owl:ObjectProperty ,
                         owl:SymmetricProperty ;
                rdfs:domain vibe:Aesthetic ;
                rdfs:range owl:Thing ;
+               rdfs:comment "A general symmetric relation indicating that an Aesthetic is related to another entity in some culturally relevant way. Serves as a superproperty for more specific relation types."@en ,
+                            "Una relazione simmetrica generale che indica che un'Estetica è correlata a un'altra entità in modo culturalmente rilevante. Funge da superpropietà per tipi di relazione più specifici."@it ;
                rdfs:label "associato a"@it ,
                           "related to"@en .
 
@@ -301,6 +360,8 @@ vibe:relatedTo rdf:type owl:ObjectProperty ,
 vibe:source rdf:type owl:ObjectProperty ;
             rdfs:domain vibe:PeriodDefinition ;
             rdfs:range vibe:Agent ;
+            rdfs:comment "Indica l'Agente da cui una PeriodDefinition trae la propria evidenza o autorità."@it ,
+                         "Indicates the Agent from which a PeriodDefinition derives its evidence or authority."@en ;
             rdfs:label "fonte"@it ,
                        "source"@en .
 
@@ -309,6 +370,8 @@ vibe:source rdf:type owl:ObjectProperty ;
 vibe:timeInterval rdf:type owl:ObjectProperty ;
                   rdfs:domain vibe:PeriodDefinition ;
                   rdfs:range vibe:TimeInterval ;
+                  rdfs:comment "Collega una PeriodDefinition all'intervallo temporale che essa definisce."@it ,
+                               "Links a PeriodDefinition to the TimeInterval it defines."@en ;
                   rdfs:label "intervallo temporale"@it ,
                              "time interval"@en .
 
@@ -317,6 +380,8 @@ vibe:timeInterval rdf:type owl:ObjectProperty ;
 vibe:withEntity rdf:type owl:ObjectProperty ;
                 rdfs:domain vibe:RepresentativeAssociation ;
                 rdfs:range owl:Thing ;
+                rdfs:comment "Collega una RepresentativeAssociation all'entità considerata rappresentativa dell'Estetica."@it ,
+                             "Links a RepresentativeAssociation to the entity that is considered representative of the Aesthetic."@en ;
                 rdfs:label "con entità"@it ,
                            "with entity"@en .
 
@@ -325,6 +390,8 @@ vibe:withEntity rdf:type owl:ObjectProperty ;
 vibe:withRole rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:TimeIndexedRole ;
               rdfs:range vibe:Role ;
+              rdfs:comment "Specifica il Ruolo ricoperto dall'entità all'interno di una relazione di tipo Ruolo indicizzato temporalmente."@it ,
+                           "Specifies the Role held by the entity within a TimeIndexedRole relation."@en ;
               rdfs:label "con ruolo"@it ,
                          "with role"@en .
 
@@ -406,6 +473,15 @@ vibe:startYear rdf:type owl:DatatypeProperty ;
 
 ###  http://www.w3.org/2004/02/skos/core#Concept
 <http://www.w3.org/2004/02/skos/core#Concept> rdf:type owl:Class .
+
+
+###  https://w3id.org/vibe-ontology#Region
+:Region rdf:type owl:Class ;
+        rdfs:subClassOf vibe:Location ;
+        rdfs:comment "A geographical area."@en ,
+                     "Un'area geografica."@it ;
+        rdfs:label "Region"@en ,
+                   "Regione"@it .
 
 
 ###  https://w3id.org/vibe-ontology/Activity
@@ -765,7 +841,7 @@ vibe:TimeIndexedRole rdf:type owl:Class ;
 ###  https://w3id.org/vibe-ontology/TimeInterval
 vibe:TimeInterval rdf:type owl:Class ;
                   rdfs:comment "A temporal extent with a start and/or end that may be precisely defined or approximate, used to qualify the temporal validity of entities, roles, or associations."@en ,
-                               "Un’estensione temporale con un inizio e/o una fine, che può essere precisa o approssimata, usata per qualitifare la validità temporale di entità, ruoli o associazioni."@it ;
+                               "Un’estensione temporale con un inizio e/o una fine, che può essere precisa o approssimata, usata per qualificare la validità temporale di entità, ruoli o associazioni."@it ;
                   rdfs:label "Intervallo temporale"@it ,
                              "Time Interval"@en .
 
