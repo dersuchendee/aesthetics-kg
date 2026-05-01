@@ -9,9 +9,11 @@
 
 <https://w3id.org/vibe-ontology> rdf:type owl:Ontology ;
                                   rdfs:comment "Ontologia per modellare le estetiche come categorie emergenti basate su collezioni e associazioni rappresentative."@it ,
-                                               "Ontology for modelling aesthetics as emergent, collection-based categories grounded in representative associations."@en ;
+                                               "Ontology for modelling aesthetics as emergent, collection-based categories grounded in representative associations."@en ,
+                                               "Онтология для моделирования эстетики как эмерджентных, коллекционно-обусловленных категорий, основанных на репрезентативных ассоциациях."@ru ;
                                   rdfs:label "Ontologia Vibe"@it ,
-                                             "Vibe Ontology"@en .
+                                             "Vibe Ontology"@en ,
+                                             "Вайб Онтология"@ru .
 
 #################################################################
 #    Datatypes
@@ -44,8 +46,10 @@ vibe:associatedSubculture rdf:type owl:ObjectProperty ;
                           rdfs:range vibe:Subculture ;
                           rdfs:comment "Collega un'Estetica a una Sottocultura che le è socialmente associata o ha contribuito alla sua emergenza e stabilizzazione."@it ,
                                        "Links an Aesthetic to a Subculture that is socially associated with it or contributed to its emergence and stabilization."@en ;
+                                       "Связывает эстетику с субкультурой, которая ассоциируется с ней в обществе или способствовала её возникновению и стабилизации."@ru ;
                           rdfs:label "associated subculture"@en ,
-                                     "sottocultura associata"@it .
+                                     "sottocultura associata"@it ,
+                                     "ассоциированная субкультура"@ru.
 
 
 ###  https://w3id.org/vibe-ontology/associationDimension
@@ -53,9 +57,11 @@ vibe:associationDimension rdf:type owl:ObjectProperty ;
                           rdfs:domain vibe:RepresentativeAssociation ;
                           rdfs:range owl:Thing ;
                           rdfs:comment "Classifica il tipo di associazione codificata da una RepresentativeAssociation. I valori attesi sono gli individui: motifDimension, themeDimension, valueDimension, colorDimension, platformDimension, musicDimension, fashionDimension, iconicFigureDimension."@it ,
-                                       "Classifies the kind of association. Expected values are the named individuals: motifDimension, themeDimension, valueDimension, colorDimension, platformDimension, musicDimension, fashionDimension, iconicFigureDimension."@en ;
+                                       "Classifies the kind of association. Expected values are the named individuals: motifDimension, themeDimension, valueDimension, colorDimension, platformDimension, musicDimension, fashionDimension, iconicFigureDimension."@en ,
+                                       "Классифицирует тип ассоциации. Ожидаемые значения — индивиды: измерение мотива (motifDimension), темы (themeDimension), ценности (valueDimension), цвета (colorDimension), платформы (platformDimension), музыки (musicDimension), моды (fashionDimension) или иконической фигуры (iconicFigureDimension)."@ru ;
                           rdfs:label "association dimension"@en ,
-                                     "dimensione dell’associazione"@it .
+                                     "dimensione dell’associazione"@it,
+                                     "измерение ассоциации"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/atTime
@@ -63,9 +69,11 @@ vibe:atTime rdf:type owl:ObjectProperty ;
             rdfs:domain vibe:TimeIndexedRole ;
             rdfs:range vibe:TimeInterval ;
             rdfs:comment "Specifica l'intervallo temporale durante il quale un TimeIndexedRole è valido."@it ,
-                         "Specifies the temporal interval during which a TimeIndexedRole is valid."@en ;
+                         "Specifies the temporal interval during which a TimeIndexedRole is valid."@en ,
+                         "Указывает временной интервал, в течение которого роль (TimeIndexedRole) является действительной."@ru ;
             rdfs:label "al tempo"@it ,
-                       "at time"@en .
+                       "at time"@en ,
+                       "во время"@ru.
 
 
 ###  https://w3id.org/vibe-ontology/coinedBy
@@ -73,9 +81,11 @@ vibe:coinedBy rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:Aesthetic ;
               rdfs:range vibe:Agent ;
               rdfs:comment "Collega un'Estetica all'Agente che l'ha coniata o che vi ha dato il nome per la prima volta."@it ,
-                           "Relates an Aesthetic to the Agent who coined or first named it."@en ;
+                           "Relates an Aesthetic to the Agent who coined or first named it."@en ,
+                           "Связывает эстетику с агентом, который впервые ввел её название или термин."@ru ;
               rdfs:label "coined by"@en ,
-                         "coniato da"@it .
+                         "coniato da"@it ,
+                         "придумано (кем)"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/follows
@@ -85,9 +95,11 @@ vibe:follows rdf:type owl:ObjectProperty ;
              rdfs:domain vibe:Aesthetic ;
              rdfs:range vibe:Aesthetic ;
              rdfs:comment "Indica che un'Estetica segue temporalmente o stilisticamente un'altra. Questa proprietà è transitiva."@it ,
-                          "Indicates that one Aesthetic temporally or stylistically follows another. This property is transitive."@en ;
+                          "Indicates that one Aesthetic temporally or stylistically follows another. This property is transitive."@en ,
+                          "Указывает на то, что одна эстетика следует за другой во времени или стилистически. Свойство является транзитивным."@ru ;
              rdfs:label "follows"@en ,
-                        "segue"@it .
+                        "segue"@it ,
+                        "следует за"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/forAesthetic
@@ -95,9 +107,11 @@ vibe:forAesthetic rdf:type owl:ObjectProperty ;
                   rdfs:domain vibe:RepresentativeAssociation ;
                   rdfs:range vibe:Aesthetic ;
                   rdfs:comment "Collega una AssociazioneRappresentativa all'Estetica che essa qualifica."@it ,
-                               "Links a RepresentativeAssociation to the Aesthetic it qualifies."@en ;
+                               "Links a RepresentativeAssociation to the Aesthetic it qualifies."@en ,
+                               "Связывает репрезентативную ассоциацию с конкретной эстетикой, которую она характеризует."@ru ;;
                   rdfs:label "for aesthetic"@en ,
-                             "per estetica"@it .
+                             "per estetica"@it ,
+                             "для эстетики"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasColorPalette
@@ -105,9 +119,11 @@ vibe:hasColorPalette rdf:type owl:ObjectProperty ;
                      rdfs:domain vibe:Aesthetic ;
                      rdfs:range vibe:ColorPalette ;
                      rdfs:comment "Associates an Aesthetic with a characteristic ColorPalette that contributes to its visual identity."@en ,
-                                  "Associa un'Estetica a una palette di colori caratteristica che contribuisce alla sua identità visiva." ;
+                                  "Associa un'Estetica a una palette di colori caratteristica che contribuisce alla sua identità visiva." ,
+                                  "Ассоциирует эстетику с характерной цветовой палитрой, определяющей её визуальную идентичность."@ru ;
                      rdfs:label "ha palette di colori"@it ,
-                                "has color palette"@en .
+                                "has color palette"@en ,
+                                "имеет цветовую палитру"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasCreator
@@ -115,9 +131,11 @@ vibe:hasCreator rdf:type owl:ObjectProperty ;
                 rdfs:domain vibe:Aesthetic ;
                 rdfs:range vibe:Agent ;
                 rdfs:comment "Collega un'Estetica all'Agente che l'ha creata o a cui essa deve la propria origine."@it ,
-                             "Relates an Aesthetic to the Agent who created or gave rise to it."@en ;
+                             "Relates an Aesthetic to the Agent who created or gave rise to it."@en ,
+                             "Связывает эстетику с агентом, который создал её или способствовал её появлению."@ru ;
                 rdfs:label "ha creatore"@it ,
-                           "has creator"@en .
+                           "has creator"@en ,
+                           "имеет создателя"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasIconicFigure
@@ -125,9 +143,11 @@ vibe:hasIconicFigure rdf:type owl:ObjectProperty ;
                      rdfs:domain vibe:Aesthetic ;
                      rdfs:range vibe:Agent ;
                      rdfs:comment "Associa un'Estetica a un Agente considerato suo rappresentante emblematico."@it ,
-                                  "Associates an Aesthetic with an Agent who is considered an emblematic or iconic representative of it."@en ;
+                                  "Associates an Aesthetic with an Agent who is considered an emblematic or iconic representative of it."@en ,
+                                  "Ассоциирует эстетику с агентом, который считается её каноничным или культовым представителем."@ru ;
                      rdfs:label "ha figura iconica"@it ,
-                                "has iconic figure"@en .
+                                "has iconic figure"@en ,
+                                "имеет иконическую фигуру"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasLocation
@@ -135,9 +155,12 @@ vibe:hasLocation rdf:type owl:ObjectProperty ;
                  rdfs:domain owl:Thing ;
                  rdfs:range vibe:Location ;
                  rdfs:comment "Associa qualsiasi entità a una collocazione spaziale, fisica o digitale."@it ,
-                              "Associates any entity with a physical or digital spatial location."@en ;
+                              "Associates any entity with a physical or digital spatial location."@en ,
+                              "Ассоциирует любую сущность с физическим или цифровым пространственным расположением."@ru ;
+
                  rdfs:label "ha luogo"@it ,
-                            "has location"@en .
+                            "has location"@en ,
+                            "имеет местоположение"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasLocationOfOrigin
@@ -146,9 +169,11 @@ vibe:hasLocationOfOrigin rdf:type owl:ObjectProperty ;
                          rdfs:domain vibe:Aesthetic ;
                          rdfs:range vibe:Location ;
                          rdfs:comment "Specifica la collocazione geografica o digitale in cui un'Estetica ha avuto origine."@it ,
-                                      "Specifies the geographic or digital location where an Aesthetic first originated."@en ;
+                                      "Specifies the geographic or digital location where an Aesthetic first originated."@en ,
+                                      "Указывает географическое или цифровое местоположение, в котором эстетика возникла впервые."@ru ;
                          rdfs:label "ha luogo di origine"@it ,
-                                    "has location of origin"@en .
+                                    "has location of origin"@en ,
+                                    "место происхождения"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasMember
@@ -157,9 +182,11 @@ vibe:hasMember rdf:type owl:ObjectProperty ;
                rdfs:domain vibe:Collection ;
                rdfs:range owl:Thing ;
                rdfs:comment "Collega una Collezione a una delle entità che la costituiscono. L'appartenenza non implica esaustività né necessità."@it ,
-                            "Relates a Collection to one of its constituent entities. Membership does not imply exhaustiveness or strict necessity."@en ;
+                            "Relates a Collection to one of its constituent entities. Membership does not imply exhaustiveness or strict necessity."@en ,
+                            "Связывает коллекцию с одной из составляющих её сущностей. Принадлежность не подразумевает исчерпаемости или строгой необходимости."@ru ;
                rdfs:label "ha membro"@it ,
-                          "has member"@en .
+                          "has member"@en ,
+                          "имеет участника/элемент"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasMotif
@@ -167,9 +194,11 @@ vibe:hasMotif rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:Artwork ;
               rdfs:range vibe:Motif ;
               rdfs:comment "Associa un'Opera d'arte a un motivo ricorrente e riconoscibile."@it ,
-                           "Associates an Artwork with a recurrent and recognizable motif it exhibits."@en ;
+                           "Associates an Artwork with a recurrent and recognizable motif it exhibits."@en ,
+                           "Ассоциирует произведение искусства с узнаваемым повторяющимся мотивом, который в нем присутствует."@ru ;
               rdfs:label "ha motivo"@it ,
-                         "has motif"@en .
+                         "has motif"@en ,
+                         "имеет мотив"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasOriginPeriod
@@ -177,9 +206,11 @@ vibe:hasOriginPeriod rdf:type owl:ObjectProperty ;
                      rdfs:domain vibe:Aesthetic ;
                      rdfs:range vibe:TimeInterval ;
                      rdfs:comment "Specifica l'intervallo temporale durante il quale un'Estetica è emersa per la prima volta."@it ,
-                                  "Specifies the time interval during which an Aesthetic first emerged."@en ;
+                                  "Specifies the time interval during which an Aesthetic first emerged."@en ,
+                                  "Указывает временной интервал, в течение которого эстетика появилась впервые."@ru ;
                      rdfs:label "ha periodo di origine"@it ,
-                                "has origin period"@en .
+                                "has origin period"@en ,
+                                "период возникновения"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasPeriodDefinition
@@ -187,9 +218,12 @@ vibe:hasPeriodDefinition rdf:type owl:ObjectProperty ;
                          rdfs:domain owl:Thing ;
                          rdfs:range vibe:PeriodDefinition ;
                          rdfs:comment "Associa un'entità a una Definizione di periodo che la colloca in un contesto temporale."@it ,
-                                      "Associates an entity with a PeriodDefinition that situates it within a temporal context."@en ;
+                                      "Associates an entity with a PeriodDefinition that situates it within a temporal context."@en ,
+                                      "Ассоциирует сущность с Определением периода, помещая её в конкретный временной контекст."@ru ;
                          rdfs:label "ha definizione di periodo"@it ,
-                                    "has period definition"@en .
+                                    "has period definition"@en ,
+                                    "имеет определение периода"@ru .
+                                  
 
 
 ###  https://w3id.org/vibe-ontology/hasPlatform
@@ -198,9 +232,11 @@ vibe:hasPlatform rdf:type owl:ObjectProperty ;
                  rdfs:domain vibe:Aesthetic ;
                  rdfs:range vibe:Platform ;
                  rdfs:comment "Associa un'Estetica a una Piattaforma su cui essa circola o è stata diffusa."@it ,
-                              "Associates an Aesthetic with a Platform on which it circulates or has been disseminated."@en ;
+                              "Associates an Aesthetic with a Platform on which it circulates or has been disseminated."@en ,
+                              "Ассоциирует эстетику с платформой, на которой она распространяется."@ru ;
                  rdfs:label "ha piattaforma"@it ,
-                            "has platform"@en .
+                            "has platform"@en ,
+                            "имеет платформу"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasPrimaryPlatform
@@ -209,9 +245,11 @@ vibe:hasPrimaryPlatform rdf:type owl:ObjectProperty ;
                         rdfs:domain vibe:Aesthetic ;
                         rdfs:range vibe:Platform ;
                         rdfs:comment "Specifica la Piattaforma principale attraverso cui un'Estetica è prevalentemente diffusa o ha acquisito visibilità."@it ,
-                                     "Specifies the main Platform through which an Aesthetic is primarily disseminated or has gained visibility."@en ;
+                                     "Specifies the main Platform through which an Aesthetic is primarily disseminated or has gained visibility."@en ,
+                                     "Указывает на основную платформу, через которую эстетика преимущественно распространялась или получила известность."@ru ;;
                         rdfs:label "ha piattaforma principale"@it ,
-                                   "has primary platform"@en .
+                                   "has primary platform"@en ,
+                                   "имеет основную платформу"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasRelatedBrand
@@ -220,9 +258,11 @@ vibe:hasRelatedBrand rdf:type owl:ObjectProperty ;
                      rdfs:domain vibe:Aesthetic ;
                      rdfs:range vibe:Brand ;
                      rdfs:comment "Associa un'Estetica a un Brand che le è caratteristico o culturalmente affine."@it ,
-                                  "Associates an Aesthetic with a Brand that is characteristic of or culturally aligned with it."@en ;
+                                  "Associates an Aesthetic with a Brand that is characteristic of or culturally aligned with it."@en ,
+                                  "Ассоциирует эстетику с брендом, который является характерным для неё или близок ей по духу."@ru ;
                      rdfs:label "ha brand associato"@it ,
-                                "has related brand"@en .
+                                "has related brand"@en ,
+                                "имеет ассоциирующийся бренд"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasRelatedWork
@@ -231,9 +271,11 @@ vibe:hasRelatedWork rdf:type owl:ObjectProperty ;
                     rdfs:domain vibe:Aesthetic ;
                     rdfs:range vibe:Artwork ;
                     rdfs:comment "Associa un'Estetica a un'Opera considerata rappresentativa o tematicamente correlata."@it ,
-                                 "Associates an Aesthetic with an Artwork considered representative of or thematically related to it."@en ;
+                                 "Associates an Aesthetic with an Artwork considered representative of or thematically related to it."@en ,
+                                 "Ассоциирует эстетику с произведением, которое считается репрезентативным для неё или тематически связано с ней."@ru ;
                     rdfs:label "ha opera associata"@it ,
-                               "has related work"@en .
+                               "has related work"@en ,
+                               "имеет ассоциирующееся произведение"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasSubgenre
@@ -243,9 +285,11 @@ vibe:hasSubgenre rdf:type owl:ObjectProperty ;
                  rdfs:domain vibe:Aesthetic ;
                  rdfs:range vibe:Aesthetic ;
                  rdfs:comment "Collega un'Estetica a un'Estetica più specifica che ne costituisce una sottovariante."@it ,
-                              "Relates an Aesthetic to a more specific Aesthetic that constitutes one of its subvariants."@en ;
+                              "Relates an Aesthetic to a more specific Aesthetic that constitutes one of its subvariants."@en ,
+                              "Связывает Эстетику с более узкой Эстетикой, являющейся её подвариантом."@ru ;
                  rdfs:label "ha sottogenere"@it ,
-                            "has subgenre"@en .
+                            "has subgenre"@en ,
+                            "имеет поджанр"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasTheme
@@ -253,9 +297,11 @@ vibe:hasTheme rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:Artwork ;
               rdfs:range vibe:Theme ;
               rdfs:comment "Associa un'Opera a un Tema che esprime, veicola o mette in primo piano."@it ,
-                           "Associates an Artwork with a Theme it conveys, expresses, or foregrounds."@en ;
+                           "Associates an Artwork with a Theme it conveys, expresses, or foregrounds."@en ,
+                           "Ассоциирует произведение с темой, которую оно выражает или выдвигает на первый план."@ru ;
               rdfs:label "ha tema"@it ,
-                         "has theme"@en .
+                         "has theme"@en ,
+                         "имеет тему"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/hasValue
@@ -263,9 +309,11 @@ vibe:hasValue rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:Aesthetic ;
               rdfs:range vibe:Value ;
               rdfs:comment "Associa un'Estetica a un Valore che ne caratterizza l'orientamento."@it ,
-                           "Associates an Aesthetic with an abstract Value that characterizes its orientation."@en ;
+                           "Associates an Aesthetic with an abstract Value that characterizes its orientation."@en ,
+                           "Ассоциирует эстетику с абстрактной ценностью, характеризующей её направленность."@ru ;
               rdfs:label "ha valore"@it ,
-                         "has value"@en .
+                         "has value"@en ,
+                         "имеет ценность"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/influenced
@@ -275,9 +323,11 @@ vibe:influenced rdf:type owl:ObjectProperty ;
                 rdfs:domain vibe:Aesthetic ;
                 rdfs:range vibe:Aesthetic ;
                 rdfs:comment "Collega un'Estetica a un'altra Estetica che essa ha influenzato in termini di stile, motivi o valori, o altro."@it ,
-                             "Relates an Aesthetic to another Aesthetic that it has influenced in terms of style, motifs, values, or other."@en ;
+                             "Relates an Aesthetic to another Aesthetic that it has influenced in terms of style, motifs, values, or other."@en ,
+                             "Связывает эстетику с другой эстетикой, на которую она оказала влияние (в стиле, мотивах, ценностях и т. д.)."@ru ;
                 rdfs:label "ha influenzato"@it ,
-                           "influenced"@en .
+                           "influenced"@en ,
+                           "оказала влияние на"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/influencedBy
@@ -286,9 +336,11 @@ vibe:influencedBy rdf:type owl:ObjectProperty ;
                   rdfs:domain vibe:Aesthetic ;
                   rdfs:range vibe:Aesthetic ;
                   rdfs:comment "Collega un'Estetica a un'altra Estetica da cui essa ha tratto influenza stilistica, tematica o culturale."@it ,
-                               "Relates an Aesthetic to another Aesthetic from which it has drawn stylistic, thematic, or cultural influence."@en ;
+                               "Relates an Aesthetic to another Aesthetic from which it has drawn stylistic, thematic, or cultural influence."@en ,
+                               "Связывает эстетику с другой эстетикой, которая послужила источником стилистического, тематического или культурного влияния."@ru ;
                   rdfs:label "influenced by"@en ,
-                             "influenzato da"@it .
+                             "influenzato da"@it ,
+                             "находится под влиянием"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/isMemberOf
@@ -296,9 +348,11 @@ vibe:isMemberOf rdf:type owl:ObjectProperty ;
                 rdfs:domain owl:Thing ;
                 rdfs:range vibe:Collection ;
                 rdfs:comment "Collega un'entità alla Collezione di cui è membro costituente."@it ,
-                             "Relates an entity to the Collection of which it is a constituent member."@en ;
+                             "Relates an entity to the Collection of which it is a constituent member."@en ,
+                             "Связывает сущность с коллекцией, частью которой она является."@ru ;
                 rdfs:label "is member of"@en ,
-                           "è membro di"@it .
+                           "è membro di"@it ,
+                           "является элементом"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/isRoleInTimeOf
@@ -306,9 +360,11 @@ vibe:isRoleInTimeOf rdf:type owl:ObjectProperty ;
                     rdfs:domain vibe:TimeIndexedRole ;
                     rdfs:range vibe:Platform ;
                     rdfs:comment "Collega un TimeIndexedRole alla Piattaforma il cui ruolo temporalmente situato viene descritto."@it ,
-                                 "Links a TimeIndexedRole to the Platform whose temporally situated role is being described."@en ;
+                                 "Links a TimeIndexedRole to the Platform whose temporally situated role is being described."@en ,
+                                 "Связывает временную роль (TimeIndexedRole) с платформой, чья обусловленная временем роль описывается."@ru ;
                     rdfs:label "is role in time of"@en ,
-                               "è ruolo nel tempo di"@it .
+                               "è ruolo nel tempo di"@it ,
+                               "является временной ролью для"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/isSubgenreOf
@@ -317,9 +373,11 @@ vibe:isSubgenreOf rdf:type owl:ObjectProperty ;
                   rdfs:domain vibe:Aesthetic ;
                   rdfs:range vibe:Aesthetic ;
                   rdfs:comment "Collega un'Estetica a un'Estetica più ampia di cui essa è una sottovariante più specifica."@it ,
-                               "Relates an Aesthetic to a broader Aesthetic of which it is a more specific subvariant."@en ;
+                               "Relates an Aesthetic to a broader Aesthetic of which it is a more specific subvariant."@en ,
+                               "Связывает эстетику с более широкой эстетикой, подвариантом которой она является."@ru ;
                   rdfs:label "is subgenre of"@en ,
-                             "è sottogenere di"@it .
+                             "è sottogenere di"@it ,
+                             "является поджанром"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/overlapsWith
@@ -329,9 +387,11 @@ vibe:overlapsWith rdf:type owl:ObjectProperty ;
                   rdfs:domain vibe:Aesthetic ;
                   rdfs:range vibe:Aesthetic ;
                   rdfs:comment "Indica che due Estetiche condividono elementi o associazioni significativi, senza che l'una sia sottogenere dell'altra. Questa proprietà è simmetrica."@it ,
-                               "Indicates that two Aesthetics share significant elements or associations without either being a subgenre of the other. This property is symmetric."@en ;
+                               "Indicates that two Aesthetics share significant elements or associations without either being a subgenre of the other. This property is symmetric."@en ,
+                               "Указывает на то, что две эстетики имеют общие значимые элементы или ассоциации, при этом ни одна не является поджанром другой. Свойство симметрично."@ru ;
                   rdfs:label "overlaps with"@en ,
-                             "si sovrappone a"@it .
+                             "si sovrappone a"@it ,
+                             "пересекается с"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/precedes
@@ -340,9 +400,11 @@ vibe:precedes rdf:type owl:ObjectProperty ,
               rdfs:domain vibe:Aesthetic ;
               rdfs:range vibe:Aesthetic ;
               rdfs:comment "Indica che un'Estetica precede temporalmente o stilisticamente un'altra. Questa proprietà è transitiva."@it ,
-                           "Indicates that one Aesthetic temporally or stylistically precedes another. This property is transitive."@en ;
+                           "Indicates that one Aesthetic temporally or stylistically precedes another. This property is transitive."@en ,
+                           "Указывает на то, что одна эстетика предшествует другой во времени или стилистически. Свойство транзитивно."@ru ;
               rdfs:label "precede"@it ,
-                         "precedes"@en .
+                         "precedes"@en ,
+                         "предшествует"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/relatedTo
@@ -351,9 +413,11 @@ vibe:relatedTo rdf:type owl:ObjectProperty ,
                rdfs:domain vibe:Aesthetic ;
                rdfs:range owl:Thing ;
                rdfs:comment "A general symmetric relation indicating that an Aesthetic is related to another entity in some culturally relevant way. Serves as a superproperty for more specific relation types."@en ,
-                            "Una relazione simmetrica generale che indica che un'Estetica è correlata a un'altra entità in modo culturalmente rilevante. Funge da superpropietà per tipi di relazione più specifici."@it ;
+                            "Una relazione simmetrica generale che indica che un'Estetica è correlata a un'altra entità in modo culturalmente rilevante. Funge da superpropietà per tipi di relazione più specifici."@it ,
+                            "Общее симметричное отношение, указывающее на культурную связь эстетики с другой сущностью. Служит суперсвойством для более специфичных типов отношений."@ru ;
                rdfs:label "associato a"@it ,
-                          "related to"@en .
+                          "related to"@en ,
+                          "связано с"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/source
@@ -361,9 +425,11 @@ vibe:source rdf:type owl:ObjectProperty ;
             rdfs:domain vibe:PeriodDefinition ;
             rdfs:range vibe:Agent ;
             rdfs:comment "Indica l'Agente da cui una PeriodDefinition trae la propria evidenza o autorità."@it ,
-                         "Indicates the Agent from which a PeriodDefinition derives its evidence or authority."@en ;
+                         "Indicates the Agent from which a PeriodDefinition derives its evidence or authority."@en ,
+                         "Указывает на агента, который является источником доказательств или авторитетным лицом для данного определения периода."@ru ;
             rdfs:label "fonte"@it ,
-                       "source"@en .
+                       "source"@en ,
+                       "источник"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/timeInterval
@@ -371,9 +437,11 @@ vibe:timeInterval rdf:type owl:ObjectProperty ;
                   rdfs:domain vibe:PeriodDefinition ;
                   rdfs:range vibe:TimeInterval ;
                   rdfs:comment "Collega una PeriodDefinition all'intervallo temporale che essa definisce."@it ,
-                               "Links a PeriodDefinition to the TimeInterval it defines."@en ;
+                               "Links a PeriodDefinition to the TimeInterval it defines."@en ,
+                               "Связывает определение периода с временным интервалом, который оно описывает."@ru ;
                   rdfs:label "intervallo temporale"@it ,
-                             "time interval"@en .
+                             "time interval"@en ,
+                             "временной интервал"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/withEntity
@@ -381,9 +449,11 @@ vibe:withEntity rdf:type owl:ObjectProperty ;
                 rdfs:domain vibe:RepresentativeAssociation ;
                 rdfs:range owl:Thing ;
                 rdfs:comment "Collega una RepresentativeAssociation all'entità considerata rappresentativa dell'Estetica."@it ,
-                             "Links a RepresentativeAssociation to the entity that is considered representative of the Aesthetic."@en ;
+                             "Links a RepresentativeAssociation to the entity that is considered representative of the Aesthetic."@en ,
+                             "Связывает репрезентативную ассоциацию с сущностью, которая считается характерной для данной эстетики."@ru ;
                 rdfs:label "con entità"@it ,
-                           "with entity"@en .
+                           "with entity"@en ,
+                           "с сущностью"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/withRole
@@ -391,9 +461,11 @@ vibe:withRole rdf:type owl:ObjectProperty ;
               rdfs:domain vibe:TimeIndexedRole ;
               rdfs:range vibe:Role ;
               rdfs:comment "Specifica il Ruolo ricoperto dall'entità all'interno di una relazione di tipo Ruolo indicizzato temporalmente."@it ,
-                           "Specifies the Role held by the entity within a TimeIndexedRole relation."@en ;
+                           "Specifies the Role held by the entity within a TimeIndexedRole relation."@en ,
+                           "Определяет Роль, которую сущность играет в рамках отношения временной роли (TimeIndexedRole)."@ru ;
               rdfs:label "con ruolo"@it ,
-                         "with role"@en .
+                         "with role"@en ,
+                         "с ролью"@ru .
 
 
 #################################################################
@@ -414,9 +486,12 @@ vibe:withRole rdf:type owl:ObjectProperty ;
 vibe:URL rdf:type owl:DatatypeProperty ;
          rdfs:domain vibe:Aesthetic ;
          rdfs:range xsd:anyURI ;
-         rdfs:comment "The wiki URL (aesthetic)" ;
+         rdfs:comment "The wiki URL (aesthetic)"@en ,
+                      "URL della wiki (estetica)"@it ,
+                      "URL-адрес в вики (эстетика)"@ru ;
          rdfs:label "URL"@en ,
-                    "URL"@it .
+                    "URL"@it ,
+                    "URL-адрес"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/alternateName
@@ -424,7 +499,8 @@ vibe:alternateName rdf:type owl:DatatypeProperty ;
                    rdfs:domain vibe:Aesthetic ;
                    rdfs:range xsd:string ;
                    rdfs:label "alternate name"@en ,
-                              "nome alternativo"@it .
+                              "nome alternativo"@it ,
+                              "альтернативное название"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/approximateLabel
@@ -432,7 +508,8 @@ vibe:approximateLabel rdf:type owl:DatatypeProperty ;
                       rdfs:domain vibe:TimeInterval ;
                       rdfs:range xsd:string ;
                       rdfs:label "approximate label"@en ,
-                                 "etichetta approssimativa"@it .
+                                 "etichetta approssimativa"@it ,
+                                 "приблизительная метка"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/endYear
@@ -440,7 +517,8 @@ vibe:endYear rdf:type owl:DatatypeProperty ;
              rdfs:domain vibe:TimeInterval ;
              rdfs:range xsd:gYear ;
              rdfs:label "anno di fine"@it ,
-                        "end year"@en .
+                        "end year"@en ,
+                        "год окончания"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/name
@@ -448,7 +526,8 @@ vibe:name rdf:type owl:DatatypeProperty ;
           rdfs:domain vibe:Aesthetic ;
           rdfs:range xsd:string ;
           rdfs:label "name"@en ,
-                     "nome"@it .
+                     "nome"@it ,
+                     "название"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/representativenessType
@@ -456,7 +535,8 @@ vibe:representativenessType rdf:type owl:DatatypeProperty ;
                             rdfs:domain vibe:RepresentativeAssociation ;
                             rdfs:range xsd:string ;
                             rdfs:label "representativeness type"@en ,
-                                       "tipo di rappresentatività"@it .
+                                       "tipo di rappresentatività"@it ,
+                                       "тип репрезентативности"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/startYear
@@ -464,7 +544,8 @@ vibe:startYear rdf:type owl:DatatypeProperty ;
                rdfs:domain vibe:TimeInterval ;
                rdfs:range xsd:gYear ;
                rdfs:label "anno di inizio"@it ,
-                          "start year"@en .
+                          "start year"@en ,
+                          "год начала"@ru .
 
 
 #################################################################
@@ -478,9 +559,11 @@ vibe:startYear rdf:type owl:DatatypeProperty ;
 ###  https://w3id.org/vibe-ontology/Activity
 vibe:Activity rdf:type owl:Class ;
               rdfs:comment "An action or practice carried out by individuals or groups, potentially associated with an aesthetic or subcultural context."@en ,
-                           "Un’azione o pratica svolta da individui o gruppi, potenzialmente associata a un’estetica o a un contesto sottoculturale."@it ;
+                           "Un’azione o pratica svolta da individui o gruppi, potenzialmente associata a un’estetica o a un contesto sottoculturale."@it ,
+                           "Индивидуальная или групповая деятельность или практика, потенциально ассоциируемая с эстетическим или субкультурным контекстом."@ru ;
               rdfs:label "Activity"@en ,
-                         "Attività"@it .
+                         "Attività"@it ,
+                         "Активность"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Aesthetic
@@ -491,15 +574,19 @@ vibe:Aesthetic rdf:type owl:Class ;
                                  owl:minCardinality "1"^^xsd:nonNegativeInteger
                                ] ;
                rdfs:comment "A culturally emergent, open-ended category that groups a collection of heterogeneous elements (e.g., images, colors, objects, sounds, texts) perceived as coherently expressing a recognizable style, affect, or orientation. It is not defined by necessary and sufficient conditions, but by shared associations and family resemblances established by a community. E.g, the Frutiger Aero aesthetic groups glossy textures, bright gradients, nature imagery, and optimistic future cues into a recognizable early-2000s style."@en ,
-                            "Una categoria culturalmente emergente e aperta che raggruppa una collezione di elementi eterogenei (ad esempio immagini, colori, oggetti, suoni, testi) percepiti come espressione coerente di uno stile, un’affettività o un orientamento riconoscibile. Non è definita da condizioni necessarie e sufficienti, ma da associazioni condivise e somiglianze di famiglia stabilite da una comunità. Ad esempio, l’estetica Frutiger Aero raggruppa texture lucide, gradienti brillanti, immagini della natura e richiami a un futuro ottimistico in uno stile riconoscibile dei primi anni 2000."@it ;
+                            "Una categoria culturalmente emergente e aperta che raggruppa una collezione di elementi eterogenei (ad esempio immagini, colori, oggetti, suoni, testi) percepiti come espressione coerente di uno stile, un’affettività o un orientamento riconoscibile. Non è definita da condizioni necessarie e sufficienti, ma da associazioni condivise e somiglianze di famiglia stabilite da una comunità. Ad esempio, l’estetica Frutiger Aero raggruppa texture lucide, gradienti brillanti, immagini della natura e richiami a un futuro ottimistico in uno stile riconoscibile dei primi anni 2000."@it ,
+                            "Культурно обусловленная, открытая категория, объединяющая коллекцию разнородных элементов (например, изображений, цветов, объектов, звуков, текстов), которые воспринимаются как целостное выражение узнаваемого стиля, эмоционального настроя или направленности. Она определяется не через необходимые и достаточные условия, а через общие ассоциации и «семейное сходство», установленные сообществом. Например, эстетика Frutiger Aero объединяет глянцевые текстуры, яркие градиенты, образы природы и оптимистичные отсылки к будущему в узнаваемый стиль начала 2000-х годов."@ru ;
                rdfs:label "Aesthetic"@en ,
-                          "Estetica"@it .
+                          "Estetica"@it ,
+                          "Эстетика"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Agent
 vibe:Agent rdf:type owl:Class ;
            rdfs:comment "An entity capable of acting, creating, or influencing cultural artifacts or aesthetics, including individuals and groups."@en ,
-                        "Un’entità capace di agire, creare o influenzare artefatti culturali o estetiche, inclusi individui e gruppi."@it ;
+                        "Un’entità capace di agire, creare o influenzare artefatti culturali o estetiche, inclusi individui e gruppi."@it ,
+                        "Агент"@ru ,
+                        "Сущность, способная действовать, создавать или влиять на культурные артефакты или эстетику, включая индивидов и группы."@ru ;
            rdfs:label "Agent"@en ,
                       "Agente"@it .
 
@@ -508,215 +595,265 @@ vibe:Agent rdf:type owl:Class ;
 vibe:Album rdf:type owl:Class ;
            rdfs:subClassOf vibe:MusicWork ;
            rdfs:comment "A music work consisting of a collection of recorded tracks released as a single unit."@en ,
-                        "Un’opera musicale composta da una raccolta di tracce pubblicate come un’unica unità."@it ;
+                        "Un’opera musicale composta da una raccolta di tracce pubblicate come un’unica unità."@it ,
+                        "Музыкальное произведение, состоящее из коллекции записанных треков, выпущенных единым изданием."@ru ;
            rdfs:label "Album"@en ,
-                      "Album"@it .
+                      "Album"@it ,
+                      "Альбом"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Anime
 vibe:Anime rdf:type owl:Class ;
            rdfs:subClassOf vibe:Artwork ;
            rdfs:comment "A form of animated artwork originating primarily from Japanese media contexts."@en ,
-                        "Una forma di opera animata originaria principalmente del contesto mediatico giapponese."@it ;
+                        "Una forma di opera animata originaria principalmente del contesto mediatico giapponese."@it ,
+                        "Форма анимационного искусства, зародившаяся преимущественно в контексте японских медиа."@ru ;
            rdfs:label "Anime"@en ,
-                      "Anime"@it .
+                      "Anime"@it ,
+                      "Аниме"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/ArchitecturalWork
 vibe:ArchitecturalWork rdf:type owl:Class ;
                        rdfs:subClassOf vibe:Artwork ;
                        rdfs:comment "An artwork consisting of buildings or spatial structures designed within architectural practice."@en ,
-                                    "Un’opera costituita da edifici o strutture progettate nell’ambito dell’architettura."@it ;
+                                    "Un’opera costituita da edifici o strutture progettate nell’ambito dell’architettura."@it ,
+                                    "Произведение искусства, представляющее собой здания или пространственные структуры, созданные в рамках архитектурной практики."@ru ;
                        rdfs:label "Architectural Work"@en ,
-                                  "Opera architettonica"@it .
+                                  "Opera architettonica"@it ,
+                                  "Архитектурное сооружение"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/ArtistRole
 vibe:ArtistRole rdf:type owl:Class ;
                 rdfs:subClassOf vibe:Role ;
                 rdfs:comment "Un ruolo svolto da un agente come creatore o contributore alla produzione artistica."@it ,
-                             "role played by an agent as a creator or contributor to artistic production."@en ;
+                             "role played by an agent as a creator or contributor to artistic production."@en ,
+                             "Роль, которую исполняет агент как создатель или участник процесса художественного производства."@ru ;
                 rdfs:label "Artist Role"@en ,
-                           "Ruolo di artista"@it .
+                           "Ruolo di artista"@it ,
+                           "Роль художника"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Artwork
 vibe:Artwork rdf:type owl:Class ;
              rdfs:comment "A creative artifact produced within any expressive medium, including visual (images, paintings, sculpture, architecture, film, videogames), auditory (music), textual (literature), or embodied/industrial forms (fashion). It is treated as a generic work entity independent of medium-specific taxonomies."@en ,
-                          "Un artefatto creativo prodotto in qualsiasi mezzo espressivo, inclusi visivo (immagini, dipinti, sculture, architetture, film, videogiochi), sonoro (musica), testuale (letteratura) o forme industriali come la moda. Viene trattato come un'opera indipendente dalle tassonomie relative ai media."@it ;
+                          "Un artefatto creativo prodotto in qualsiasi mezzo espressivo, inclusi visivo (immagini, dipinti, sculture, architetture, film, videogiochi), sonoro (musica), testuale (letteratura) o forme industriali come la moda. Viene trattato come un'opera indipendente dalle tassonomie relative ai media."@it ,
+                          "Творческий артефакт, созданный в любой выразительной среде, включая визуальную (изображения, живопись, скульптура, архитектура, кино, видеоигры), звуковую (музыка), текстовую (литература) или воплощенные/индустриальные формы (мода). Рассматривается как общая сущность произведения, независимая от классификаций конкретных медиа."@ru ;
              rdfs:label "Artwork"@en ,
-                        "Opera d'arte"@it .
+                        "Opera d'arte"@it ,
+                        "Произведение искусства"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Beauty
 vibe:Beauty rdf:type owl:Class ;
             rdfs:comment "A domain of products, practices, and industries related to personal care, cosmetics, skincare, and bodily appearance, often associated with aesthetic expression and identity construction."@en ,
-                         "Ambito che comprende prodotti, pratiche e industrie legate alla cura della persona, alla cosmetica, alla skincare e all’aspetto corporeo, spesso associato all’espressione estetica e alla costruzione dell’identità."@it ;
+                         "Ambito che comprende prodotti, pratiche e industrie legate alla cura della persona, alla cosmetica, alla skincare e all’aspetto corporeo, spesso associato all’espressione estetica e alla costruzione dell’identità."@it ,
+                         "Сфера товаров, практик и индустрий, связанных с уходом за собой, косметикой и внешним видом, часто ассоциирующаяся с эстетическим самовыражением и конструированием идентичности."@ru ;
             rdfs:label "Beauty"@en ,
-                       "Cura della persona"@it .
+                       "Cura della persona"@it ,
+                       "Красота и уход"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Brand
 vibe:Brand rdf:type owl:Class ;
            rdfs:comment "An identifiable commercial or institutional entity characterized by a name, identity, and set of associated meanings, values, and design practices, which can produce or influence artifacts, styles, and aesthetic associations."@en ,
-                        "Un'entità commerciale o istituzionale identificabile caratterizzata da un nome, un’identità e un set di significati, valori e pratiche di design associate, che possono produrre o influenzare artefatti, stili e associazioni estetiche."@it ;
+                        "Un'entità commerciale o istituzionale identificabile caratterizzata da un nome, un’identità e un set di significati, valori e pratiche di design associate, che possono produrre o influenzare artefatti, stili e associazioni estetiche."@it ,
+                        "Идентифицируемая коммерческая или общественная организация, характеризующаяся названием, идентичностью и набором смыслов, ценностей и практик дизайна, которая может создавать или влиять на артефакты, стили и эстетические ассоциации."@ru ;
            rdfs:label "Brand"@en ,
-                      "Marchio"@it .
+                      "Marchio"@it ,
+                      "Бренд"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/City
 vibe:City rdf:type owl:Class ;
           rdfs:subClassOf vibe:Location ;
           rdfs:comment "An urban location characterised by dense population and structured infrastructure."@en ,
-                       "Città"@it ,
-                       "Una località urbana caratterizzata da popolazione densa e infrastruttura organizzata."@it ;
-          rdfs:label "City"@en .
+                       "Una località urbana caratterizzata da popolazione densa e infrastruttura organizzata."@it ,
+                       "Городская локация, характеризующаяся высокой плотностью населения и организованной инфраструктурой."@ru ;
+          rdfs:label "City"@en ,
+                     "Città"@it ,
+                     "Город"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Collection
 vibe:Collection rdf:type owl:Class ;
                 rdfs:comment "A set of entities grouped together, either explicitly or implicitly, based on perceived coherence, curation, or shared associations. Collections function as the primary means through which an Aesthetic is expressed and recognized, without requiring fixed or exhaustive membership."@en ,
-                             "Un insieme di entità raggruppate assieme, in modo esplicito o implicito, per coerenza percepita o associazioni condivise. Le collezioni costituiscono il mezzo primario tramite il quale le estetiche vengono espresse o riconosciute; non richiedono la fissità o l'esausività dei loro membri."@it ;
+                             "Un insieme di entità raggruppate assieme, in modo esplicito o implicito, per coerenza percepita o associazioni condivise. Le collezioni costituiscono il mezzo primario tramite il quale le estetiche vengono espresse o riconosciute; non richiedono la fissità o l'esausività dei loro membri."@it ,
+                             "Набор сущностей, сгруппированных вместе (явно или неявно) на основе воспринимаемой целостности, кураторства или общих ассоциаций. Коллекции служат основным средством выражения и узнавания эстетики, не требуя при этом фиксированного или исчерпывающего состава участников."@ru ;
                 rdfs:label "Collection"@en ,
-                           "Collezione"@it .
+                           "Collezione"@it ,
+                           "Коллекция"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Color
 vibe:Color rdf:type owl:Class ;
            rdfs:comment "A visual attribute perceived through light, often contributing to aesthetic identity."@en ,
-                        "Un attributo visivo percepito attraverso la luce, che contribuisce all’identità estetica."@it ;
+                        "Un attributo visivo percepito attraverso la luce, che contribuisce all’identità estetica."@it ,
+                        "Визуальный атрибут, воспринимаемый через свет, часто вносящий вклад в эстетическую идентичность."@ru ;
            rdfs:label "Color"@en ,
-                      "Colore"@it .
+                      "Colore"@it ,
+                      "Цвет"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/ColorPalette
 vibe:ColorPalette rdf:type owl:Class ;
                   rdfs:comment "A structured set of colors associated through recurrent co-occurrence, design conventions, or perceptual harmony, often contributing to the visual identity of an aesthetic."@en ,
-                               "Un insieme strutturato di colori associati per co-occorrenza o armonia visiva, che spesso contribuisce all’identità di un’estetica."@it ;
+                               "Un insieme strutturato di colori associati per co-occorrenza o armonia visiva, che spesso contribuisce all’identità di un’estetica."@it ,
+                               "Структурированный набор цветов, связанных через повторяющееся совместное использование, конвенции дизайна или гармонию восприятия; часто вносит вклад в визуальную идентичность эстетики."@ru ;
                   rdfs:label "Color Palette"@en ,
-                             "Palette di colori"@it .
+                             "Palette di colori"@it ,
+                             "Цветовая палитра"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Country
 vibe:Country rdf:type owl:Class ;
              rdfs:subClassOf vibe:Location ;
              rdfs:comment "A geopolitical location representing a nation or state."@en ,
-                          "Una località geopolitica che rappresenta una nazione o uno stato."@it ;
+                          "Una località geopolitica che rappresenta una nazione o uno stato."@it ,
+                          "Геополитическая локация, представляющая собой нацию или государство."@ru ;
              rdfs:label "Country"@en ,
-                        "Paese"@it .
+                        "Paese"@it ,
+                        "Страна"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/DigitalPlace
 vibe:DigitalPlace rdf:type owl:Class ;
                   rdfs:subClassOf vibe:Location ;
                   rdfs:comment "A virtual environment where interactions, content creation, or community practices occur (e.g., forums, websites, social networks)."@en ,
-                               "Un ambiente virtuale in cui avvengono interazioni, creazione di contenuti o pratiche comunitarie (per esempio, forum, siti web, social network)."@it ;
+                               "Un ambiente virtuale in cui avvengono interazioni, creazione di contenuti o pratiche comunitarie (per esempio, forum, siti web, social network)."@it ,
+                               "Виртуальная среда, где происходит взаимодействие, создание контента или практики сообщества (например, форумы, веб-сайты, социальные сети)."@ru ;
                   rdfs:label "Digital Place"@en ,
-                             "Luogo digitale"@it .
+                             "Luogo digitale"@it ,
+                             "Цифровое пространство"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Fashion
 vibe:Fashion rdf:type owl:Class ;
              rdfs:comment "A domain of embodied and material expression involving clothing, styling, and adornment practices, through which cultural meanings, identities, and aesthetic orientations are communicated."@en ,
-                          "Un ambito di espressione materiale che coinvolge abbigliamento e pratiche di stile, attraverso cui si comunicano significati culturali, identità e orientamenti estetici."@it ;
+                          "Un ambito di espressione materiale che coinvolge abbigliamento e pratiche di stile, attraverso cui si comunicano significati culturali, identità e orientamenti estetici."@it ,
+                          "Сфера телесного и материального самовыражения, включающая одежду, стайлинг и практики украшения тела, посредством которых транслируются культурные смыслы, идентичности и эстетические ориентиры."@ru ;
              rdfs:label "Fashion"@en ,
-                        "Moda"@it .
+                        "Moda"@it ,
+                        "Мода"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Film
 vibe:Film rdf:type owl:Class ;
           rdfs:subClassOf vibe:Artwork ;
           rdfs:comment "A moving-image artwork produced within cinematic media."@en ,
-                       "Un’opera audiovisiva prodotta nel contesto cinematografico."@it ;
+                       "Un’opera audiovisiva prodotta nel contesto cinematografico."@it ,
+                       "Произведение движущихся изображений, созданное в рамках кинематографа."@ru ;
           rdfs:label "Film"@en ,
-                     "Film"@it .
+                     "Film"@it ,
+                     "Фильм"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/FoodItem
 vibe:FoodItem rdf:type owl:Class ;
               rdfs:comment "An edible item that may carry aesthetic or cultural significance."@en ,
-                           "Un alimento che può avere rilevanza estetica o culturale."@it ;
-              rdfs:label "Alimento"@it ,
-                         "Food Item"@en .
+                           "Un alimento che può avere rilevanza estetica o culturale."@it ,
+                           "Пищевой продукт, который может иметь эстетическую или культурную значимость."@ru ;
+              rdfs:label "Food Item"@en ,
+                         "Alimento"@it ,
+                         "Продукт питания"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Group
 vibe:Group rdf:type owl:Class ;
            rdfs:subClassOf vibe:Agent ;
            rdfs:comment "A collection of agents acting or identified as a unit."@en ,
-                        "Un insieme di agenti che agiscono o sono identificati come un’unità."@it ;
+                        "Un insieme di agenti che agiscono o sono identificati come un’unità."@it ,
+                        "Объединение агентов, действующих или определяемых как единое целое."@ru ;
            rdfs:label "Group"@en ,
-                      "Gruppo"@it .
+                      "Gruppo"@it ,
+                      "Группа"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/IconicFigure
 vibe:IconicFigure rdf:type owl:Class ;
                   rdfs:subClassOf vibe:Role ;
                   rdfs:comment "A role representing an individual strongly associated with an aesthetic."@en ,
-                               "Un ruolo che rappresenta un individuo fortemente associato a un’estetica."@it ;
-                  rdfs:label "Figura iconica"@it ,
-                             "Iconic Figure"@en .
+                               "Un ruolo che rappresenta un individuo fortemente associato a un’estetica."@it ,
+                               "Роль, представляющая личность, тесно связанную с определенной эстетикой."@ru ;
+                  rdfs:label "Iconic Figure"@en ,
+                             "Figura iconica"@it ,
+                             "Иконическая фигура"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Image
 vibe:Image rdf:type owl:Class ;
            rdfs:subClassOf vibe:Artwork ;
            rdfs:comment "A visual artwork such as a photograph or digital image."@en ,
-                        "Un’opera visiva come una fotografia o immagine digitale."@it ;
+                        "Un’opera visiva come una fotografia o immagine digitale."@it ,
+                        "Визуальное произведение искусства, такое как фотография или цифровое изображение."@ru ;
            rdfs:label "Image"@en ,
-                      "Immagine"@it .
+                      "Immagine"@it ,
+                      "Изображение"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/InteriorDesign
 vibe:InteriorDesign rdf:type owl:Class ;
                     rdfs:subClassOf vibe:ArchitecturalWork ;
                     rdfs:comment "A form of architectural work focused on the design of interior spaces."@en ,
-                                 "Una forma di progettazione architettonica focalizzata sugli spazi interni."@it ;
-                    rdfs:label "Design d’interni"@it ,
-                               "Interior Design"@en .
+                                 "Una forma di progettazione architettonica focalizzata sugli spazi interni."@it ,
+                                 "Форма архитектурной работы, ориентированная на проектирование внутренних пространств."@ru ;
+                    rdfs:label "Interior Design"@en ,
+                               "Design d’interni"@it ,
+                               "Дизайн интерьера"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/LiteraryWork
 vibe:LiteraryWork rdf:type owl:Class ;
                   rdfs:subClassOf vibe:Artwork ;
                   rdfs:comment "A textual artwork such as a novel, poem, or written narrative."@en ,
-                               "Un’opera testuale come romanzi, poesie o narrazioni scritte."@it ;
+                               "Un’opera testuale come romanzi, poesie o narrazioni scritte."@it ,
+                               "Текстовое произведение искусства, такое как роман, стихотворение или письменное повествование."@ru ;
                   rdfs:label "Literary Work"@en ,
-                             "Opera letteraria"@it .
+                             "Opera letteraria"@it ,
+                             "Литературное произведение"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Location
 vibe:Location rdf:type owl:Class ;
               rdfs:comment "A spatial entity representing a physical or a digital place."@en ,
-                           "Un’entità spaziale che rappresenta un luogo fisico o digitale."@it ;
+                           "Un’entità spaziale che rappresenta un luogo fisico o digitale."@it ,
+                           "Пространственная сущность, представляющая физическое или цифровое место."@ru ;
               rdfs:label "Location"@en ,
-                         "Luogo"@it .
+                         "Luogo"@it ,
+                         "Местоположение"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Motif
 vibe:Motif rdf:type owl:Class ;
            rdfs:comment "A recurrent and recognizable element (visual, conceptual, or stylistic) that contributes to the identity of an aesthetic through repeated association. E.g., the Frutiger Aero aesthetic's motifs include skeuomorphism, glossy textures, bubbles, nature imagery, and Frutiger-type fonts."@en ,
-                        "Un elemento ricorrente e riconoscibile (di tipo visivo, concettuale o stilistico) che contribuisce all’identità di un’estetica attraverso associazioni ripetute. Per esempio, nell'estetica Frutiger Aero, i motivi includono scheumorfismo, texture lucide, scene di natura e font di tipo Frutiger."@it ;
+                        "Un elemento ricorrente e riconoscibile (di tipo visivo, concettuale o stilistico) che contribuisce all’identità di un’estetica attraverso associazioni ripetute. Per esempio, nell'estetica Frutiger Aero, i motivi includono scheumorfismo, texture lucide, scene di natura e font di tipo Frutiger."@it ,
+                        "Повторяющийся и узнаваемый элемент (визуальный, концептуальный или стилистический), который формирует идентичность эстетики через многократные ассоциации. Например, мотивы эстетики Frutiger Aero включают скевоморфизм, глянцевые текстуры, пузырьки, образы природы и шрифты семейства Frutiger."@ru ;
            rdfs:label "Motif"@en ,
-                      "Motivo"@it .
+                      "Motivo"@it ,
+                      "Мотив"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/MusicWork
 vibe:MusicWork rdf:type owl:Class ;
                rdfs:subClassOf vibe:Artwork ;
                rdfs:comment "An artwork expressed through sound and musical composition."@en ,
-                            "Un’opera espressa attraverso il suono e la composizione musicale."@it ;
+                            "Un’opera espressa attraverso il suono e la composizione musicale."@it ,
+                            "Произведение искусства, выраженное через звук и музыкальную композицию."@ru ;
                rdfs:label "Music Work"@en ,
-                          "Opera musicale"@it .
+                          "Opera musicale"@it ,
+                          "Музыкальное произведение"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Painting
 vibe:Painting rdf:type owl:Class ;
               rdfs:subClassOf vibe:Artwork ;
               rdfs:comment "A visual artwork created using paint on a surface."@en ,
-                           "Un’opera visiva realizzata con pittura su una superficie."@it ;
-              rdfs:label "Dipinto"@it ,
-                         "Painting"@en .
+                           "Un’opera visiva realizzata con pittura su una superficie."@it ,
+                           "Визуальное произведение искусства, созданное красками на какой-либо поверхности."@ru ;
+              rdfs:label "Painting"@en ,
+                         "Dipinto"@it ,
+                         "Картина"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/PeriodDefinition
@@ -726,9 +863,11 @@ vibe:PeriodDefinition rdf:type owl:Class ;
                                         owl:minCardinality "1"^^xsd:nonNegativeInteger
                                       ] ;
                       rdfs:comment "A temporally bounded but potentially imprecise interval used to situate entities or phenomena in time, allowing for vague or overlapping boundaries, in alignment with models such as PeriodO."@en ,
-                                   "Un intervallo temporale delimitato ma potenzialmente impreciso usato per collocare entità o fenomeni nel tempo, che consente di definire confini vaghi o con sovrapposizioni, allineato a modellazioni come PeriodO."@it ;
-                      rdfs:label "Definizione di periodo"@it ,
-                                 "Period Definition"@en .
+                                   "Un intervallo temporale delimitato ma potenzialmente impreciso usato per collocare entità o fenomeni nel tempo, che consente di definire confini vaghi o con sovrapposizioni, allineato a modellazioni come PeriodO."@it ,
+                                   "Ограниченный во времени, но потенциально неточный интервал, используемый для локализации сущностей или явлений во времени; допускает размытые или пересекающиеся границы в соответствии с такими моделями, как PeriodO."@ru ;
+                      rdfs:label "Period Definition"@en ,
+                                 "Definizione di periodo"@it ,
+                                 "Определение периода"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Person
@@ -737,85 +876,105 @@ vibe:Person rdf:type owl:Class ;
             owl:disjointWith vibe:Platform ,
                              vibe:TimeInterval ;
             rdfs:comment "An individual human agent."@en ,
-                         "Un individuo umano."@it ;
+                         "Un individuo umano."@it ,
+                         "Человеческий индивид."@ru ;
             rdfs:label "Person"@en ,
-                       "Persona"@it .
+                       "Persona"@it ,
+                       "Персона"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Platform
 vibe:Platform rdf:type owl:Class ;
               rdfs:comment "A socio-technical system that enables and constrains interaction, content production, and dissemination, while exerting agency through its design, governance, and algorithmic mechanisms, thereby shaping the emergence and visibility of aesthetics."@en ,
-                           "Un sistema socio-tecnico che abilita e al tempo stesso vincola l’interazione, la produzione di contenuti e la loro diffusione, esercitando un’agenzia attraverso il proprio design, le forme di governance e i meccanismi algoritmici, e contribuendo così a modellare l’emergere e la visibilità delle estetiche."@it ;
-              rdfs:label "Piattaforma"@it ,
-                         "Platform"@en .
+                           "Un sistema socio-tecnico che abilita e al tempo stesso vincola l’interazione, la produzione di contenuti e la loro diffusione, esercitando un’agenzia attraverso il proprio design, le forme di governance e i meccanismi algoritmici, e contribuendo così a modellare l’emergere e la visibilità delle estetiche."@it ,
+                           "Социотехническая система, которая обеспечивает и одновременно ограничивает взаимодействие, создание и распространение контента. Она проявляет субъектность через свой дизайн, управление и алгоритмические механизмы, тем самым формируя возникновение и видимость эстетик."@ru ;
+              rdfs:label "Platform"@en ,
+                         "Piattaforma"@it ,
+                         "Платформа"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/PrimaryRole
 vibe:PrimaryRole rdf:type owl:Class ;
                  rdfs:subClassOf vibe:Role ;
                  rdfs:comment "A role indicating a primary or central association within a context."@en ,
-                              "Un ruolo che indica un’associazione primaria o centrale in un contesto."@it ;
+                              "Un ruolo che indica un’associazione primaria o centrale in un contesto."@it ,
+                              "Роль, указывающая на первичную или центральную связь внутри контекста."@ru ;
                  rdfs:label "Primary Role"@en ,
-                            "Ruolo primario"@it .
+                            "Ruolo primario"@it ,
+                            "Основная роль"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Region
 vibe:Region rdf:type owl:Class ;
             rdfs:subClassOf vibe:Location ;
             rdfs:comment "A geographical area."@en ,
-                         "Un'area geografica."@it ;
+                         "Un'area geografica."@it ,
+                         "Географическая область (регион)."@ru ;
             rdfs:label "Region"@en ,
-                       "Regione"@it .
+                       "Regione"@it ,
+                       "Регион"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/RepresentativeAssociation
 vibe:RepresentativeAssociation rdf:type owl:Class ;
                                rdfs:comment "A reified relation linking an Aesthetic to an entity that is considered representative of it. Such associations encode the mechanisms through which an aesthetic is recognized and constructed, and may be qualified by temporal scope, degree of representativeness, or role (e.g., primary)."@en ,
-                                            "Una relazione reificata che collega un’Estetica a un’entità considerata rappresentativa di essa. Tali associazioni codificano i meccanismi attraverso cui un’estetica viene riconosciuta e costruita, e possono essere qualificate rispetto all’estensione temporale, al grado di rappresentatività o al ruolo (ad esempio, primario)."@it ;
-                               rdfs:label "Associazione rappresentativa"@it ,
-                                          "Representative Association"@en .
+                                            "Una relazione reificata che collega un’Estetica a un’entità considerata rappresentativa di essa. Tali associazioni codificano i meccanismi attraverso cui un’estetica viene riconosciuta e costruita, e possono essere qualificate rispetto all’estensione temporale, al grado di rappresentatività o al ruolo (ad esempio, primario)."@it ,
+                                            "Реифицированное отношение, связывающее эстетику с сущностью, которая считается репрезентативной для неё. Такие ассоциации кодируют механизмы, посредством которых эстетика распознается и конструируется, и могут быть уточнены временными рамками, степенью репрезентативности или ролью (например, основной)."@ru ;
+                               rdfs:label "Representative Association"@en ,
+                                          "Associazione rappresentativa"@it ,
+                                          "Репрезентативная ассоциация"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Role
 vibe:Role rdf:type owl:Class ;
           rdfs:comment "A role is a context-dependent function or qualification assigned to an entity within a relation."@en ,
-                       "Un ruolo è una funzione o qualificazione dipendente dal contesto assegnata a un’entità all’interno di una relazione."@it ;
+                       "Un ruolo è una funzione o qualificazione dipendente dal contesto assegnata a un’entità all’interno di una relazione."@it ,
+                       "Роль — это зависящая от контекста функция или квалификация, присваиваемая сущности в рамках отношения."@ru ;
           rdfs:label "Role"@en ,
-                     "Ruolo"@it .
+                     "Ruolo"@it ,
+                     "Роль"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Song
 vibe:Song rdf:type owl:Class ;
           rdfs:subClassOf vibe:MusicWork ;
           rdfs:comment "A single musical composition, typically consisting of lyrics and melody."@en ,
-                       "Una composizione musicale singola, tipicamente composta da testo e melodia."@it ;
-          rdfs:label "Canzone"@it ,
-                     "Song"@en .
+                       "Una composizione musicale singola, tipicamente composta da testo e melodia."@it ,
+                       "Отдельное музыкальное произведение, обычно состоящее из слов и мелодии."@ru ;
+          rdfs:label "Song"@en ,
+                     "Canzone"@it ,
+                     "Песня"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Subculture
 vibe:Subculture rdf:type owl:Class ;
                 rdfs:comment "A socially situated group or network characterized by shared practices, values, and symbolic systems that differentiate it from broader cultural contexts, often contributing to the emergence and stabilization of specific aesthetics."@en ,
-                             "Un gruppo o una rete socialmente situata caratterizzata da pratiche, valori e sistemi simbolici condivisi che la distinguono dal contesto culturale più ampio, contribuendo spesso all’emergere e alla stabilizzazione di specifiche estetiche."@it ;
-                rdfs:label "Sottocultura"@it ,
-                           "Subculture"@en .
+                             "Un gruppo o una rete socialmente situata caratterizzata da pratiche, valori e sistemi simbolici condivisi che la distinguono dal contesto culturale più ampio, contribuendo spesso all’emergere e alla stabilizzazione di specifiche estetiche."@it ,
+                             "Социально локализованная группа или сеть, характеризующаяся общими практиками, ценностями и символическими системами, которые отличают её от более широкого культурного контекста; часто способствует возникновению и стабилизации определенных эстетик."@ru ;
+                rdfs:label "Subculture"@en ,
+                           "Sottocultura"@it ,
+                           "Субкультура"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/TVShow
 vibe:TVShow rdf:type owl:Class ;
             rdfs:subClassOf vibe:Artwork ;
             rdfs:comment "A serial audiovisual work produced for television or streaming platforms."@en ,
-                         "Un’opera audiovisiva seriale prodotta per televisione o piattaforme streaming."@it ;
-            rdfs:label "Serie TV"@it ,
-                       "TV Show"@en .
+                         "Un’opera audiovisiva seriale prodotta per televisione o piattaforme streaming."@it ,
+                         "Сериальное аудиовизуальное произведение, созданное для телевидения или стриминговых платформ."@ru ;
+            rdfs:label "TV Show"@en ,
+                       "Serie TV"@it ,
+                       "Сериал"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Theme
 vibe:Theme rdf:type owl:Class ;
            rdfs:comment "An abstract conceptual orientation or narrative underlying an aesthetic, capturing its dominant meanings, affective tone, or worldview. E.g., the theme of the Frutiger Aero aesthetic can be described as an optimistic, clean, and nature-integrated vision of the near future."@en ,
-                        "Un orientamento concettuale astratto o una struttura narrativa sottostante a un’estetica, che ne cattura i significati dominanti, il tono affettivo o la visione del mondo. Ad esempio, il tema dell'estetica Frutiger Aero può essere descritto come una visione ottimistica, pulita e integrata con la natura del futuro prossimo."@it ;
-           rdfs:label "Tema"@it ,
-                      "Theme"@en .
+                        "Un orientamento concettuale astratto o una struttura narrativa sottostante a un’estetica, che ne cattura i significati dominanti, il tono affettivo o la visione del mondo. Ad esempio, il tema dell'estetica Frutiger Aero può essere descritto come una visione ottimistica, pulita e integrata con la natura del futuro prossimo."@it ,
+                        "Абстрактная концептуальная направленность или нарратив, лежащий в основе эстетики и отражающий её доминирующие смыслы, эмоциональный тон или мировоззрение. Например, тему эстетики Frutiger Aero можно описать как оптимистичное, чистое и интегрированное с природой видение ближайшего будущего."@ru ;
+           rdfs:label "Theme"@en ,
+                      "Tema"@it ,
+                      "Тема"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/TimeIndexedRole
@@ -833,44 +992,53 @@ vibe:TimeIndexedRole rdf:type owl:Class ;
                                        owl:minCardinality "1"^^xsd:nonNegativeInteger
                                      ] ;
                      rdfs:comment "A contextual role assigned to an entity within a relation that is explicitly bound to a temporal interval, allowing the same entity to hold different roles at different times."@en ,
-                                  "Un ruolo assegnato a un’entità all’interno di una relazione, esplicitamente vincolato a un intervallo temporale, cosa che permette alla stessa entità di avere ruoli diversi in tempi diversi."@it ;
-                     rdfs:label "Ruolo indicizzato temporalmente"@it ,
-                                "Time Indexed Role"@en .
+                                  "Un ruolo assegnato a un’entità all’interno di una relazione, esplicitamente vincolato a un intervallo temporale, cosa che permette alla stessa entità di avere ruoli diversi in tempi diversi."@it ,
+                                  "Контекстная роль, присваиваемая сущности в рамках отношения, которое явно привязано к временному интервалу, что позволяет одной и той же сущности выполнять разные роли в разное время."@ru ;
+                     rdfs:label "Time Indexed Role"@en ,
+                                "Ruolo indicizzato temporalmente"@it ,
+                                "Временно обозначенная роль"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/TimeInterval
 vibe:TimeInterval rdf:type owl:Class ;
                   rdfs:comment "A temporal extent with a start and/or end that may be precisely defined or approximate, used to qualify the temporal validity of entities, roles, or associations."@en ,
-                               "Un’estensione temporale con un inizio e/o una fine, che può essere precisa o approssimata, usata per qualificare la validità temporale di entità, ruoli o associazioni."@it ;
-                  rdfs:label "Intervallo temporale"@it ,
-                             "Time Interval"@en .
+                               "Un’estensione temporale con un inizio e/o una fine, che può essere precisa o approssimata, usata per qualificare la validità temporale di entità, ruoli o associazioni."@it ,
+                               "Временной отрезок с началом и/или концом, который может быть точно определенным или приблизительным; используется для квалификации временной валидности сущностей, ролей или ассоциаций."@ru ;
+                  rdfs:label "Time Interval"@en ,
+                             "Intervallo temporale"@it ,
+                             "Временной интервал"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Value
 vibe:Value rdf:type owl:Class ;
            rdfs:comment "An abstract principle, an affective/axiological orientation, or evaluative dimension (ethical, cultural, aesthetic, or ideological) associated with entities or aesthetics. Values are not limited to moral judgments but include broader attitudinal or conceptual stances. E.g., the aesthetic Frutiger Aero is associated with optimism, cleanliness, techno-natural harmony."@en ,
-                        "Un principio astratto, un orientamento affettivo/assiologico o una dimensione valutativa (etica, culturale, estetica o ideologica) associata a entità o estetiche. I valori non si limitano ai giudizi morali, ma includono anche atteggiamenti e posizioni concettuali più ampie. Ad esempio, l’estetica Frutiger Aero è associata a ottimismo, pulizia e armonia tecno-naturale."@it ;
-           rdfs:label "Valore"@it ,
-                      "Value"@en .
+                        "Un principio astratto, un orientamento affettivo/assiologico o una dimensione valutativa (etica, culturale, estetica o ideologica) associata a entità o estetiche. I valori non si limitano ai giudizi morali, ma includono anche atteggiamenti e posizioni concettuali più ampie. Ad esempio, l’estetica Frutiger Aero è associata a ottimismo, pulizia e armonia tecno-naturale."@it ,
+                        "Абстрактный принцип, аффективная/аксиологическая направленность или оценочное измерение (этическое, культурное, эстетическое или идеологическое), связанное с сущностями или эстетиками. Ценности не ограничиваются моральными суждениями, а включают широкие мировоззренческие или концептуальные позиции. Например, эстетика Frutiger Aero ассоциируется с оптимизмом, чистотой и техно-природной гармонией."@ru ;
+           rdfs:label "Value"@en ,
+                      "Valore"@it ,
+                      "Ценность"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Video
 vibe:Video rdf:type owl:Class ;
            rdfs:subClassOf vibe:Artwork ;
            rdfs:comment "A moving-image artwork, typically digital."@en ,
-                        "Un’opera audiovisiva, tipicamente digitale."@it ;
+                        "Un’opera audiovisiva, tipicamente digitale."@it ,
+                        "Произведение с движущимися изображениями, обычно цифровое."@ru ;
            rdfs:label "Video"@en ,
-                      "Video"@it .
+                      "Video"@it ,
+                      "Видео"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/Videogame
 vibe:Videogame rdf:type owl:Class ;
                rdfs:subClassOf vibe:Artwork ;
                rdfs:comment "An interactive digital artwork combining visual, narrative, and gameplay elements."@en ,
-                            "Un’opera digitale interattiva che combina elementi visivi, narrativi e ludici."@it ;
+                            "Un’opera digitale interattiva che combina elementi visivi, narrativi e ludici."@it ,
+                            "Интерактивное цифровое произведение, сочетающее визуальные, повествовательные и игровые элементы."@ru ;
                rdfs:label "Videogame"@en ,
-                          "Videogioco"@it .
-
+                          "Videogioco"@it ,
+                          "Видеоигра"@ru .
 
 #################################################################
 #    Individuals
@@ -879,49 +1047,57 @@ vibe:Videogame rdf:type owl:Class ;
 ###  https://w3id.org/vibe-ontology/colorDimension
 vibe:colorDimension rdf:type owl:NamedIndividual ;
                     rdfs:label "color dimension"@en ,
-                               "dimensione del colore"@it .
+                               "dimensione del colore"@it ,
+                               "цветовое измерение"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/fashionDimension
 vibe:fashionDimension rdf:type owl:NamedIndividual ;
                       rdfs:label "dimensione della moda"@it ,
-                                 "fashion dimension"@en .
+                                 "fashion dimension"@en ,
+                                 "измерение моды"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/iconicFigureDimension
 vibe:iconicFigureDimension rdf:type owl:NamedIndividual ;
                            rdfs:label "dimensione della figura iconica"@it ,
-                                      "iconic figure dimension"@en .
+                                      "iconic figure dimension"@en ,
+                                      "измерение иконической фигуры"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/motifDimension
 vibe:motifDimension rdf:type owl:NamedIndividual ;
                     rdfs:label "dimensione del motivo"@it ,
-                               "motif dimension"@en .
+                               "motif dimension"@en ,
+                               "измерение мотива"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/musicDimension
 vibe:musicDimension rdf:type owl:NamedIndividual ;
                     rdfs:label "dimensione musicale"@it ,
-                               "music dimension"@en .
+                               "music dimension"@en ,
+                               "музыкальное измерение"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/platformDimension
 vibe:platformDimension rdf:type owl:NamedIndividual ;
                        rdfs:label "dimensione della piattaforma"@it ,
-                                  "platform dimension"@en .
+                                  "platform dimension"@en ,
+                                  "измерение платформы"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/themeDimension
 vibe:themeDimension rdf:type owl:NamedIndividual ;
                     rdfs:label "dimensione del tema"@it ,
-                               "theme dimension"@en .
+                               "theme dimension"@en ,
+                               "измерение темы"@ru .
 
 
 ###  https://w3id.org/vibe-ontology/valueDimension
 vibe:valueDimension rdf:type owl:NamedIndividual ;
                     rdfs:label "dimensione del valore"@it ,
-                               "value dimension"@en .
+                               "value dimension"@en ,
+                               "измерение ценности"@ru .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
