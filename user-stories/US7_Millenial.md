@@ -3,7 +3,7 @@
 ### 1. Persona
 **Name:** Marco  
 **Age:** 34  
-**Role:** Millennial Content Creator 
+**Role:** Millennial Content Creator   
 **Description:** Marco grew up during the era of Tumblr, early YouTube and MySpace. For him, aesthetics are deeply tied to personal memory, nostalgia and an evolution of the web.
 
 ### 2. Scenario & Motivation
