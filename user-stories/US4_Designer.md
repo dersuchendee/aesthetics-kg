@@ -2,7 +2,7 @@
 
 ### 1. Persona
 **Name:** Matteo  
-**Role:** Visual Designer / Trend Researcher  
+**Role:** Visual Designer / Brand Manager 
 **Description:** Matteo works with fashion brands and creative studios. He uses aesthetic research to create moodboards, brand guidelines, and new collection concepts.
 
 ### 2. Scenario & Motivation
