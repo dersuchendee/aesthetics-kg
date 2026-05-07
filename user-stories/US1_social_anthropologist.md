@@ -3,7 +3,7 @@
 ### 1. Persona
 **Name:** David  
 **Role:** Social & Cultural Anthropologist  
-**Context:** David studies digital communities and how aesthetics function as a form of social identity.  
+**Description:** David studies digital communities and how aesthetics function as a form of social identity.  
 
 ### 2. Scenario & Motivation
 Anthropologists studying digital environments face a methodological challenge: recommendation algorithms (like TikTok's FYP) create "filter bubbles." This makes it hard for a researcher to see a representative "cross-section" of an aesthetic beyond their own algorithmic feed. 
