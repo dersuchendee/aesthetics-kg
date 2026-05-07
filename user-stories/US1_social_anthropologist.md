@@ -6,7 +6,7 @@
 **Description:** David studies digital communities and how aesthetics function as a form of social identity.  
 
 ### 2. Scenario & Motivation
-Anthropologists studying digital environments face a methodological challenge: recommendation algorithms (like TikTok's FYP) create "filter bubbles." This makes it hard for a researcher to see a representative "cross-section" of an aesthetic beyond their own algorithmic feed. 
+Anthropologists studying digital environments face a methodological challenge: recommendation algorithms (like TikTok's FYP) create "filter bubbles". This makes it hard for a researcher to see a representative "cross-section" of an aesthetic beyond their own algorithmic feed. 
 
 **AestheticsKG** serves as a counterbalance to this bias. It provides David with a systematic, community-grounded map of aesthetic categories that is independent of individual algorithmic tailoring.
 
