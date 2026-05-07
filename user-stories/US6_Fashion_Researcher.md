@@ -10,7 +10,7 @@ Camille is interested in mapping "aesthetic family trees." For her, an aesthetic
 
 By using **AestheticsKG**, Camille can move beyond anecdotal evidence. She uses the graph to calculate the "generative power" of a movement based on its number of descendants and the length of its influence chains. This allows her to identify which aesthetics are "core nodes" in the history of digital and physical fashion.
 
-### 3. Competency Questions (CQ)
+### 3. Competency Questions & SPARQL Implementation
 
 1. **CQ1:** Which aesthetics have the highest number of sub-aesthetics or derivative movements?
 ```sparql
