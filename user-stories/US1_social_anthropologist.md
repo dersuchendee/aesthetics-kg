@@ -48,7 +48,6 @@ LIMIT 30
 ```
 3. **CQ3:** Which broader aesthetic/subculture does a given aesthetic belong to?
 ```sparql
-PREFIX ae-ont: <https://w3id.org/aesthetics-kg/ontology/>
 SELECT ?subName ?parentName WHERE {
   ?parent a ae-ont:Aesthetic ; ae-ont:name ?parentName ;
           ae-ont:hasSubgenre ?sub .
