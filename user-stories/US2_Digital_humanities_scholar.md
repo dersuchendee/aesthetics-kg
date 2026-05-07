@@ -2,9 +2,8 @@
 
 ### 1. Persona
 **Name:** Lily  
-**Role:** Digital Humanities Researcher  
-**Specialization:** Transmediality and Cultural Migration  
-**Context:** Lily studies how cultural forms and aesthetic sensibilities migrate across different media, platforms and historical periods.
+**Role:** Digital Humanities Researcher   
+**Description:** Lily studies how cultural forms and aesthetic sensibilities migrate across different media, platforms and historical periods.
 
 ### 2. Scenario & Motivation
 As a scholar, Lily is building a comparative corpus of aesthetic movements. She is interested in the **transmediality** of aesthetics—how a single "vibe" or sensibility (like *Dark Academia* or *Cyberpunk*) manifests simultaneously in diverse domains such as film, literature, music, and architecture. 
