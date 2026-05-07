@@ -1,10 +1,10 @@
-# User Story: Millennial User / Content Creator
+# User Story: Millennial User 
 
 ### 1. Persona
 **Name:** Marco  
 **Age:** 34  
-**Role:** Millennial Content Creator & Independent Designer  
-**Context:** Marco grew up during the era of Tumblr, early YouTube, and MySpace. For him, aesthetics are deeply tied to personal memory, nostalgia, and the evolution of the web.
+**Role:** Millennial Content Creator 
+**Description:** Marco grew up during the era of Tumblr, early YouTube and MySpace. For him, aesthetics are deeply tied to personal memory, nostalgia and an evolution of the web.
 
 ### 2. Scenario & Motivation
 Marco often tries to articulate why certain visual styles feel like "his era." He wants to understand the visual logic of the early 2000s and the emotional registers of movements like *Emo* or *Scene*. 
