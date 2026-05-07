@@ -11,7 +11,7 @@ Sofia views aesthetics as powerful tools for **audience segmentation**. By under
 Using **AestheticsKG**, Sofia can identify potential brand alignment opportunities. She needs to know not only which visual motifs define a style, but also which **iconic figures**, **brands**, and **values** are already baked into that aesthetic's DNA. This prevents "brand-wash" and helps create authentic connections with communities.
 
 ### 3. Competency Questions & SPARQL Implementation
-Sofia uses the ontology to answer these strategic questions:
+Sofia uses the ontology to answer these questions:
 
 1. **CQ1:** Which iconic figures are most associated with a given aesthetic?
 ```sparql
