@@ -7,7 +7,7 @@
 **Description:** Marco grew up during the era of Tumblr, early YouTube and MySpace. For him, aesthetics are deeply tied to personal memory, nostalgia and an evolution of the web.
 
 ### 2. Scenario & Motivation
-Marco often tries to articulate why certain visual styles feel like "his era." He wants to understand the visual logic of the early 2000s and the emotional registers of movements like *Emo* or *Scene*. 
+Marco often tries to articulate why certain visual styles feel like "his era". He wants to understand the visual logic of the early 2000s and the emotional registers of movements like *Emo* or *Scene*. 
 
 Using **AestheticsKG**, Marco explores the genealogy of the aesthetics he lived through. He wants to see which of them have been revived (like *Y2K*), which ones gave rise to current TikTok micro-trends, and how brands have reappropriated the subcultures of his youth for modern marketing. It’s an exploration of cultural identity through data.
 
