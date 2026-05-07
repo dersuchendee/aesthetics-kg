@@ -10,7 +10,7 @@ Modern e-commerce requires more than just keyword matching; it needs "vibe-match
 
 Alex uses **AestheticsKG** as a knowledge graph to power his recommendation logic. By traversing the relationships in the graph (like subgenres, influences, and shared values), his system can calculate "aesthetic proximity." This allows the platform to suggest products that are stylistically relevant, even if they belong to different categories.
 
-### 3. Competency Questions (CQ)
+### 3. Competency Questions & SPARQL Implementation
 Alex uses these queries to build his recommendation clusters:
 
 1. **CQ1:** Which aesthetics are subgenres of a given aesthetic?
