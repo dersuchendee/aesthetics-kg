@@ -6,7 +6,7 @@
 **Description:** Lily studies how cultural forms and aesthetic sensibilities migrate across different media, platforms and historical periods.
 
 ### 2. Scenario & Motivation
-As a scholar, Lily is building a comparative corpus of aesthetic movements. She is interested in the **transmediality** of aesthetics—how a single "vibe" or sensibility (like *Dark Academia* or *Cyberpunk*) manifests simultaneously in diverse domains such as film, literature, music, and architecture. 
+As a researcher, Lily is building a comparative corpus of aesthetic movements. She is interested in the **transmediality** of aesthetics, she tries to find out how a single "vibe" or aesthetic movement (like *Dark Academia* or *Cyberpunk*) manifests simultaneously in diverse domains such as film, literature, music, and architecture. 
 
 Rather than treating aesthetics as mere visual labels, Lily uses **AestheticsKG** to trace their symbolic and cross-domain dimensions. This allows her to move beyond "algorithmic bubbles" and see how an aesthetic is rooted in specific geographic locations or historical contexts.
 
