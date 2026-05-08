@@ -16,14 +16,14 @@ These are the questions David can answer using the AestheticsKG:
 ```sparql
 SELECT ?aestheticName ?locationLabel ?platformLabel
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName .
   OPTIONAL {
-    ?aesthetic ae-ont:hasLocationOfOrigin ?location .
+    ?aesthetic vibe:hasLocationOfOrigin ?location .
     ?location rdfs:label ?locationLabel .
   }
   OPTIONAL {
-    ?aesthetic ae-ont:hasPrimaryPlatform ?platform .
+    ?aesthetic vibe:hasPrimaryPlatform ?platform .
     ?platform rdfs:label ?platformLabel .
   }
   FILTER(str(?aestheticName) = "Cottagecore")
@@ -33,12 +33,12 @@ WHERE {
 ```sparql
 SELECT ?aestheticName ?periodLabel ?startYear
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasOriginPeriod ?period .
-  ?period ae-ont:approximateLabel ?periodLabel ;
-          ae-ont:startYear ?startYear .
-  FILTER(str(?startYear) >= "2000")
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasOriginPeriod ?period .
+  ?period vibe:approximateLabel ?periodLabel ;
+          vibe:startYear ?startYear .
+  FILTER(xsd:integer(?startYear) >= 2000)
 }
 ORDER BY ?startYear
 LIMIT 30
@@ -46,20 +46,23 @@ LIMIT 30
 3. **CQ3:** Which broader aesthetic/subculture does a given aesthetic belong to?
 ```sparql
 SELECT ?subName ?parentName WHERE {
-  ?parent a ae-ont:Aesthetic ; ae-ont:name ?parentName ;
-          ae-ont:hasSubgenre ?sub .
-  ?sub ae-ont:name ?subName .
+  ?parent a vibe:Aesthetic ; 
+          vibe:name ?parentName ;
+          vibe:hasSubgenre ?sub .
+  ?sub vibe:name ?subName .
   FILTER(str(?parentName) = "Punk")
-} ORDER BY ?subName
+} 
+ORDER BY ?subName
 ```
 4. **CQ4:** Which activities or lifestyle practices are associated with a given aesthetic?
 ```sparql
 SELECT ?activityLabel
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasAssociatedActivity ?activity .
-  ?activity rdfs:label ?activityLabel .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasMember ?activity .
+  ?activity a vibe:Activity ;
+            rdfs:label ?activityLabel .
   FILTER(str(?aestheticName) = "Cottagecore")
 }
 ```
