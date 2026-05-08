@@ -1,0 +1,217 @@
+user,cq_id,description,sparql,result_count,sample,verdict,notes
+User 1,CQ1,What is the primary geographical and/or platform area of distribution for a given aesthetic?,"SELECT ?aestheticName ?locationLabel ?platformLabel
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName .
+  OPTIONAL {
+    ?aesthetic ae-ont:hasLocationOfOrigin ?location .
+    ?location rdfs:label ?locationLabel .
+  }
+  OPTIONAL {
+    ?aesthetic ae-ont:hasPrimaryPlatform ?platform .
+    ?platform rdfs:label ?platformLabel .
+  }
+  FILTER(str(?aestheticName) = ""Cottagecore"")
+}",3,"Cottagecore, TikTok | Cottagecore, TikTok (revival) | Cottagecore, Tumblr",ANSWERABLE,
+User 1,CQ2,During which time period did the digital turn in aesthetics creation occur? (aesthetics with origin period 2000+),"SELECT ?aestheticName ?periodLabel ?startYear
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasOriginPeriod ?period .
+  ?period ae-ont:approximateLabel ?periodLabel ;
+          ae-ont:startYear ?startYear .
+  FILTER(str(?startYear) >= ""2000"")
+}
+ORDER BY ?startYear
+LIMIT 30",30,"Sparkledog, 2000s, 2000 | Sparkledog, 2000s (Initial Popularity), 2000 | Sparkledog, 2000s (Third Wave/Mainstream Subculture), 2000",ANSWERABLE,
+User 1,CQ3,Which aesthetics are associated with specific subcultures?,(no query),0,,NOT ANSWERABLE,NOT ANSWERABLE — no ae-ont:associatedSubculture property in graph. Closest proxy: ae-ont:hasIconicFigure links to known community figures.
+User 2,CQ1,"Which artworks (films, music, literature) are associated with a given aesthetic?","SELECT ?workTitle ?workType
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasRelatedWork ?work .
+  ?work a ?workType ;
+        rdfs:label ?workTitle .
+  FILTER(str(?aestheticName) = ""Dark Academia"")
+  FILTER(?workType != owl:NamedIndividual)
+}
+ORDER BY ?workType ?workTitle",72,"5 Centimeters per Second, https://w3id.org/aesthetics-kg/ontology/Anime | 91 Days, https://w3id.org/aesthetics-kg/ontology/Anime | Baccano, https://w3id.org/aesthetics-kg/ontology/Anime",ANSWERABLE,
+User 2,CQ2,Which aesthetics are associated with works of a specific medium (e.g. Film)?,"SELECT ?aestheticName (COUNT(?work) AS ?filmCount)
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasRelatedWork ?work .
+  ?work a ae-ont:Film .
+}
+GROUP BY ?aestheticName
+ORDER BY DESC(?filmCount)
+LIMIT 20",20,"Catholic Horror, 21 | Corporate Grunge, 19 | Fantasy, 17",ANSWERABLE,
+User 2,CQ3,Which aesthetics are linked to a specific geographic location of origin?,"SELECT ?aestheticName ?locationLabel
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasLocationOfOrigin ?location .
+  ?location rdfs:label ?locationLabel .
+  FILTER(CONTAINS(LCASE(str(?locationLabel)), ""japan""))
+}
+ORDER BY ?aestheticName",59,"2010s Soft Kawaii, Japan and the West | Agejo, Japan | Agejo, Japan (modern-day Tokyo)",ANSWERABLE,
+User 3,CQ1,Which age groups are most engaged with a given aesthetic movement?,(no query),0,,NOT ANSWERABLE,NOT ANSWERABLE — no demographic/age-group data in graph.
+User 3,CQ2,Which iconic figures / communities are associated with a particular aesthetic?,"SELECT ?aestheticName ?figureName
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasIconicFigure ?figure .
+  ?figure rdfs:label ?figureName .
+  FILTER(str(?aestheticName) = ""Dark Cabaret"")
+}
+ORDER BY ?figureName",13,"Dark Cabaret, Amanda Palmer (The Dresden Dolls) | Dark Cabaret, Bertolt Brecht | Dark Cabaret, Brian Viglione (The Dresden Dolls)",ANSWERABLE,Proxy via ae-ont:hasIconicFigure (no explicit 'social group' class). Example: Dark Cabaret (13 figures).
+User 3,CQ3,"Which brands are associated with a given aesthetic, and what values does it carry?","SELECT ?brandLabel ?valueLabel
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName .
+  OPTIONAL {
+    ?aesthetic ae-ont:hasRelatedBrand ?brand .
+    ?brand rdfs:label ?brandLabel .
+  }
+  OPTIONAL {
+    ?aesthetic ae-ont:hasMember ?value .
+    ?value a ae-ont:Value ;
+           rdfs:label ?valueLabel .
+  }
+  FILTER(str(?aestheticName) = ""Normcore"")
+}",0,,NO RESULTS,
+User 4,CQ1,Which aesthetics share a given color palette entry?,"SELECT ?aestheticName
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasMember ?color .
+  ?color a ae-ont:Color ;
+         rdfs:label ""black""@en .
+}
+ORDER BY ?aestheticName
+LIMIT 30",30,2000s Yoga Mom | 2020 Alt | Acid Design,ANSWERABLE,
+User 4,CQ2,Which motifs are characteristic of a particular aesthetic?,"SELECT ?motifLabel
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasMember ?motif .
+  ?motif a ae-ont:Motif ;
+         rdfs:label ?motifLabel .
+  FILTER(str(?aestheticName) = ""Gothic"")
+}
+ORDER BY ?motifLabel",0,,NO RESULTS,
+User 4,CQ3,Which brands are associated with a given aesthetic?,"SELECT ?brandLabel
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasRelatedBrand ?brand .
+  ?brand rdfs:label ?brandLabel .
+  FILTER(str(?aestheticName) = ""Preppy"")
+}
+ORDER BY ?brandLabel",7,Brooks Brothers | J. Crew | Lacoste,ANSWERABLE,
+User 4,CQ4,Which aesthetics are visually or stylistically related to a given one?,"SELECT ?relatedName ?relationType
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName .
+  FILTER(str(?aestheticName) = ""Cottagecore"")
+  {
+    ?aesthetic ae-ont:relatedTo ?related .
+    BIND(""relatedTo"" AS ?relationType)
+  } UNION {
+    ?aesthetic ae-ont:overlapsWith ?related .
+    BIND(""overlapsWith"" AS ?relationType)
+  } UNION {
+    ?aesthetic ae-ont:hasSubgenre ?related .
+    BIND(""hasSubgenre"" AS ?relationType)
+  }
+  ?related ae-ont:name ?relatedName .
+}
+ORDER BY ?relationType ?relatedName",0,,NO RESULTS,
+User 5,CQ1,Which aesthetics are subgenres of a given aesthetic?,"SELECT ?subgenreName
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasSubgenre ?sub .
+  ?sub ae-ont:name ?subgenreName .
+  FILTER(str(?aestheticName) = ""Punk"")
+}
+ORDER BY ?subgenreName",16,2 Tone | Afropunk | Anarcho-Punk,ANSWERABLE,
+User 5,CQ2,Which aesthetics have influenced a given aesthetic? (via ae-ont:follows = was preceded by),"SELECT ?influencerName
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?n .
+  FILTER(str(?n) = ""DIY Punk"")
+  ?aesthetic ae-ont:follows ?influencer .
+  ?influencer ae-ont:name ?influencerName .
+}",1,Punk,PARTIAL,ae-ont:follows maps box__preceded_by; A follows B = B influenced A. Example: DIY Punk follows Punk.
+User 5,CQ3,Which aesthetics are related to a given one and share at least one value?,"SELECT DISTINCT ?relatedName ?relationType
+WHERE {
+  ?source a ae-ont:Aesthetic ;
+          ae-ont:name ?sourceName .
+  FILTER(str(?sourceName) = ""Memphis Lite"")
+  {
+    ?source ae-ont:hasSubgenre ?related .
+    BIND(""subgenre"" AS ?relationType)
+  } UNION {
+    ?source ae-ont:follows ?related .
+    BIND(""follows"" AS ?relationType)
+  } UNION {
+    ?source ae-ont:overlapsWith ?related .
+    BIND(""overlapsWith"" AS ?relationType)
+  } UNION {
+    ?source ae-ont:hasMember ?v .
+    ?v a ae-ont:Value .
+    ?related ae-ont:hasMember ?v .
+    ?related a ae-ont:Aesthetic .
+    FILTER(?related != ?source)
+    BIND(""sharedValue"" AS ?relationType)
+  }
+  ?related ae-ont:name ?relatedName .
+}
+ORDER BY ?relationType",0,,NO RESULTS,
+User 6,CQ1,Which aesthetics have the highest number of sub-aesthetics or derivative movements?,"SELECT ?aestheticName (COUNT(?sub) AS ?subCount)
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasSubgenre ?sub .
+}
+GROUP BY ?aestheticName
+ORDER BY DESC(?subCount)
+LIMIT 20",20,"Punk, 16 | Metalhead, 13 | Goth, 11",ANSWERABLE,
+User 6,CQ2,Which aesthetics have the longest chain of influence (precedes+)?,"SELECT ?aestheticName (COUNT(DISTINCT ?descendant) AS ?chainLength)
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName .
+  ?aesthetic ae-ont:precedes+ ?descendant .
+}
+GROUP BY ?aestheticName
+ORDER BY DESC(?chainLength)
+LIMIT 10",10,"Italian Renaissance, 51 | Baroque, 50 | Chinoiserie, 49",ANSWERABLE,
+User 6,CQ3,Which aesthetics share fashion-related motifs as defining elements?,"SELECT DISTINCT ?aestheticName ?motifLabel
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasMember ?motif .
+  ?motif a ae-ont:Motif ;
+         rdfs:label ?motifLabel .
+  FILTER(
+    CONTAINS(LCASE(str(?motifLabel)), ""dress"")  ||
+    CONTAINS(LCASE(str(?motifLabel)), ""clothing"") ||
+    CONTAINS(LCASE(str(?motifLabel)), ""outfit"")  ||
+    CONTAINS(LCASE(str(?motifLabel)), ""jacket"")  ||
+    CONTAINS(LCASE(str(?motifLabel)), ""boots"")   ||
+    CONTAINS(LCASE(str(?motifLabel)), ""skirt"")   ||
+    CONTAINS(LCASE(str(?motifLabel)), ""jeans"")
+  )
+}
+ORDER BY ?aestheticName
+LIMIT 40",0,,NO RESULTS,
+User 6,CQ4,Which aesthetic has the highest number of associated brands?,"SELECT ?aestheticName (COUNT(DISTINCT ?brand) AS ?brandCount)
+WHERE {
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasRelatedBrand ?brand .
+}
+GROUP BY ?aestheticName
+ORDER BY DESC(?brandCount)
+LIMIT 20",20,"Hip-Hop, 21 | Guochao, 19 | Ultras, 17",ANSWERABLE,No causal 'influence' data; query returns brand association count as proxy.

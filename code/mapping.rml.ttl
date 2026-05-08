@@ -1,0 +1,1557 @@
+###############################################################################
+#  AestheticsKG — RML Mapping
+#  Base IRI : https://w3id.org/aesthetics-kg/
+#  Ontology : https://w3id.org/aesthetics-kg/ontology/
+#
+#  Run from aestheticswork/ with:
+#      python3 run_rml.py
+#
+#  Prerequisites — add to your ontology before running:
+#    ae-ont:foodDimension       rdf:type owl:NamedIndividual
+#    ae-ont:hasAssociatedActivity  rdf:type owl:ObjectProperty ;
+#                               rdfs:domain ae-ont:Aesthetic ;
+#                               rdfs:range  ae-ont:Activity
+###############################################################################
+
+@prefix rml:  <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr:   <http://www.w3.org/ns/r2rml#> .
+@prefix ql:   <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix ae-ont:   <https://w3id.org/aesthetics-kg/ontology/> .
+@prefix ae-kg:    <https://w3id.org/aesthetics-kg/> .
+@prefix vibe-ont: <https://w3id.org/vibe-ontology/> .
+@prefix vibe:     <https://w3id.org/vibe-ontology/> .
+
+
+###############################################################################
+#  1. AESTHETICS — core identity
+###############################################################################
+
+<#AestheticMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetics.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}" ;
+        rr:class ae-ont:Aesthetic, ae-ont:Collection, skos:Concept
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:name ;
+        rr:objectMap [ rml:reference "name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:URL ;
+        rr:objectMap [ rml:reference "url" ; rr:datatype xsd:anyURI ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:definition ;
+        rr:objectMap [ rml:reference "intro_text" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:scopeNote ;
+        rr:objectMap [ rml:reference "text_visuals" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+
+###############################################################################
+#  2. ALTERNATE NAMES
+###############################################################################
+
+<#AltNameMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_altnames.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:alternateName ;
+        rr:objectMap [ rml:reference "altname" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:altLabel ;
+        rr:objectMap [ rml:reference "altname" ; rr:language "en" ]
+    ] .
+
+
+###############################################################################
+#  3. TEMPORAL — decade → TimeInterval
+###############################################################################
+
+<#TimeIntervalMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_decades.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/period/{label_slug}" ;
+        rr:class ae-ont:TimeInterval
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "label" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:approximateLabel ;
+        rr:objectMap [ rml:reference "label" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:startYear ;
+        rr:objectMap [ rml:reference "start_year" ; rr:datatype xsd:gYear ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:endYear ;
+        rr:objectMap [ rml:reference "end_year" ; rr:datatype xsd:gYear ]
+    ] .
+
+<#AestheticDecadeLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_decades.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasOriginPeriod ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/period/{label_slug}" ]
+    ] .
+
+
+###############################################################################
+#  4. LOCATIONS — Country, City, DigitalPlace, Region
+###############################################################################
+
+<#CountryMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/locations_country.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/location/country/{location_slug}" ;
+        rr:class vibe-ont:Country
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "location" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "location" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "geonames_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#CityMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/locations_city.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/location/city/{location_slug}" ;
+        rr:class vibe-ont:City
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "location" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "location" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "geonames_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#DigitalPlaceMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/locations_digital.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/location/digital/{location_slug}" ;
+        rr:class vibe-ont:DigitalPlace
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "location" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "location" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#RegionMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/locations_region.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/location/region/{location_slug}" ;
+        rr:class vibe-ont:Location
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "location" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "location" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "geonames_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#AestheticLocationCityLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_locations_city.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasLocationOfOrigin ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/location/city/{location_slug}" ]
+    ] .
+
+<#AestheticLocationCountryLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_locations_country.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasLocationOfOrigin ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/location/country/{location_slug}" ]
+    ] .
+
+<#AestheticLocationRegionLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_locations_region.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasLocationOfOrigin ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/location/region/{location_slug}" ]
+    ] .
+
+<#AestheticLocationDigitalLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_locations_digital.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasLocationOfOrigin ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/location/digital/{location_slug}" ]
+    ] .
+
+
+###############################################################################
+#  5. AGENTS — Creators (Person / Group / unknown Agent)
+#     All use akg:agent/ namespace so typing maps merge onto same node.
+###############################################################################
+
+<#AgentCreatorMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/creators_all.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/agent/{creator_slug}" ;
+        rr:class ae-ont:Agent
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "creator" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "creator" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#PersonCreatorTypeMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/creators_person.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/agent/{creator_slug}" ;
+        rr:class ae-ont:Person
+    ] .
+
+<#GroupCreatorTypeMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/creators_group.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/agent/{creator_slug}" ;
+        rr:class ae-ont:Group
+    ] .
+
+<#AestheticCreatorLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/creators_all.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasCreator ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/agent/{creator_slug}" ]
+    ] .
+
+
+###############################################################################
+#  6. AGENTS — Coined-by
+###############################################################################
+
+<#AgentCoinedByMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/coined_all.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/agent/{coined_by_slug}" ;
+        rr:class ae-ont:Agent
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "coined_by" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "coined_by" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#PersonCoinedTypeMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/coined_person.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/agent/{coined_by_slug}" ;
+        rr:class ae-ont:Person
+    ] .
+
+<#GroupCoinedTypeMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/coined_group.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/agent/{coined_by_slug}" ;
+        rr:class ae-ont:Group
+    ] .
+
+<#AestheticCoinedByLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/coined_all.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:coinedBy ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/agent/{coined_by_slug}" ]
+    ] .
+
+
+###############################################################################
+#  7. ICONIC FIGURES — via RepresentativeAssociation (iconicFigureDimension)
+###############################################################################
+
+<#FigureMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_figures.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/agent/{figure_slug}" ;
+        rr:class ae-ont:Agent
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "figure" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "figure" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#FigureAssocMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_figures.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/assoc/figure/{slug}-{figure_slug}" ;
+        rr:class ae-ont:RepresentativeAssociation
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [
+            rr:template "{name} — iconic figure — {figure}" ;
+            rr:language "en"
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment ;
+        rr:objectMap [
+            rr:constant "Representative association linking an aesthetic to one of its iconic figures."@en
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:forAesthetic ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:withEntity ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/agent/{figure_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:associationDimension ;
+        rr:objectMap [ rr:constant ae-ont:iconicFigureDimension ]
+    ] .
+
+<#AestheticFigureLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_figures.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasIconicFigure ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/agent/{figure_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/agent/{figure_slug}" ]
+    ] .
+
+
+###############################################################################
+#  8. PLATFORMS
+###############################################################################
+
+<#PlatformMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_platforms.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/platform/{platform_slug}" ;
+        rr:class ae-ont:Platform, ae-ont:DigitalPlace
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "platform" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "platform" ; rr:language "en" ]
+    ] .
+
+<#AestheticPlatformLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_platforms.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasPrimaryPlatform ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/platform/{platform_slug}" ]
+    ] .
+
+
+###############################################################################
+#  9. BRANDS
+###############################################################################
+
+<#BrandMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_brands.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/brand/{brand_slug}" ;
+        rr:class ae-ont:Brand
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "brand" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "brand" ; rr:language "en" ]
+    ] .
+
+<#AestheticBrandLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_brands.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedBrand ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/brand/{brand_slug}" ]
+    ] .
+
+
+###############################################################################
+#  10. MOTIFS — via RepresentativeAssociation (motifDimension)
+###############################################################################
+
+<#MotifMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_motifs.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/motif/{motif_slug}" ;
+        rr:class ae-ont:Motif
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "motif" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "motif" ; rr:language "en" ]
+    ] .
+
+<#MotifAssocMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_motifs.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/assoc/motif/{slug}-{motif_slug}" ;
+        rr:class ae-ont:RepresentativeAssociation
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [
+            rr:template "linking {name} to {motif} (motif)" ;
+            rr:language "en"
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment ;
+        rr:objectMap [
+            rr:template "Representative association linking {name} to one of its key motifs: {motif}."@en ;
+            rr:language "en"
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:forAesthetic ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:withEntity ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/motif/{motif_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:associationDimension ;
+        rr:objectMap [ rr:constant ae-ont:motifDimension ]
+    ] .
+
+<#AestheticMotifLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_motifs.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/motif/{motif_slug}" ]
+    ] .
+
+
+###############################################################################
+#  11. VALUES — via RepresentativeAssociation (valueDimension)
+###############################################################################
+
+<#ValueMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_values.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/value/{value_slug}" ;
+        rr:class ae-ont:Value
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "value" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "value" ; rr:language "en" ]
+    ] .
+
+<#ValueAssocMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_values.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/assoc/value/{slug}-{value_slug}" ;
+        rr:class ae-ont:RepresentativeAssociation
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [
+            rr:template "linking {name} to {value} (value)" ;
+            rr:language "en"
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment ;
+        rr:objectMap [
+            rr:template "Representative association linking {name} to one of its key values: {value}."@en ;
+            rr:language "en"
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:forAesthetic ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:withEntity ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/value/{value_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:associationDimension ;
+        rr:objectMap [ rr:constant ae-ont:valueDimension ]
+    ] .
+
+<#AestheticValueLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_values.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/value/{value_slug}" ]
+    ] .
+
+
+###############################################################################
+#  12. COLORS — via RepresentativeAssociation (colorDimension)
+###############################################################################
+
+<#ColorMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_colors.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/color/{color_slug}" ;
+        rr:class ae-ont:Color
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "color" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "color" ; rr:language "en" ]
+    ] .
+
+<#ColorAssocMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_colors.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/assoc/color/{slug}-{color_slug}" ;
+        rr:class ae-ont:RepresentativeAssociation
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [
+            rr:template "linking {name} to {color} (color)" ;
+            rr:language "en"
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment ;
+        rr:objectMap [
+            rr:template "Representative association linking {name} to one of its key colors: {color}."@en ;
+            rr:language "en"
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:forAesthetic ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:withEntity ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/color/{color_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:associationDimension ;
+        rr:objectMap [ rr:constant ae-ont:colorDimension ]
+    ] .
+
+<#AestheticColorLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_colors.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/color/{color_slug}" ]
+    ] .
+
+
+###############################################################################
+#  13. ARTWORKS — Film, TVShow, LiteraryWork, VideoGame, Anime, Song, Album, Artwork
+#      Each type uses its own namespace; aesthetic links via hasRelatedWork + hasMember
+###############################################################################
+
+# ── Film ──────────────────────────────────────────────────────────────────────
+<#FilmMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_film.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/film/{artwork_slug}" ;
+        rr:class ae-ont:Film
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#AestheticFilmLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_film.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/film/{artwork_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/film/{artwork_slug}" ]
+    ] .
+
+# ── TVShow ────────────────────────────────────────────────────────────────────
+<#TVShowMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_tvshow.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/tvshow/{artwork_slug}" ;
+        rr:class ae-ont:TVShow
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#AestheticTVShowLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_tvshow.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/tvshow/{artwork_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/tvshow/{artwork_slug}" ]
+    ] .
+
+# ── LiteraryWork (Book) ───────────────────────────────────────────────────────
+<#BookMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_book.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/book/{artwork_slug}" ;
+        rr:class ae-ont:LiteraryWork
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#AestheticBookLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_book.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/book/{artwork_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/book/{artwork_slug}" ]
+    ] .
+
+# ── VideoGame ─────────────────────────────────────────────────────────────────
+<#VideoGameMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_videogame.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/videogame/{artwork_slug}" ;
+        rr:class ae-ont:VideoGame
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#AestheticVideoGameLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_videogame.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/videogame/{artwork_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/videogame/{artwork_slug}" ]
+    ] .
+
+# ── Anime ─────────────────────────────────────────────────────────────────────
+<#AnimeMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_anime.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/anime/{artwork_slug}" ;
+        rr:class ae-ont:Anime
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#AestheticAnimeLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_anime.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/anime/{artwork_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/anime/{artwork_slug}" ]
+    ] .
+
+# ── Song ──────────────────────────────────────────────────────────────────────
+<#SongMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_song.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/song/{artwork_slug}" ;
+        rr:class ae-ont:Song
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] .
+
+<#AestheticSongLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_song.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/song/{artwork_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/song/{artwork_slug}" ]
+    ] .
+
+# ── Album ─────────────────────────────────────────────────────────────────────
+<#AlbumMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_album.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/album/{artwork_slug}" ;
+        rr:class ae-ont:Album
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate owl:sameAs ;
+        rr:objectMap [ rml:reference "wikidata_uri" ; rr:termType rr:IRI ]
+    ] .
+
+<#AestheticAlbumLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_album.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/album/{artwork_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/album/{artwork_slug}" ]
+    ] .
+
+# ── Generic Artwork ───────────────────────────────────────────────────────────
+<#ArtworkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_other.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/artwork/{artwork_slug}" ;
+        rr:class ae-ont:Artwork
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "title" ; rr:language "en" ]
+    ] .
+
+<#AestheticArtworkLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/artworks_other.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/artwork/{artwork_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/artwork/{artwork_slug}" ]
+    ] .
+
+
+###############################################################################
+#  14. FOOD ITEMS — via RepresentativeAssociation (foodDimension)
+#      NOTE: add  ae-ont:foodDimension rdf:type owl:NamedIndividual  to ontology
+###############################################################################
+
+<#FoodItemMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_food.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/food/{food_slug}" ;
+        rr:class ae-ont:FoodItem
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "food_item" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "food_item" ; rr:language "en" ]
+    ] .
+
+<#FoodAssocMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_food.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/assoc/food/{slug}-{food_slug}" ;
+        rr:class ae-ont:RepresentativeAssociation
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [
+            rr:template "{name} — food — {food_item}" ;
+            rr:language "en"
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:comment ;
+        rr:objectMap [
+            rr:constant "Representative association linking an aesthetic to an associated food or drink item."@en
+        ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:forAesthetic ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:withEntity ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/food/{food_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:associationDimension ;
+        rr:objectMap [ rr:constant ae-ont:foodDimension ]
+    ] .
+
+<#AestheticFoodLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_food.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/food/{food_slug}" ]
+    ] .
+
+
+###############################################################################
+#  15. ACTIVITIES
+#      NOTE: add  ae-ont:hasAssociatedActivity  to ontology (domain: Aesthetic, range: Activity)
+###############################################################################
+
+<#ActivityMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_activities.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/activity/{activity_slug}" ;
+        rr:class ae-ont:Activity
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "activity" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "activity" ; rr:language "en" ]
+    ] .
+
+<#AestheticActivityLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_activities.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasAssociatedActivity ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/activity/{activity_slug}" ]
+    ] .
+
+
+###############################################################################
+#  16. INTER-AESTHETIC RELATIONS
+###############################################################################
+
+<#RelatedToMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/relations_relatedTo.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:relatedTo ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{related_slug}" ]
+    ] .
+
+<#OverlapsWithMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/relations_overlapsWith.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:overlapsWith ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{related_slug}" ]
+    ] .
+
+<#HasSubgenreMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/relations_hasSubgenre.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasSubgenre ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{related_slug}" ]
+    ] .
+
+<#FollowsMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/relations_follows.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:follows ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{related_slug}" ]
+    ] .
+
+<#PrecedesMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/relations_precedes.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:precedes ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{related_slug}" ]
+    ] .
+
+
+###############################################################################
+#  PHILOSOPHY VALUES — ae-ont:Value with skos:scopeNote "philosophy"
+###############################################################################
+
+<#PhilosophyValueMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_philosophy_values.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/value/{value_slug}" ;
+        rr:class ae-ont:Value
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "value" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "value" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:scopeNote ;
+        rr:objectMap [ rr:constant "philosophy" ; rr:language "en" ]
+    ] .
+
+<#AestheticPhilosophyValueLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_philosophy_values.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/value/{value_slug}" ]
+    ] .
+
+
+###############################################################################
+#  ARCHITECTURE — vibe-ont:ArchitecturalWork
+###############################################################################
+
+<#ArchitectureMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_architecture.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/architecture/{slug}" ;
+        rr:class vibe-ont:ArchitecturalWork
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:definition ;
+        rr:objectMap [ rml:reference "text" ; rr:language "en" ]
+    ] .
+
+<#AestheticArchitectureLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_architecture.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasArchitecturalStyle ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/architecture/{slug}" ]
+    ] .
+
+
+###############################################################################
+#  INTERIOR DESIGN — vibe-ont:InteriorDesign
+###############################################################################
+
+<#InteriorDesignMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_interior.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/interior/{slug}" ;
+        rr:class vibe-ont:InteriorDesign
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:definition ;
+        rr:objectMap [ rml:reference "text" ; rr:language "en" ]
+    ] .
+
+<#AestheticInteriorDesignLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_interior.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasInteriorStyle ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/interior/{slug}" ]
+    ] .
+
+
+###############################################################################
+#  ONLINE RESOURCES — blogs, podcasts, YouTube channels, Tumblr blogs
+#  Entity + link map pattern mirrors Films/Books/etc.
+###############################################################################
+
+# ── Blog ──────────────────────────────────────────────────────────────────────
+<#BlogMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_blogs.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/blog/{resource_slug}" ;
+        rr:class vibe-ont:Blog
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "resource_name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "resource_name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:URL ;
+        rr:objectMap [ rml:reference "resource_url" ; rr:datatype xsd:anyURI ]
+    ] .
+
+<#AestheticBlogLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_blogs.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/blog/{resource_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/blog/{resource_slug}" ]
+    ] .
+
+# ── Podcast ───────────────────────────────────────────────────────────────────
+<#PodcastMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_podcasts.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/podcast/{resource_slug}" ;
+        rr:class vibe-ont:Podcast
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "resource_name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "resource_name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:URL ;
+        rr:objectMap [ rml:reference "resource_url" ; rr:datatype xsd:anyURI ]
+    ] .
+
+<#AestheticPodcastLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_podcasts.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/podcast/{resource_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/podcast/{resource_slug}" ]
+    ] .
+
+# ── YouTubeChannel ────────────────────────────────────────────────────────────
+<#YouTubeChannelMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_youtube_channels.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/youtube-channel/{resource_slug}" ;
+        rr:class vibe-ont:YouTubeChannel
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "resource_name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "resource_name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:URL ;
+        rr:objectMap [ rml:reference "resource_url" ; rr:datatype xsd:anyURI ]
+    ] .
+
+<#AestheticYouTubeChannelLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_youtube_channels.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/youtube-channel/{resource_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/youtube-channel/{resource_slug}" ]
+    ] .
+
+# ── TumblrBlog ────────────────────────────────────────────────────────────────
+<#TumblrBlogMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_tumblr_blogs.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/tumblr-blog/{resource_slug}" ;
+        rr:class vibe-ont:Blog
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "resource_name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate skos:prefLabel ;
+        rr:objectMap [ rml:reference "resource_name" ; rr:language "en" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:URL ;
+        rr:objectMap [ rml:reference "resource_url" ; rr:datatype xsd:anyURI ]
+    ] .
+
+<#AestheticTumblrBlogLinkMap>
+    rml:logicalSource [
+        rml:source              "exploded/split/aesthetic_tumblr_blogs.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/aesthetics-kg/resource/aesthetic/{slug}"
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasRelatedWork ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/tumblr-blog/{resource_slug}" ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate ae-ont:hasMember ;
+        rr:objectMap [ rr:template "https://w3id.org/aesthetics-kg/resource/tumblr-blog/{resource_slug}" ]
+    ] .
