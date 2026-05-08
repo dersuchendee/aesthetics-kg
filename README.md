@@ -107,14 +107,16 @@ The full graph is available on Zenodo in three serialisations:
 
 ## Ontology
 
-Aesthetics-KG is built on the **Vibe Ontology** ([https://w3id.org/vibe-ontology/](https://w3id.org/vibe-ontology/)), which models aesthetics together with:
+Aesthetics-KG is built on the **Vibe Ontology** — source repository: [github.com/dersuchendee/vibe-ontology](https://github.com/dersuchendee/vibe-ontology) · persistent URI: [https://w3id.org/vibe-ontology/](https://w3id.org/vibe-ontology/).
 
-- `ae-ont:Motif`, `ae-ont:Theme`, `ae-ont:Value` — cultural content
-- `ae-ont:Color`, `ae-ont:Brand`, `ae-ont:IconicFigure` — associated entities
+The ontology (prefix `vibe:`) models aesthetics together with:
+
+- `vibe:Motif`, `vibe:Theme`, `vibe:Value` — cultural content
+- `vibe:Color`, `vibe:Brand`, `vibe:IconicFigure` — associated entities
 - `vibe:Country`, `vibe:City`, `vibe:DigitalPlace` — typed location hierarchy
 - `vibe:Blog`, `vibe:Podcast`, `vibe:YouTubeChannel` — online resources
-- `ae-ont:Film`, `ae-ont:Book`, `ae-ont:Anime` — related artworks
-- `ae-ont:hasSubgenre`, `ae-ont:relatedTo`, `ae-ont:precedes`, `ae-ont:follows` — inter-aesthetic relations
+- `vibe:Film`, `vibe:Book`, `vibe:Anime` — related artworks
+- `vibe:hasSubgenre`, `vibe:relatedTo`, `vibe:precedes`, `vibe:follows` — inter-aesthetic relations
 
 The ontology source is in [`semantic-assets/latest/vibeontology.ttl`](semantic-assets/latest/vibeontology.ttl).
 
