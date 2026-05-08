@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aesthetics-KG · Explore Internet Aesthetics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:      #ffffff;
+      --bg2:     #f7f8fa;
+      --bg3:     #eef0f4;
+      --border:  #dde2ea;
+      --accent:  #7c3aed;
+      --accent2: #be185d;
+      --text:    #111827;
+      --text2:   #4b5563;
+      --text3:   #9ca3af;
+      --r: 10px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 24px;
+      height: 56px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'UnifrakturMaguntia', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-right: 20px;
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+
+    .tab {
+      background: none;
+      border: none;
+      color: var(--text2);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 500;
+      padding: 6px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tab:hover  { color: var(--text); background: var(--bg3); }
+    .tab.active { color: var(--accent); background: rgba(124,58,237,0.08); }
+
+    .spacer { flex: 1; }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.7rem;
+      color: var(--text3);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+    .live-dot {
+      width: 6px; height: 6px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 60px 24px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-family: 'UnifrakturMaguntia', serif;
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 400;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 70%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .hero p {
+      color: var(--text2);
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 50px;
+      padding: 6px 6px 6px 20px;
+      max-width: 560px;
+      margin: 0 auto;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-box:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.08);
+    }
+    .search-box input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.93rem;
+    }
+    .search-box input::placeholder { color: var(--text3); }
+
+    .btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.81rem;
+      font-weight: 600;
+      padding: 9px 18px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.82; }
+
+    .btn-ghost {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--text2);
+      font-family: inherit;
+      font-size: 0.81rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── VIEWS ── */
+    .view { display: none; padding: 0 24px 60px; max-width: 1200px; margin: 0 auto; }
+    .view.active { display: block; }
+
+    /* ── CARDS GRID ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 11px;
+      margin-top: 24px;
+    }
+
+    .acard {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      padding: 15px 17px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .acard:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 12px rgba(124,58,237,0.08);
+    }
+    .acard .name {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+    .acard .snippet {
+      font-size: 0.75rem;
+      color: var(--text3);
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── STATE / LOADING ── */
+    .state-msg {
+      text-align: center;
+      color: var(--text3);
+      padding: 64px 20px;
+      font-size: 0.87rem;
+      line-height: 1.65;
+    }
+    .error-box {
+      background: #fff1f5;
+      border: 1px solid #fca5c0;
+      border-radius: var(--r);
+      padding: 14px 18px;
+      color: #9f1239;
+      font-size: 0.83rem;
+      margin: 16px 0;
+      line-height: 1.55;
+    }
+    .error-box a { color: inherit; }
+    .spinner {
+      display: inline-block;
+      width: 20px; height: 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── DETAIL DRAWER ── */
+    #detail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.22);
+      backdrop-filter: blur(3px);
+    }
+    #detail-overlay.open { display: block; }
+
+    #detail-panel {
+      position: fixed;
+      right: -560px;
+      top: 0;
+      width: min(540px, 100vw);
+      height: 100vh;
+      background: var(--bg);
+      border-left: 1.5px solid var(--border);
+      overflow-y: auto;
+      padding: 30px 26px;
+      transition: right 0.3s cubic-bezier(0.4,0,0.2,1);
+      z-index: 201;
+      box-shadow: -8px 0 40px rgba(0,0,0,0.08);
+    }
+    #detail-panel.open { right: 0; }
+
+    .d-close {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 50%;
+      width: 30px; height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text3);
+      font-size: 0.8rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .d-close:hover { color: var(--text); border-color: var(--text2); }
+
+    .d-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      padding-right: 38px;
+      letter-spacing: -0.02em;
+    }
+    .d-desc {
+      font-size: 0.85rem;
+      color: var(--text2);
+      line-height: 1.68;
+      margin-bottom: 22px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .d-section { margin-bottom: 17px; }
+    .d-section h3 {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text3);
+      margin-bottom: 7px;
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      color: var(--text2);
+    }
+    .tag-rel {
+      background: rgba(124,58,237,0.06);
+      border-color: rgba(124,58,237,0.22);
+      color: var(--accent);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .tag-rel:hover { background: rgba(124,58,237,0.13); }
+
+    .color-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      color: var(--text2);
+    }
+    .color-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+
+    .d-actions {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ── BROWSE ── */
+    .browse-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 26px;
+      margin-bottom: 4px;
+    }
+    .fsel {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.83rem;
+      padding: 8px 13px;
+      cursor: pointer;
+      outline: none;
+      min-width: 175px;
+      transition: border-color 0.15s;
+    }
+    .fsel:focus { border-color: var(--accent); }
+
+    /* ── CHARTS ── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 14px;
+      padding-top: 26px;
+    }
+    .chart-card {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px;
+    }
+    .chart-card h3 {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .bar { margin-bottom: 8px; }
+    .bar-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+    }
+    .bar-name {
+      font-size: 0.75rem;
+      color: var(--text2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 84%;
+    }
+    .bar-name[data-ae] { cursor: pointer; }
+    .bar-name[data-ae]:hover { color: var(--accent); }
+    .bar-count {
+      font-size: 0.71rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .bar-track {
+      background: var(--bg3);
+      border-radius: 3px;
+      height: 5px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 3px;
+      transition: width 0.7s ease;
+    }
+
+    /* ── NETWORK ── */
+    .net-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 26px;
+      margin-bottom: 12px;
+    }
+    .net-input {
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.87rem;
+      padding: 9px 14px;
+      outline: none;
+      width: 260px;
+      transition: border-color 0.15s;
+    }
+    .net-input:focus { border-color: var(--accent); }
+    .net-hint {
+      font-size: 0.75rem;
+      color: var(--text3);
+    }
+
+    #net-legend {
+      display: none;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-bottom: 10px;
+    }
+    .leg { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--text2); }
+    .leg-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+    #net-svg {
+      width: 100%;
+      height: 540px;
+      background: var(--bg2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--r);
+    }
+    #net-state { padding-top: 0; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="logo">✦ Aesthetics-KG</div>
+  <button class="tab active" data-tab="explore" onclick="switchTab(this,'explore')">Explore</button>
+  <button class="tab" data-tab="browse"  onclick="switchTab(this,'browse')">Browse</button>
+  <button class="tab" data-tab="network" onclick="switchTab(this,'network')">Network</button>
+  <button class="tab" data-tab="charts"  onclick="switchTab(this,'charts')">Charts</button>
+  <div class="spacer"></div>
+  <div class="live-badge"><div class="live-dot"></div>Live endpoint</div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<div class="hero" id="hero">
+  <h1>Explore Internet Aesthetics</h1>
+  <p>A knowledge graph of 1,031 internet aesthetics — motifs, vibes, connections, and cultural context.</p>
+  <div class="search-box">
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;opacity:0.35">
+      <circle cx="7" cy="7" r="5" stroke="#9ca3af" stroke-width="1.6"/>
+      <path d="M11 11 L14.5 14.5" stroke="#9ca3af" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <input id="search-input" type="text" placeholder="Search aesthetics…" autocomplete="off"
+      oninput="onSearchInput(this.value)"
+      onkeydown="if(event.key==='Enter')doSearch(this.value.trim())">
+    <button class="btn" onclick="loadRandom()">Surprise me ✦</button>
+  </div>
+</div>
+
+<!-- ─── EXPLORE VIEW ─── -->
+<div id="explore-view" class="view active">
+  <div id="explore-state" class="state-msg">
+    Start typing to search, or click <strong>Surprise me</strong> to discover a random aesthetic.
+  </div>
+  <div id="explore-grid" class="cards-grid" style="display:none"></div>
+</div>
+
+<!-- ─── BROWSE VIEW ─── -->
+<div id="browse-view" class="view">
+  <div class="browse-controls">
+    <select class="fsel" id="platform-sel" onchange="browseFilter('platform',this.value)">
+      <option value="">All platforms…</option>
+    </select>
+    <select class="fsel" id="period-sel" onchange="browseFilter('period',this.value)">
+      <option value="">All time periods…</option>
+    </select>
+    <select class="fsel" id="location-sel" onchange="browseFilter('location',this.value)">
+      <option value="">All locations…</option>
+    </select>
+    <button class="btn-ghost" onclick="clearBrowse()">Clear</button>
+  </div>
+  <div id="browse-state" class="state-msg">Select a filter above to browse aesthetics.</div>
+  <div id="browse-grid" class="cards-grid" style="display:none"></div>
+</div>
+
+<!-- ─── NETWORK VIEW ─── -->
+<div id="network-view" class="view">
+  <div class="net-header">
+    <input class="net-input" id="net-input" type="text"
+      placeholder="e.g. Vaporwave, Cottagecore, Punk…"
+      onkeydown="if(event.key==='Enter')loadNetwork()">
+    <button class="btn" onclick="loadNetwork()">Visualize</button>
+    <span class="net-hint">Click any node to open its detail panel.</span>
+  </div>
+  <div id="net-legend">
+    <div class="leg"><div class="leg-dot" style="background:#7c3aed"></div>subgenre</div>
+    <div class="leg"><div class="leg-dot" style="background:#6366f1"></div>parent genre</div>
+    <div class="leg"><div class="leg-dot" style="background:#be185d"></div>related to</div>
+    <div class="leg"><div class="leg-dot" style="background:#059669"></div>precedes</div>
+    <div class="leg"><div class="leg-dot" style="background:#d97706"></div>follows</div>
+    <div class="leg"><div class="leg-dot" style="background:#9ca3af"></div>overlaps</div>
+  </div>
+  <div id="net-state" class="state-msg">Enter an aesthetic name and click <strong>Visualize</strong> to see its connections.</div>
+  <svg id="net-svg" style="display:none"></svg>
+</div>
+
+<!-- ─── CHARTS VIEW ─── -->
+<div id="charts-view" class="view">
+  <div id="charts-state" class="state-msg"><span class="spinner"></span> Loading charts…</div>
+  <div id="charts-grid" class="charts-grid" style="display:none"></div>
+</div>
+
+<!-- ─── DETAIL DRAWER ─── -->
+<div id="detail-overlay"></div>
+<div id="detail-panel">
+  <div class="d-close" id="d-close-btn">✕</div>
+  <div id="detail-content"></div>
+</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+/* ═══ SPARQL ═══════════════════════════════════════════════════════════ */
+const EP = 'https://semantics.istc.cnr.it/aesthetics-kg/graphdb/repositories/aesthetics';
+const PFX = `PREFIX ae: <https://w3id.org/aesthetics-kg/ontology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+`;
+
+async function sparql(q) {
+  const r = await fetch(EP + '?query=' + encodeURIComponent(PFX + q), {
+    headers: { Accept: 'application/sparql-results+json' }
+  });
+  if (!r.ok) throw new Error('Endpoint returned HTTP ' + r.status);
+  return (await r.json()).results.bindings;
+}
+
+const v = (b, k) => b[k]?.value ?? '';
+
+
+/* ═══ GLOBAL EVENT DELEGATION ══════════════════════════════════════════
+   All clickable aesthetic names use data-ae="name" so we never embed
+   names inside onclick="" attributes (which breaks on names with quotes). */
+document.addEventListener('click', e => {
+  /* detail drawer close */
+  if (e.target.closest('#detail-overlay') || e.target.closest('#d-close-btn')) {
+    closeDetail(); return;
+  }
+  /* open detail for any element with data-ae */
+  const ae = e.target.closest('[data-ae]');
+  if (ae) { openDetail(ae.dataset.ae); return; }
+  /* "explore network" button inside detail */
+  const net = e.target.closest('[data-net]');
+  if (net) { toNetwork(net.dataset.net); return; }
+  /* "find related" button inside detail */
+  const srch = e.target.closest('[data-srch]');
+  if (srch) { toSearch(srch.dataset.srch); return; }
+});
+
+
+/* ═══ TAB SWITCHING ════════════════════════════════════════════════════ */
+function switchTab(btn, tab) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(tab + '-view').classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('hero').style.display = tab === 'explore' ? '' : 'none';
+  if (tab === 'browse') initBrowse();
+  if (tab === 'charts') loadCharts();
+}
+
+function goToTab(tab) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => {
+    el.classList.toggle('active', el.dataset.tab === tab);
+  });
+  document.getElementById(tab + '-view').classList.add('active');
+  document.getElementById('hero').style.display = tab === 'explore' ? '' : 'none';
+  if (tab === 'browse') initBrowse();
+  if (tab === 'charts') loadCharts();
+}
+
+
+/* ═══ EXPLORE / SEARCH ════════════════════════════════════════════════ */
+let _stTimer = null;
+
+function onSearchInput(q) {
+  clearTimeout(_stTimer);
+  if (!q.trim()) {
+    setExploreState('Start typing to search, or click <strong>Surprise me</strong> to discover a random aesthetic.');
+    return;
+  }
+  _stTimer = setTimeout(() => doSearch(q.trim()), 320);
+}
+
+async function doSearch(q) {
+  setExploreState('<span class="spinner"></span>');
+  try {
+    const safe = q.replace(/"/g,'').replace(/\\/g,'');
+    const rows = await sparql(`
+      SELECT DISTINCT ?name ?desc WHERE {
+        ?a a ae:Aesthetic ; ae:name ?name .
+        OPTIONAL { ?a skos:definition ?desc }
+        FILTER(CONTAINS(LCASE(STR(?name)), LCASE("${safe}")))
+      } ORDER BY ?name LIMIT 36
+    `);
+    renderGrid('explore', rows.map(r => ({ name: v(r,'name'), desc: v(r,'desc') })));
+  } catch(e) {
+    setExploreState(errBox(e));
+  }
+}
+
+async function loadRandom() {
+  setExploreState('<span class="spinner"></span>');
+  try {
+    const rows = await sparql(`SELECT ?name WHERE { ?a a ae:Aesthetic ; ae:name ?name . } ORDER BY RAND() LIMIT 1`);
+    if (rows.length) openDetail(v(rows[0],'name'));
+    else setExploreState('Could not load a random aesthetic.');
+  } catch(e) {
+    setExploreState(errBox(e));
+  }
+}
+
+function setExploreState(html) {
+  const s = document.getElementById('explore-state');
+  s.innerHTML = html;
+  s.style.display = '';
+  document.getElementById('explore-grid').style.display = 'none';
+}
+
+function renderGrid(ns, items) {
+  const stEl   = document.getElementById(ns + '-state');
+  const gridEl = document.getElementById(ns + '-grid');
+  if (!items.length) {
+    stEl.innerHTML = 'No aesthetics found. Try a different search term.';
+    stEl.style.display = '';
+    gridEl.style.display = 'none';
+    return;
+  }
+  stEl.style.display = 'none';
+  gridEl.style.display = '';
+  gridEl.innerHTML = items.map(it => `
+    <div class="acard" data-ae="${esc(it.name)}">
+      <div class="name">${esc(it.name)}</div>
+      ${it.desc ? `<div class="snippet">${esc(it.desc.slice(0,150))}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+
+/* ═══ DETAIL DRAWER ═══════════════════════════════════════════════════ */
+async function openDetail(name) {
+  const panel   = document.getElementById('detail-panel');
+  const overlay = document.getElementById('detail-overlay');
+  const content = document.getElementById('detail-content');
+
+  content.innerHTML = '<div class="state-msg"><span class="spinner"></span></div>';
+  overlay.style.display = 'block';
+  panel.classList.add('open');
+
+  try {
+    const safe = sq(name);
+
+    const [attrs, rels, descRows] = await Promise.all([
+      sparql(`
+        SELECT ?cat ?label WHERE {
+          ?ae a ae:Aesthetic ; ae:name ?n . FILTER(STR(?n) = "${safe}")
+          {
+            ?ae ae:hasMember ?e . ?e a ae:Motif         ; rdfs:label ?label . BIND("motif"    AS ?cat)
+          } UNION {
+            ?ae ae:hasMember ?e . ?e a ae:Theme         ; rdfs:label ?label . BIND("theme"    AS ?cat)
+          } UNION {
+            ?ae ae:hasMember ?e . ?e a ae:Value         ; rdfs:label ?label . BIND("value"    AS ?cat)
+          } UNION {
+            ?ae ae:hasMember ?e . ?e a ae:Color         ; rdfs:label ?label . BIND("color"    AS ?cat)
+          } UNION {
+            ?ae ae:hasMember ?e . ?e a ae:IconicFigure  ; rdfs:label ?label . BIND("figure"   AS ?cat)
+          } UNION {
+            ?ae ae:hasRelatedBrand ?e . ?e rdfs:label ?label .                BIND("brand"    AS ?cat)
+          } UNION {
+            ?ae ae:hasRelatedWork  ?e . ?e rdfs:label ?label .
+            FILTER NOT EXISTS { ?e a owl:NamedIndividual }                    BIND("work"     AS ?cat)
+          } UNION {
+            ?ae ae:hasLocationOfOrigin ?e . ?e rdfs:label ?label .            BIND("location" AS ?cat)
+          } UNION {
+            ?ae ae:hasPrimaryPlatform  ?e . ?e rdfs:label ?label .            BIND("platform" AS ?cat)
+          } UNION {
+            ?ae ae:hasOriginPeriod ?e . ?e ae:approximateLabel ?label .       BIND("period"   AS ?cat)
+          }
+        } LIMIT 500
+      `),
+      sparql(`
+        SELECT ?rel ?other WHERE {
+          ?ae a ae:Aesthetic ; ae:name ?n . FILTER(STR(?n) = "${safe}")
+          {
+            ?ae ae:hasSubgenre ?o . ?o ae:name ?other . BIND("Subgenres"    AS ?rel)
+          } UNION {
+            ?p ae:hasSubgenre ?ae . ?p ae:name ?other . BIND("Parent genre" AS ?rel)
+          } UNION {
+            ?ae ae:relatedTo   ?o . ?o ae:name ?other . BIND("Related to"   AS ?rel)
+          } UNION {
+            ?ae ae:overlapsWith ?o . ?o ae:name ?other . BIND("Overlaps with" AS ?rel)
+          } UNION {
+            ?ae ae:precedes    ?o . ?o ae:name ?other . BIND("Precedes"     AS ?rel)
+          } UNION {
+            ?ae ae:follows     ?o . ?o ae:name ?other . BIND("Follows"      AS ?rel)
+          }
+        } LIMIT 120
+      `),
+      sparql(`
+        SELECT ?desc WHERE {
+          ?ae a ae:Aesthetic ; ae:name ?n . FILTER(STR(?n) = "${safe}")
+          ?ae skos:definition ?desc .
+        } LIMIT 1
+      `)
+    ]);
+
+    /* group */
+    const grp = {}, relGrp = {};
+    for (const r of attrs) {
+      const c = v(r,'cat'), l = v(r,'label');
+      if (l) (grp[c] = grp[c] || new Set()).add(l);
+    }
+    for (const r of rels) {
+      const rel = v(r,'rel'), o = v(r,'other');
+      if (o) (relGrp[rel] = relGrp[rel] || new Set()).add(o);
+    }
+    const description = descRows.length ? v(descRows[0],'desc') : '';
+
+    /* build HTML */
+    let html = `<div class="d-name">${esc(name)}</div>`;
+    if (description) html += `<div class="d-desc">${esc(description)}</div>`;
+
+    /* relations */
+    for (const rel of ['Subgenres','Parent genre','Related to','Overlaps with','Precedes','Follows']) {
+      const items = relGrp[rel];
+      if (!items?.size) continue;
+      html += `<div class="d-section"><h3>${rel}</h3><div class="tags">`;
+      html += [...items].map(n => `<span class="tag tag-rel" data-ae="${esc(n)}">${esc(n)}</span>`).join('');
+      html += `</div></div>`;
+    }
+
+    /* attributes */
+    const attrDefs = [
+      { k:'motif',    label:'Motifs' },
+      { k:'theme',    label:'Themes' },
+      { k:'value',    label:'Values' },
+      { k:'color',    label:'Colors' },
+      { k:'figure',   label:'Iconic Figures' },
+      { k:'brand',    label:'Brands' },
+      { k:'work',     label:'Related Works' },
+      { k:'platform', label:'Platforms' },
+      { k:'location', label:'Locations' },
+      { k:'period',   label:'Time Periods' },
+    ];
+    for (const { k, label } of attrDefs) {
+      const items = grp[k];
+      if (!items?.size) continue;
+      html += `<div class="d-section"><h3>${label}</h3><div class="tags">`;
+      if (k === 'color') {
+        html += [...items].map(l =>
+          `<span class="color-chip"><span class="color-dot" style="background:${colorHex(l)}"></span>${esc(l)}</span>`
+        ).join('');
+      } else {
+        html += [...items].map(l => `<span class="tag">${esc(l)}</span>`).join('');
+      }
+      html += `</div></div>`;
+    }
+
+    if (!description && !Object.keys(grp).length && !Object.keys(relGrp).length) {
+      html += `<p style="color:var(--text3);font-size:0.83rem;margin-top:8px">No additional data found for this aesthetic.</p>`;
+    }
+
+    html += `<div class="d-actions">
+      <button class="btn" data-net="${esc(name)}">Explore network ↗</button>
+      <button class="btn-ghost" data-srch="${esc(name)}">Find related ↗</button>
+    </div>`;
+
+    content.innerHTML = html;
+  } catch(e) {
+    content.innerHTML = `<div class="d-name">${esc(name)}</div>${errBox(e)}`;
+  }
+}
+
+function closeDetail() {
+  document.getElementById('detail-panel').classList.remove('open');
+  document.getElementById('detail-overlay').style.display = 'none';
+}
+
+function toNetwork(name) {
+  closeDetail();
+  document.getElementById('net-input').value = name;
+  goToTab('network');
+  loadNetwork();
+}
+
+function toSearch(name) {
+  closeDetail();
+  document.getElementById('search-input').value = name;
+  goToTab('explore');
+  doSearch(name);
+}
+
+
+/* ═══ BROWSE ═══════════════════════════════════════════════════════════ */
+let browseInited = false;
+
+async function initBrowse() {
+  if (browseInited) return;
+  browseInited = true;
+  try {
+    const [plats, periods, locs] = await Promise.all([
+      sparql(`SELECT DISTINCT ?lbl WHERE { ?a a ae:Aesthetic ; ae:hasPrimaryPlatform ?p . ?p rdfs:label ?lbl . } ORDER BY ?lbl LIMIT 100`),
+      sparql(`SELECT DISTINCT ?lbl WHERE { ?a a ae:Aesthetic ; ae:hasOriginPeriod ?p . ?p ae:approximateLabel ?lbl . } ORDER BY ?lbl LIMIT 60`),
+      sparql(`SELECT DISTINCT ?lbl WHERE { ?a a ae:Aesthetic ; ae:hasLocationOfOrigin ?l . ?l rdfs:label ?lbl . } ORDER BY ?lbl LIMIT 150`),
+    ]);
+    fillSelect('platform-sel', plats);
+    fillSelect('period-sel',   periods);
+    fillSelect('location-sel', locs);
+  } catch(e) {
+    console.warn('Browse init failed:', e);
+  }
+}
+
+function fillSelect(id, rows) {
+  const sel = document.getElementById(id);
+  for (const r of rows) {
+    const lbl = v(r,'lbl');
+    if (!lbl) continue;
+    const o = document.createElement('option');
+    o.value = o.text = lbl;
+    sel.appendChild(o);
+  }
+}
+
+async function browseFilter(type, val_) {
+  if (!val_) return;
+  if (type !== 'platform') document.getElementById('platform-sel').value = '';
+  if (type !== 'period')   document.getElementById('period-sel').value = '';
+  if (type !== 'location') document.getElementById('location-sel').value = '';
+
+  const bs = document.getElementById('browse-state');
+  bs.innerHTML = '<span class="spinner"></span>';
+  bs.style.display = '';
+  document.getElementById('browse-grid').style.display = 'none';
+
+  const safe = sq(val_);
+  const Q = {
+    platform: `SELECT DISTINCT ?name WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasPrimaryPlatform ?p . ?p rdfs:label ?l . FILTER(STR(?l)="${safe}") } ORDER BY ?name LIMIT 150`,
+    period:   `SELECT DISTINCT ?name WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasOriginPeriod ?p . ?p ae:approximateLabel ?l . FILTER(STR(?l)="${safe}") } ORDER BY ?name LIMIT 150`,
+    location: `SELECT DISTINCT ?name WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasLocationOfOrigin ?l . ?l rdfs:label ?lb . FILTER(STR(?lb)="${safe}") } ORDER BY ?name LIMIT 150`,
+  };
+  try {
+    const rows = await sparql(Q[type]);
+    renderGrid('browse', rows.map(r => ({ name: v(r,'name') })));
+  } catch(e) {
+    bs.innerHTML = errBox(e);
+    bs.style.display = '';
+  }
+}
+
+function clearBrowse() {
+  ['platform-sel','period-sel','location-sel'].forEach(id => document.getElementById(id).value = '');
+  const bs = document.getElementById('browse-state');
+  bs.innerHTML = 'Select a filter above to browse aesthetics.';
+  bs.style.display = '';
+  document.getElementById('browse-grid').style.display = 'none';
+}
+
+
+/* ═══ CHARTS ═══════════════════════════════════════════════════════════ */
+let chartsLoaded = false;
+
+async function loadCharts() {
+  if (chartsLoaded) return;
+  const state = document.getElementById('charts-state');
+  const grid  = document.getElementById('charts-grid');
+  try {
+    const [subs, brands, influence, motifs, values, themes] = await Promise.all([
+      sparql(`SELECT ?name (COUNT(?sub) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasSubgenre ?sub . } GROUP BY ?name ORDER BY DESC(?c) LIMIT 12`),
+      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasRelatedBrand ?b . ?b rdfs:label ?lbl . } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
+      sparql(`SELECT ?name (COUNT(DISTINCT ?d) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:name ?name . ?a ae:precedes+ ?d . } GROUP BY ?name ORDER BY DESC(?c) LIMIT 10`),
+      /* BIND(LCASE) collapses "Lace"/"lace", "Hearts"/"hearts" etc. into one row */
+      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Motif ; rdfs:label ?raw . BIND(LCASE(STR(?raw)) AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
+      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Value ; rdfs:label ?raw . BIND(LCASE(STR(?raw)) AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
+      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Theme ; rdfs:label ?raw . BIND(LCASE(STR(?raw)) AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
+    ]);
+    chartsLoaded = true;
+    state.style.display = 'none';
+    grid.style.display = '';
+    grid.innerHTML =
+      barChart('Most Subgenres',           subs,      'name', 'c', true)  +
+      barChart('Most-Referenced Brands',   brands,    'lbl',  'c', false) +
+      barChart('Longest Influence Chains', influence, 'name', 'c', true)  +
+      barChart('Most Common Motifs',       motifs,    'lbl',  'c', false) +
+      barChart('Most Common Values',       values,    'lbl',  'c', false) +
+      barChart('Most Common Themes',       themes,    'lbl',  'c', false);
+  } catch(e) {
+    state.innerHTML = errBox(e);
+    state.style.display = '';
+  }
+}
+
+function barChart(title, rows, nameKey, cntKey, clickable) {
+  if (!rows.length) return '';
+  const max = Math.max(...rows.map(r => +v(r,cntKey)));
+  const bars = rows.map(r => {
+    const n = v(r, nameKey), c = +v(r, cntKey);
+    const pct = (c / max * 100).toFixed(1);
+    const nameHtml = clickable
+      ? `<span class="bar-name" data-ae="${esc(n)}">${esc(n)}</span>`
+      : `<span class="bar-name">${esc(n)}</span>`;
+    return `<div class="bar">
+      <div class="bar-row">${nameHtml}<span class="bar-count">${c}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+  return `<div class="chart-card"><h3>${title}</h3>${bars}</div>`;
+}
+
+
+/* ═══ NETWORK (D3 force graph) ════════════════════════════════════════ */
+const REL_COLORS = {
+  subgenre: '#7c3aed',
+  parent:   '#6366f1',
+  related:  '#be185d',
+  precedes: '#059669',
+  follows:  '#d97706',
+  overlaps: '#9ca3af',
+};
+
+async function loadNetwork() {
+  const name = document.getElementById('net-input').value.trim();
+  if (!name) return;
+
+  const svgEl   = document.getElementById('net-svg');
+  const stateEl = document.getElementById('net-state');
+
+  svgEl.style.display = 'none';
+  document.getElementById('net-legend').style.display = 'none';
+  stateEl.innerHTML = '<span class="spinner"></span>';
+  stateEl.style.display = '';
+
+  try {
+    /* Case-insensitive match so "vaporwave" finds "Vaporwave" */
+    const safe = sq(name);
+    const rows = await sparql(`
+      SELECT ?rel ?other WHERE {
+        ?ae a ae:Aesthetic ; ae:name ?aname .
+        FILTER(LCASE(STR(?aname)) = LCASE("${safe}"))
+        {
+          ?ae ae:hasSubgenre  ?o . ?o ae:name ?other . BIND("subgenre" AS ?rel)
+        } UNION {
+          ?p  ae:hasSubgenre  ?ae . ?p ae:name ?other . BIND("parent"   AS ?rel)
+        } UNION {
+          ?ae ae:relatedTo    ?o . ?o ae:name ?other . BIND("related"  AS ?rel)
+        } UNION {
+          ?ae ae:overlapsWith ?o . ?o ae:name ?other . BIND("overlaps" AS ?rel)
+        } UNION {
+          ?ae ae:precedes     ?o . ?o ae:name ?other . BIND("precedes" AS ?rel)
+        } UNION {
+          ?ae ae:follows      ?o . ?o ae:name ?other . BIND("follows"  AS ?rel)
+        }
+      } LIMIT 100
+    `);
+
+    if (!rows.length) {
+      stateEl.innerHTML = `No connections found for <em>${esc(name)}</em>. Check spelling — names are case-sensitive (e.g. "Vaporwave", not "vaporwave").`;
+      return;
+    }
+
+    stateEl.style.display = 'none';
+    svgEl.style.display = '';
+    document.getElementById('net-legend').style.display = 'flex';
+
+    /* Use resolved name from results so label matches exactly */
+    drawForceGraph(name, rows);
+  } catch(e) {
+    stateEl.innerHTML = errBox(e);
+  }
+}
+
+function drawForceGraph(center, rows) {
+  const svgEl = document.getElementById('net-svg');
+  svgEl.innerHTML = '';
+
+  const W = svgEl.getBoundingClientRect().width  || svgEl.offsetWidth  || 800;
+  const H = svgEl.getBoundingClientRect().height || svgEl.offsetHeight || 540;
+
+  const nodeMap = new Map();
+  nodeMap.set(center, { id: center, isCenter: true });
+  const links = [];
+
+  for (const r of rows) {
+    const other = v(r,'other'), rel = v(r,'rel');
+    if (!other) continue;
+    if (!nodeMap.has(other)) nodeMap.set(other, { id: other, isCenter: false });
+    links.push({ source: center, target: other, rel });
+  }
+  const nodes = [...nodeMap.values()];
+
+  if (typeof d3 === 'undefined') {
+    svgEl.innerHTML = `<text x="20" y="30" fill="#9ca3af" font-size="13">D3.js not loaded — check your internet connection.</text>`;
+    return;
+  }
+
+  const svg  = d3.select(svgEl);
+  const defs = svg.append('defs');
+
+  /* center node gradient */
+  const cg = defs.append('radialGradient').attr('id','_cg');
+  cg.append('stop').attr('offset','0%').attr('stop-color','#c084fc');
+  cg.append('stop').attr('offset','100%').attr('stop-color','#7c3aed');
+
+  /* arrowhead per relation type */
+  Object.entries(REL_COLORS).forEach(([rel, color]) => {
+    defs.append('marker')
+      .attr('id','arr-'+rel).attr('viewBox','0 -4 8 8')
+      .attr('refX',22).attr('refY',0)
+      .attr('markerWidth',5).attr('markerHeight',5)
+      .attr('orient','auto')
+      .append('path').attr('d','M0,-4L8,0L0,4').attr('fill',color);
+  });
+
+  const g = svg.append('g');
+  svg.call(d3.zoom().scaleExtent([0.25, 4]).on('zoom', e => g.attr('transform', e.transform)));
+
+  const sim = d3.forceSimulation(nodes)
+    .force('link',    d3.forceLink(links).id(d => d.id).distance(110))
+    .force('charge',  d3.forceManyBody().strength(-280))
+    .force('center',  d3.forceCenter(W / 2, H / 2))
+    .force('collide', d3.forceCollide(38));
+
+  const link = g.append('g').selectAll('line').data(links).join('line')
+    .attr('stroke',         d => REL_COLORS[d.rel] || '#ccc')
+    .attr('stroke-width',   1.5)
+    .attr('stroke-opacity', 0.65)
+    .attr('marker-end',     d => `url(#arr-${d.rel})`);
+
+  const node = g.append('g').selectAll('g').data(nodes).join('g')
+    .style('cursor','pointer')
+    .call(d3.drag()
+      .on('start', (e,d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+      .on('drag',  (e,d) => { d.fx=e.x; d.fy=e.y; })
+      .on('end',   (e,d) => { if (!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; })
+    )
+    .on('click', (_e, d) => openDetail(d.id));
+
+  node.append('circle')
+    .attr('r',            d => d.isCenter ? 18 : 10)
+    .attr('fill',         d => d.isCenter ? 'url(#_cg)' : '#f7f8fa')
+    .attr('stroke',       d => d.isCenter ? '#7c3aed' : '#9ca3af')
+    .attr('stroke-width', d => d.isCenter ? 2 : 1);
+
+  node.append('text')
+    .attr('text-anchor', 'middle')
+    .attr('dy',          d => d.isCenter ? 32 : 22)
+    .attr('font-size',   d => d.isCenter ? '11px' : '9.5px')
+    .attr('font-family', "'Space Grotesk', sans-serif")
+    .attr('fill',        d => d.isCenter ? '#111827' : '#4b5563')
+    .attr('font-weight', d => d.isCenter ? '600' : '400')
+    .text(d => d.id.length > 20 ? d.id.slice(0,18)+'…' : d.id);
+
+  sim.on('tick', () => {
+    link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+        .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+}
+
+
+/* ═══ UTILITIES ════════════════════════════════════════════════════════ */
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function sq(s) {
+  return String(s ?? '').replace(/\\/g,'\\\\').replace(/"/g,'\\"');
+}
+
+function errBox(e) {
+  return `<div class="error-box">⚠ ${esc(e.message)}<br>
+    <small>This may be a CORS or connectivity issue.
+    Try the <a href="https://semantics.istc.cnr.it/aesthetics-kg/query/" target="_blank">SPARQL endpoint</a> directly to check if it's online.</small></div>`;
+}
+
+const _cmap = {
+  black:'#111',white:'#f5f5f5',red:'#ef4444',blue:'#3b82f6',green:'#22c55e',
+  purple:'#9333ea',pink:'#ec4899',yellow:'#eab308',orange:'#f97316',brown:'#92400e',
+  grey:'#6b7280',gray:'#6b7280',beige:'#d4b896',navy:'#1e3a8a',teal:'#14b8a6',
+  lavender:'#a78bfa',gold:'#ca8a04',silver:'#9ca3af',cream:'#fef3c7',rose:'#fb7185',
+  violet:'#8b5cf6',indigo:'#6366f1',cyan:'#06b6d4',lime:'#84cc16',maroon:'#7f1d1d',
+  ivory:'#fffff0',magenta:'#d946ef',turquoise:'#2dd4bf',coral:'#f87171',
+};
+function colorHex(name) {
+  const n = name.toLowerCase();
+  for (const [k, h] of Object.entries(_cmap)) if (n.includes(k)) return h;
+  return '#d1d5db';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+</script>
+</body>
+</html>

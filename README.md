@@ -5,6 +5,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20039664.svg)](https://doi.org/10.5281/zenodo.20039664)
 [![SPARQL Endpoint](https://img.shields.io/badge/SPARQL-Endpoint-orange)](https://semantics.istc.cnr.it/aesthetics-kg/query/)
 [![w3id](https://img.shields.io/badge/URI-w3id.org%2Faesthetics--kg-green)](https://w3id.org/aesthetics-kg/)
+[![Explorer](https://img.shields.io/badge/Explore-Knowledge%20Graph-7c3aed)](https://dersuchendee.github.io/aesthetics-kg/)
 
 **Aesthetics-KG** is a Linked Open Data knowledge graph for the structured representation of internet aesthetics as culturally situated, relational, and multimodal entities. Built on the [Vibe Ontology](https://w3id.org/vibe-ontology/), it covers over 1,000 aesthetic entities sourced from [Aesthetics Wiki](https://aesthetics.fandom.com/wiki/Aesthetics_Wiki), encoding their motifs, values, platforms, time periods, geographic locations, iconic figures, artworks, brands, colours, and inter-aesthetic relations.
 
@@ -61,6 +62,13 @@ aesthetics-kg/
 ---
 
 ## Access
+
+### Interactive Explorer
+
+Browse and explore the graph visually at:
+**[https://dersuchendee.github.io/aesthetics-kg/](https://dersuchendee.github.io/aesthetics-kg/)**
+
+Features: full-text search across 1,031 aesthetics · detail panels with motifs, values, colors, brands, artworks, and inter-aesthetic relations · browse by platform, time period, or location · D3 network graph of aesthetic connections · live charts of most common motifs, values, themes, and brands.
 
 ### SPARQL Endpoint
 
