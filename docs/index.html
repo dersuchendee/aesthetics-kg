@@ -944,10 +944,10 @@ async function loadCharts() {
       sparql(`SELECT ?name (COUNT(?sub) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasSubgenre ?sub . } GROUP BY ?name ORDER BY DESC(?c) LIMIT 12`),
       sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasRelatedBrand ?b . ?b rdfs:label ?lbl . } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
       sparql(`SELECT ?name (COUNT(DISTINCT ?d) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:name ?name . ?a ae:precedes+ ?d . } GROUP BY ?name ORDER BY DESC(?c) LIMIT 10`),
-      /* BIND(LCASE) collapses "Lace"/"lace", "Hearts"/"hearts" etc. into one row */
-      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Motif ; rdfs:label ?raw . BIND(LCASE(STR(?raw)) AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
-      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Value ; rdfs:label ?raw . BIND(LCASE(STR(?raw)) AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
-      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Theme ; rdfs:label ?raw . BIND(LCASE(STR(?raw)) AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
+      /* normalise: lowercase → replace non-alphanumeric runs with space → collapse spaces → trim edges */
+      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Motif ; rdfs:label ?raw . BIND(REPLACE(REPLACE(REPLACE(LCASE(STR(?raw)),"[^a-z0-9]+"," ")," +"," "),"^ | $","") AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
+      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Value ; rdfs:label ?raw . BIND(REPLACE(REPLACE(REPLACE(LCASE(STR(?raw)),"[^a-z0-9]+"," ")," +"," "),"^ | $","") AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
+      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Theme ; rdfs:label ?raw . BIND(REPLACE(REPLACE(REPLACE(LCASE(STR(?raw)),"[^a-z0-9]+"," ")," +"," "),"^ | $","") AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
     ]);
     chartsLoaded = true;
     state.style.display = 'none';
