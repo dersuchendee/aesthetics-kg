@@ -10,7 +10,7 @@ When working on a new visual identity, Matteo needs to quickly grasp the definin
 
 **AestheticsKG** allows Matteo to retrieve recurring **motifs**, **color palettes**, and **brand associations** without spending hours on Pinterest. This structured approach helps him identify "visual DNA" and discover related styles that might share similar stylistic roots.
 
-### 3. Competency Questions & SPARQL Imolementation
+### 3. Competency Questions & SPARQL Implementation
 Matteo uses the ontology to find answer to these questions:
 
 1. **CQ1:** Which aesthetics share a given color palette entry?
