@@ -749,7 +749,7 @@ async function openDetail(name) {
           } UNION {
             ?ae ae:hasPrimaryPlatform  ?e . ?e rdfs:label ?label .            BIND("platform" AS ?cat)
           } UNION {
-            ?ae ae:hasOriginPeriod ?e . OPTIONAL{?e ae:approximateLabel ?pl1} OPTIONAL{?e ae:name ?pl2} OPTIONAL{?e rdfs:label ?pl3} BIND(COALESCE(?pl1,?pl2,?pl3) AS ?label) FILTER(BOUND(?label)) BIND("period" AS ?cat)
+            ?ae ae:hasOriginPeriod ?e . BIND(REPLACE(STR(?e),"^.*/","") AS ?label) BIND("period" AS ?cat)
           }
         } LIMIT 500
       `),
@@ -875,7 +875,8 @@ async function initBrowse() {
   try {
     const [plats, periods, locs] = await Promise.all([
       sparql(`SELECT DISTINCT ?lbl WHERE { ?a a ae:Aesthetic ; ae:hasPrimaryPlatform ?p . ?p rdfs:label ?lbl . } ORDER BY ?lbl LIMIT 100`),
-      sparql(`SELECT DISTINCT ?lbl WHERE { ?a a ae:Aesthetic ; ae:hasOriginPeriod ?p . OPTIONAL { ?p ae:approximateLabel ?l1 } OPTIONAL { ?p ae:name ?l2 } OPTIONAL { ?p rdfs:label ?l3 } BIND(COALESCE(?l1,?l2,?l3) AS ?lbl) FILTER(BOUND(?lbl)) } ORDER BY ?lbl LIMIT 100`),
+      /* Use URI last segment as stable key — avoids the label-explosion on period nodes */
+      sparql(`SELECT DISTINCT (REPLACE(STR(?p),"^.*/","") AS ?lbl) WHERE { ?a a ae:Aesthetic ; ae:hasOriginPeriod ?p . } ORDER BY ?lbl LIMIT 100`),
       sparql(`SELECT DISTINCT ?lbl WHERE { ?a a ae:Aesthetic ; ae:hasLocationOfOrigin ?l . ?l rdfs:label ?lbl . } ORDER BY ?lbl LIMIT 150`),
     ]);
     fillSelect('platform-sel', plats);
@@ -911,7 +912,7 @@ async function browseFilter(type, val_) {
   const safe = sq(val_);
   const Q = {
     platform: `SELECT DISTINCT ?name WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasPrimaryPlatform ?p . ?p rdfs:label ?l . FILTER(STR(?l)="${safe}") } ORDER BY ?name LIMIT 150`,
-    period:   `SELECT DISTINCT ?name WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasOriginPeriod ?p . OPTIONAL { ?p ae:approximateLabel ?l1 } OPTIONAL { ?p ae:name ?l2 } OPTIONAL { ?p rdfs:label ?l3 } BIND(COALESCE(?l1,?l2,?l3) AS ?lbl) FILTER(STR(?lbl)="${safe}") } ORDER BY ?name LIMIT 150`,
+    period:   `SELECT DISTINCT ?name WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasOriginPeriod ?p . FILTER(REPLACE(STR(?p),"^.*/","") = "${safe}") } ORDER BY ?name LIMIT 150`,
     location: `SELECT DISTINCT ?name WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasLocationOfOrigin ?l . ?l rdfs:label ?lb . FILTER(STR(?lb)="${safe}") } ORDER BY ?name LIMIT 150`,
   };
   try {
