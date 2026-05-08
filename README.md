@@ -77,24 +77,24 @@ Query the graph directly at:
 
 Example — find all sub-aesthetics of Punk:
 ```sparql
-PREFIX ae-ont: <https://w3id.org/aesthetics-kg/ontology/>
+PREFIX vibe: <https://w3id.org/aesthetics-kg/ontology/>
 
 SELECT ?name WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name "Punk"@en ;
-             ae-ont:hasSubgenre ?sub .
-  ?sub ae-ont:name ?name .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name "Punk"@en ;
+             vibe:hasSubgenre ?sub .
+  ?sub vibe:name ?name .
 } ORDER BY ?name
 ```
 
 Example — aesthetics with the longest chain of cultural influence:
 ```sparql
-PREFIX ae-ont: <https://w3id.org/aesthetics-kg/ontology/>
+PREFIX vibe: <https://w3id.org/aesthetics-kg/ontology/>
 
 SELECT ?name (COUNT(DISTINCT ?descendant) AS ?chainLength) WHERE {
   ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?name ;
-             ae-ont:precedes+ ?descendant .
+             vibe:name ?name ;
+             vibe:precedes+ ?descendant .
 }
 GROUP BY ?name ORDER BY DESC(?chainLength) LIMIT 10
 ```
