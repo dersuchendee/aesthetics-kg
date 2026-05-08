@@ -14,9 +14,6 @@ Anthropologists studying digital environments face a methodological challenge: r
 These are the questions David can answer using the AestheticsKG:
 1. **CQ1:** What is the primary geographical and/or platform area of distribution for a given aesthetic?
 ```sparql
-PREFIX ae-ont: [https://w3id.org/aesthetics-kg/ontology/](https://w3id.org/aesthetics-kg/ontology/)
-PREFIX rdfs: [http://www.w3.org/2000/01/rdf-schema#](http://www.w3.org/2000/01/rdf-schema#)
-
 SELECT ?aestheticName ?locationLabel ?platformLabel
 WHERE {
   ?aesthetic a ae-ont:Aesthetic ;
