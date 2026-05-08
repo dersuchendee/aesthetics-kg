@@ -875,8 +875,8 @@ async function initBrowse() {
   try {
     const [plats, periods, locs] = await Promise.all([
       sparql(`SELECT DISTINCT ?lbl WHERE { ?a a ae:Aesthetic ; ae:hasPrimaryPlatform ?p . ?p rdfs:label ?lbl . } ORDER BY ?lbl LIMIT 100`),
-      /* Use URI last segment as stable key — avoids the label-explosion on period nodes */
-      sparql(`SELECT DISTINCT (REPLACE(STR(?p),"^.*/","") AS ?lbl) WHERE { ?a a ae:Aesthetic ; ae:hasOriginPeriod ?p . } ORDER BY ?lbl LIMIT 100`),
+      /* URI last segment = stable key, no label-explosion; 300 covers all ~220 distinct periods */
+      sparql(`SELECT DISTINCT (REPLACE(STR(?p),"^.*/","") AS ?lbl) WHERE { ?a a ae:Aesthetic ; ae:hasOriginPeriod ?p . } ORDER BY ?lbl LIMIT 300`),
       sparql(`SELECT DISTINCT ?lbl WHERE { ?a a ae:Aesthetic ; ae:hasLocationOfOrigin ?l . ?l rdfs:label ?lbl . } ORDER BY ?lbl LIMIT 150`),
     ]);
     fillSelect('platform-sel', plats);
