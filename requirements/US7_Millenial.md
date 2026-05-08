@@ -17,22 +17,30 @@ Marco uses the ontology to investigate more about his interest:
 1. **CQ1:** Which aesthetics originated in the 2000s–2010s and have contemporary revivals or derivatives?
 ```sparql
 SELECT DISTINCT ?originalName ?revivalName WHERE {
-  ?original a ae-ont:Aesthetic ; ae-ont:name ?originalName ;
-            ae-ont:hasOriginPeriod ?op . ?op ae-ont:startYear ?sy .
-  ?revival a ae-ont:Aesthetic ; ae-ont:name ?revivalName ;
-            ae-ont:follows ?original ;
-            ae-ont:hasOriginPeriod ?rp . ?rp ae-ont:startYear ?ry .
+  ?original a vibe:Aesthetic ; 
+            vibe:name ?originalName ;
+            vibe:hasOriginPeriod ?op . 
+  ?op       vibe:startYear ?sy .
+  
+  ?revival  a vibe:Aesthetic ; 
+            vibe:name ?revivalName ;
+            vibe:follows ?original ;
+            vibe:hasOriginPeriod ?rp . 
+  ?rp       vibe:startYear ?ry .
+  
   FILTER(?ry > ?sy)
-} ORDER BY ?originalName LIMIT 30
+} 
+ORDER BY ?originalName 
+LIMIT 30
 
 ```
 2. **CQ2:** Which aesthetics are associated with nostalgia?
 ```sparql
 SELECT ?name ?valueLabel
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?name ;
-             ae-ont:hasMember ?value .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?name ;
+             vibe:hasMember ?value .
   ?value rdfs:label ?valueLabel .
   FILTER(CONTAINS(LCASE(str(?valueLabel)), "nostalgia"))
 }
@@ -42,11 +50,11 @@ ORDER BY ?name
 ```sparql
 SELECT DISTINCT ?name ?brandLabel ?subgenreName
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?name ;
-             ae-ont:hasSubgenre ?sub ;
-             ae-ont:hasRelatedBrand ?brand .
-  ?sub ae-ont:name ?subgenreName .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?name ;
+             vibe:hasSubgenre ?sub ;
+             vibe:hasRelatedBrand ?brand .
+  ?sub vibe:name ?subgenreName .
   ?brand rdfs:label ?brandLabel .
 }
 ORDER BY ?name
