@@ -16,9 +16,9 @@ By using **AestheticsKG**, Camille can move beyond anecdotal evidence. She uses 
 ```sparql
 SELECT ?aestheticName (COUNT(?sub) AS ?subCount)
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasSubgenre ?sub .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasSubgenre ?sub .
 }
 GROUP BY ?aestheticName
 ORDER BY DESC(?subCount)
@@ -28,9 +28,9 @@ LIMIT 20
 ```sparql
 SELECT ?aestheticName (COUNT(DISTINCT ?descendant) AS ?chainLength)
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName .
-  ?aesthetic ae-ont:precedes+ ?descendant .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName .
+  ?aesthetic vibe:precedes+ ?descendant .
 }
 GROUP BY ?aestheticName
 ORDER BY DESC(?chainLength)
@@ -40,18 +40,18 @@ LIMIT 10
 ```sparql
 SELECT DISTINCT ?aestheticName ?motifLabel
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasMember ?motif .
-  ?motif a ae-ont:Motif ;
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasMember ?motif .
+  ?motif a vibe:Motif ;
          rdfs:label ?motifLabel .
   FILTER(
-    CONTAINS(LCASE(str(?motifLabel)), "dress")  ||
+    CONTAINS(LCASE(str(?motifLabel)), "dress")    ||
     CONTAINS(LCASE(str(?motifLabel)), "clothing") ||
-    CONTAINS(LCASE(str(?motifLabel)), "outfit")  ||
-    CONTAINS(LCASE(str(?motifLabel)), "jacket")  ||
-    CONTAINS(LCASE(str(?motifLabel)), "boots")   ||
-    CONTAINS(LCASE(str(?motifLabel)), "skirt")   ||
+    CONTAINS(LCASE(str(?motifLabel)), "outfit")   ||
+    CONTAINS(LCASE(str(?motifLabel)), "jacket")   ||
+    CONTAINS(LCASE(str(?motifLabel)), "boots")    ||
+    CONTAINS(LCASE(str(?motifLabel)), "skirt")    ||
     CONTAINS(LCASE(str(?motifLabel)), "jeans")
   )
 }
@@ -62,9 +62,9 @@ LIMIT 40
 ```sparql
 SELECT ?aestheticName (COUNT(DISTINCT ?brand) AS ?brandCount)
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasRelatedBrand ?brand .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasRelatedBrand ?brand .
 }
 GROUP BY ?aestheticName
 ORDER BY DESC(?brandCount)
