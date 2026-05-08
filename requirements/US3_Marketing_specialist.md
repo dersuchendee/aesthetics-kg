@@ -17,9 +17,9 @@ Sofia uses the ontology to answer these questions:
 ```sparql
 SELECT ?figureLabel
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasIconicFigure ?figure .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasIconicFigure ?figure .
   ?figure rdfs:label ?figureLabel .
   FILTER(str(?aestheticName) = "Grunge")
 }
@@ -28,10 +28,10 @@ WHERE {
 ```sparql
 SELECT ?aestheticName ?brandLabel
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasPrimaryPlatform ?platform ;
-             ae-ont:hasRelatedBrand ?brand .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasPrimaryPlatform ?platform ;
+             vibe:hasRelatedBrand ?brand .
   ?platform rdfs:label ?platformLabel .
   ?brand rdfs:label ?brandLabel .
   FILTER(CONTAINS(LCASE(str(?platformLabel)), "tiktok"))
@@ -41,11 +41,11 @@ ORDER BY ?aestheticName
 3. **CQ3:** Which brands are associated with a given aesthetic, and what values does it carry?
 ```sparql
 SELECT ?brandLabel ?valueLabel WHERE {
-  ?aesthetic a ae-ont:Aesthetic ; ae-ont:name "Normcore"@en .
-  OPTIONAL { ?aesthetic ae-ont:hasRelatedBrand ?brand . ?brand rdfs:label ?brandLabel . }
+  ?aesthetic a vibe:Aesthetic ; vibe:name "Normcore"@en .
+  OPTIONAL { ?aesthetic vibe:hasRelatedBrand ?brand . ?brand rdfs:label ?brandLabel . }
   OPTIONAL {
-    ?aesthetic ae-ont:hasMember ?value .
-    ?value a ae-ont:Value ; rdfs:label ?valueLabel .
+    ?aesthetic vibe:hasMember ?value .
+    ?value a vibe:Value ; rdfs:label ?valueLabel .
   }
 }
 ```
@@ -53,9 +53,9 @@ SELECT ?brandLabel ?valueLabel WHERE {
 ```sparql
 SELECT ?brandLabel
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasRelatedBrand ?brand .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasRelatedBrand ?brand .
   ?brand rdfs:label ?brandLabel .
   FILTER(str(?aestheticName) = "Normcore")
 }
