@@ -1,0 +1,65 @@
+========================================================================
+RELATEDNESS VALIDATION — AestheticsKG  (all association dimensions)
+========================================================================
+
+Related pairs  : 7,031
+Random pairs   : 10,000  (seed=42)
+
+Metric                            Related     Random
+------------------------------------------------------
+Combined Jaccard (mean)            0.0171     0.0027
+Combined Jaccard (median)          0.0000     0.0000
+Non-zero pairs %                    29.6%       5.7%
+
+Dimension      R mean   N mean   Ratio    p-value (MWU)   R non-zero%
+------------------------------------------------------------------------
+motifs         0.0090   0.0004    24.1x      p=4.13e-190          9.8%
+values         0.0189   0.0027     7.0x      p=2.83e-175         13.6%
+colours        0.0069   0.0037     1.9x       p=3.81e-05          2.2%
+platforms      0.0124   0.0026     4.7x       p=2.29e-32          3.1%
+locations      0.0207   0.0036     5.8x       p=1.16e-40          3.5%
+figures        0.0022   0.0000   279.8x       p=1.13e-24          1.1%
+films          0.0000   0.0000     infx       p=1.17e-01          0.0%
+tvshows        0.0000   0.0000     infx       p=1.00e+00          0.0%
+books          0.0000   0.0000     infx       p=1.00e+00          0.0%
+videogames     0.0000   0.0000     infx       p=1.00e+00          0.0%
+anime          0.0000   0.0000     infx       p=4.58e-02          0.0%
+albums         0.0000   0.0000     infx       p=1.00e+00          0.0%
+songs          0.0000   0.0000     infx       p=1.17e-01          0.0%
+artworks       0.0000   0.0000     infx       p=1.00e+00          0.0%
+brands         0.0077   0.0003    23.8x       p=3.29e-82          4.2%
+
+Overall MWU combined Jaccard: U=43584572, p=0.00e+00
+  → SIGNIFICANTLY higher overlap in related pairs (p<0.05)
+
+
+Top-10 related pairs by combined Jaccard (undirected, unique):
+   1. Royalcore                    ↔ Princesscore                  J=0.5429
+      driven by: motifs, values, platforms, brands
+   2. Manba                        ↔ Ganguro                       J=0.4667
+      driven by: motifs, values, locations, figures
+   3. Nouveau Réalisme             ↔ Figuration Narrative          J=0.3750
+      driven by: values, locations
+   4. Meme Rap                     ↔ Trap Metal                    J=0.3533
+      driven by: values, platforms, locations
+   5. Guochao                      ↔ Neo-Chinese Style             J=0.3471
+      driven by: values, platforms, locations, brands
+   6. Sukeban                      ↔ Yanki                         J=0.3333
+      driven by: values
+   7. Kawaii Metal                 ↔ Goth Punk                     J=0.3333
+      driven by: colours, locations
+   8. Neubrutalism                 ↔ Superflat Pop                 J=0.3333
+      driven by: colours
+   9. Agejo                        ↔ Hime Gyaru                    J=0.3269
+      driven by: motifs, locations
+  10. Neo-Chinese Style            ↔ Yabi                          J=0.3250
+      driven by: values, platforms, locations
+
+Bottom-5 related pairs (J=0, editorially declared):
+  Japanese Horror Game Protagonist ↔ Dollette                      (no shared associations)
+  Buckle Bunny                 ↔ Dollette                      (no shared associations)
+  Dollcore                     ↔ Dollette                      (no shared associations)
+  Bubblegum Coquette           ↔ Dollette                      (no shared associations)
+  Himekaji                     ↔ Dollette                      (no shared associations)
+
+  Total zero-overlap undirected pairs: 3879 / 5376 (72.2%)

@@ -1,0 +1,133 @@
+@prefix dcat:    <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix void:    <http://rdfs.org/ns/void#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix vcard:   <http://www.w3.org/2006/vcard/ns#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+<https://w3id.org/aesthetics-kg/>
+    a dcat:Dataset, void:Dataset ;
+
+    dcterms:title "Aesthetics-KG"@en ;
+    dcterms:alternative "Vibes Lore Core: the Aesthetics Knowledge Graph"@en ;
+
+    dcterms:description """
+    Aesthetics-KG is a Linked Open Data knowledge graph for the structured
+    representation of aesthetics as culturally situated, relational, and
+    multimodal entities. It models aesthetics together with motifs, values,
+    platforms, periods, locations, cultural agents, artworks, brands, colours,
+    and relations between aesthetics. The graph contains 1,031 aesthetic
+    entities and 150,297 triples, and is based on the Vibe Ontology.
+    """@en ;
+
+    dcterms:identifier "https://doi.org/10.5281/zenodo.20039664" ;
+    dcterms:license <https://www.apache.org/licenses/LICENSE-2.0> ;
+
+    dcterms:creator
+        <https://orcid.org/0009-0000-5581-2215>,
+        <https://orcid.org/0000-0002-0266-3452>,
+        <https://orcid.org/0009-0001-6190-8595>,
+        <https://orcid.org/0009-0005-3588-5093>,
+        <https://orcid.org/0009-0001-8829-8643>,
+        <https://orcid.org/0000-0003-2928-9496>,
+        <https://orcid.org/0000-0001-5568-2684> ;
+
+    dcterms:publisher
+        <https://www.cnr.it/>,
+        <https://www.unibo.it/>,
+        <https://centri.unibo.it/dharc/en> ;
+
+    dcterms:language <http://id.loc.gov/vocabulary/iso639-1/en> ;
+
+    dcterms:subject
+        "Aesthetics"@en,
+        "Semantic Web"@en,
+        "Knowledge Graph"@en,
+        "Linked Open Data"@en,
+        "Digital Culture"@en,
+        "Internet Aesthetics"@en ;
+
+    dcat:keyword
+        "Aesthetics"@en,
+        "Semantic Web"@en,
+        "Knowledge Graph"@en,
+        "Linked Open Data"@en,
+        "Vibe Ontology"@en ;
+
+    dcat:landingPage <https://w3id.org/aesthetics-kg/> ;
+    dcat:contactPoint <https://w3id.org/aesthetics-kg/contact> ;
+
+    dcat:distribution
+        <https://w3id.org/aesthetics-kg/distribution/turtle>,
+        <https://w3id.org/aesthetics-kg/distribution/rdfxml>,
+        <https://w3id.org/aesthetics-kg/distribution/jsonld> ;
+
+    dcat:accessService <https://w3id.org/aesthetics-kg/sparql-service> ;
+
+    void:triples 150297 ;
+    void:entities 1031 ;
+    void:vocabulary <https://w3id.org/vibe-ontology/> ;
+
+    prov:wasDerivedFrom <https://aesthetics.fandom.com/wiki/Aesthetics_Wiki> .
+
+<https://w3id.org/aesthetics-kg/distribution/turtle>
+    a dcat:Distribution ;
+    dcterms:title "Aesthetics-KG Turtle distribution"@en ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/text/turtle> ;
+    dcat:accessURL <https://github.com/dersuchendee/aesthetics-kg> .
+
+<https://w3id.org/aesthetics-kg/distribution/rdfxml>
+    a dcat:Distribution ;
+    dcterms:title "Aesthetics-KG RDF/XML distribution"@en ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/application/rdf+xml> ;
+    dcat:accessURL <https://github.com/dersuchendee/aesthetics-kg> .
+
+<https://w3id.org/aesthetics-kg/distribution/jsonld>
+    a dcat:Distribution ;
+    dcterms:title "Aesthetics-KG JSON-LD distribution"@en ;
+    dcat:mediaType <https://www.iana.org/assignments/media-types/application/ld+json> ;
+    dcat:accessURL <https://github.com/dersuchendee/aesthetics-kg> .
+
+<https://w3id.org/aesthetics-kg/sparql-service>
+    a dcat:DataService ;
+    dcterms:title "Aesthetics-KG SPARQL endpoint"@en ;
+    dcterms:description "Public SPARQL endpoint for querying Aesthetics-KG."@en ;
+    dcat:endpointURL <https://semantics.istc.cnr.it/aesthetics-kg/query/> ;
+    dcat:servesDataset <https://w3id.org/aesthetics-kg/> .
+
+<https://w3id.org/aesthetics-kg/contact>
+    a vcard:Group ;
+    vcard:fn "Aesthetics-KG maintainers"@en ;
+    vcard:hasEmail <mailto:silvia.cappa@istc.cnr.it>,
+                   <mailto:annasofia.lippolis@istc.cnr.it>,
+                   <mailto:andrea.nuzzolese@istc.cnr.it>,
+                   <mailto:aldo.gangemi@unibo.it> .
+
+<https://orcid.org/0009-0000-5581-2215>
+    a foaf:Person ;
+    foaf:name "Silvia Cappa" .
+
+<https://orcid.org/0000-0002-0266-3452>
+    a foaf:Person ;
+    foaf:name "Anna Sofia Lippolis" .
+
+<https://orcid.org/0009-0001-6190-8595>
+    a foaf:Person ;
+    foaf:name "Anouk Flinkert" .
+
+<https://orcid.org/0009-0005-3588-5093>
+    a foaf:Person ;
+    foaf:name "Ekaterina Krasnova" .
+
+<https://orcid.org/0009-0001-8829-8643>
+    a foaf:Person ;
+    foaf:name "Shiho Nakamura" .
+
+<https://orcid.org/0000-0003-2928-9496>
+    a foaf:Person ;
+    foaf:name "Andrea Giovanni Nuzzolese" .
+
+<https://orcid.org/0000-0001-5568-2684>
+    a foaf:Person ;
+    foaf:name "Aldo Gangemi" .
