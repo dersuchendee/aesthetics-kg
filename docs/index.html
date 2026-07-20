@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aesthetics-KG · Explore Internet Aesthetics</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+  <script data-goatcounter="https://aslippolis.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <style>
     :root {
       --bg:      #ffffff;
@@ -490,6 +491,92 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+    /* ── CQ QUESTION CHIPS ── */
+    .cq-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      justify-content: center;
+      margin-top: 20px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cq-label {
+      font-size: 0.72rem;
+      color: var(--text3);
+      align-self: center;
+      white-space: nowrap;
+    }
+    .cq-chip {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      color: var(--text2);
+      font-family: inherit;
+      font-size: 0.75rem;
+      padding: 5px 13px;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .cq-chip:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── DETAIL IMAGE ── */
+    .d-img-wrap {
+      width: 100%;
+      height: 180px;
+      background: var(--bg3);
+      border-radius: var(--r);
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .d-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* ── COLLAPSIBLE DESCRIPTION ── */
+    .desc-toggle {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-family: inherit;
+      font-size: 0.78rem;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 4px;
+      display: block;
+    }
+    .desc-toggle:hover { text-decoration: underline; }
+
+    /* ── VISUAL STYLE DETAILS ── */
+    .d-details {
+      margin-bottom: 17px;
+    }
+    .d-summary {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text3);
+      cursor: pointer;
+      list-style: none;
+      margin-bottom: 7px;
+      user-select: none;
+    }
+    .d-summary::after { content: ' ▸'; }
+    details[open] .d-summary::after { content: ' ▾'; }
+    .d-scope-text {
+      font-size: 0.83rem;
+      color: var(--text2);
+      line-height: 1.65;
+      margin-top: 6px;
+    }
+
+    /* ── EXPANDED NETWORK NODES ── */
+    .net-hint { font-size: 0.75rem; color: var(--text3); }
   </style>
 </head>
 <body>
@@ -518,6 +605,15 @@
       oninput="onSearchInput(this.value)"
       onkeydown="if(event.key==='Enter')doSearch(this.value.trim())">
     <button class="btn" onclick="loadRandom()">Surprise me ✦</button>
+  </div>
+  <div class="cq-wrap">
+    <span class="cq-label">Try:</span>
+    <button class="cq-chip" data-ae="Dark Academia">What is Dark Academia?</button>
+    <button class="cq-chip" data-net="Cottagecore">How does Cottagecore connect?</button>
+    <button class="cq-chip" data-goto-tab="charts">Most influential aesthetics</button>
+    <button class="cq-chip" data-srch="nostalgia">Aesthetics about nostalgia</button>
+    <button class="cq-chip" data-ae="Y2K">What defines Y2K?</button>
+    <button class="cq-chip" data-srch="dark">Aesthetics exploring darkness</button>
   </div>
 </div>
 
@@ -554,7 +650,7 @@
       placeholder="e.g. Vaporwave, Cottagecore, Punk…"
       onkeydown="if(event.key==='Enter')loadNetwork()">
     <button class="btn" onclick="loadNetwork()">Visualize</button>
-    <span class="net-hint">Click any node to open its detail panel.</span>
+    <span class="net-hint">Click a node to open details. Double-click to expand its connections.</span>
   </div>
   <div id="net-legend">
     <div class="leg"><div class="leg-dot" style="background:#7c3aed"></div>subgenre</div>
@@ -610,6 +706,18 @@ document.addEventListener('click', e => {
   if (e.target.closest('#detail-overlay') || e.target.closest('#d-close-btn')) {
     closeDetail(); return;
   }
+  /* collapsible description toggle */
+  const descBtn = e.target.closest('[data-desc]');
+  if (descBtn) {
+    const id = descBtn.dataset.desc;
+    const more = document.getElementById(id + '-more');
+    const ellipsis = document.getElementById(id + '-ellipsis');
+    const collapsed = more.style.display === 'none';
+    more.style.display = collapsed ? '' : 'none';
+    if (ellipsis) ellipsis.style.display = collapsed ? 'none' : '';
+    descBtn.textContent = collapsed ? 'Read less ↑' : 'Read more ↓';
+    return;
+  }
   /* open detail for any element with data-ae */
   const ae = e.target.closest('[data-ae]');
   if (ae) { openDetail(ae.dataset.ae); return; }
@@ -619,6 +727,9 @@ document.addEventListener('click', e => {
   /* "find related" button inside detail */
   const srch = e.target.closest('[data-srch]');
   if (srch) { toSearch(srch.dataset.srch); return; }
+  /* CQ chip: go to a tab */
+  const tab = e.target.closest('[data-goto-tab]');
+  if (tab) { goToTab(tab.dataset.gotoTab); return; }
 });
 
 
@@ -713,6 +824,24 @@ function renderGrid(ns, items) {
 
 
 /* ═══ DETAIL DRAWER ═══════════════════════════════════════════════════ */
+
+async function fetchWikiImage(pageTitle) {
+  try {
+    const url = `https://aesthetics.fandom.com/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&prop=pageimages&format=json&origin=*&pithumbsize=600`;
+    const r = await fetch(url);
+    const d = await r.json();
+    const page = Object.values(d.query.pages)[0];
+    return page?.thumbnail?.source || null;
+  } catch { return null; }
+}
+
+function renderDesc(text, maxLen = 300) {
+  if (!text) return '';
+  if (text.length <= maxLen) return `<div class="d-desc">${esc(text)}</div>`;
+  const id = 'dc-' + Math.random().toString(36).slice(2, 8);
+  return `<div class="d-desc">${esc(text.slice(0, maxLen))}<span id="${id}-ellipsis">…</span><span id="${id}-more" style="display:none">${esc(text.slice(maxLen))}</span><button class="desc-toggle" data-desc="${id}">Read more ↓</button></div>`;
+}
+
 async function openDetail(name) {
   const panel   = document.getElementById('detail-panel');
   const overlay = document.getElementById('detail-overlay');
@@ -725,14 +854,14 @@ async function openDetail(name) {
   try {
     const safe = sq(name);
 
-    const [attrs, rels, descRows] = await Promise.all([
+    const [attrs, rels, meta] = await Promise.all([
       sparql(`
         SELECT ?cat ?label WHERE {
           ?ae a ae:Aesthetic ; ae:name ?n . FILTER(STR(?n) = "${safe}")
           {
             ?ae ae:hasMember ?e . ?e a ae:Motif         ; rdfs:label ?label . BIND("motif"    AS ?cat)
           } UNION {
-            ?ae ae:hasMember ?e . ?e a ae:Theme         ; rdfs:label ?label . BIND("theme"    AS ?cat)
+            ?ae ae:hasAssociatedActivity ?e . ?e rdfs:label ?label .            BIND("activity" AS ?cat)
           } UNION {
             ?ae ae:hasMember ?e . ?e a ae:Value         ; rdfs:label ?label . BIND("value"    AS ?cat)
           } UNION {
@@ -772,14 +901,15 @@ async function openDetail(name) {
         } LIMIT 120
       `),
       sparql(`
-        SELECT ?desc WHERE {
+        SELECT ?desc ?note ?wikiUrl WHERE {
           ?ae a ae:Aesthetic ; ae:name ?n . FILTER(STR(?n) = "${safe}")
-          ?ae skos:definition ?desc .
+          OPTIONAL { ?ae skos:definition ?desc }
+          OPTIONAL { ?ae skos:scopeNote  ?note }
+          OPTIONAL { ?ae ae:URL ?wikiUrl }
         } LIMIT 1
       `)
     ]);
 
-    /* group */
     const grp = {}, relGrp = {};
     for (const r of attrs) {
       const c = v(r,'cat'), l = v(r,'label');
@@ -789,11 +919,16 @@ async function openDetail(name) {
       const rel = v(r,'rel'), o = v(r,'other');
       if (o) (relGrp[rel] = relGrp[rel] || new Set()).add(o);
     }
-    const description = descRows.length ? v(descRows[0],'desc') : '';
+    const metaRow     = meta[0] || {};
+    const description = v(metaRow, 'desc');
+    const scopeNote   = v(metaRow, 'note');
+    const wikiUrl     = v(metaRow, 'wikiUrl');
 
     /* build HTML */
-    let html = `<div class="d-name">${esc(name)}</div>`;
-    if (description) html += `<div class="d-desc">${esc(description)}</div>`;
+    let html = `<div class="d-img-wrap" id="d-img-wrap"></div>`;
+    html += `<div class="d-name">${esc(name)}</div>`;
+    if (description) html += renderDesc(description);
+    if (scopeNote)   html += `<details class="d-details"><summary class="d-summary">Visual style</summary><div class="d-scope-text">${esc(scopeNote)}</div></details>`;
 
     /* relations */
     for (const rel of ['Subgenres','Parent genre','Related to','Overlaps with','Precedes','Follows']) {
@@ -807,7 +942,7 @@ async function openDetail(name) {
     /* attributes */
     const attrDefs = [
       { k:'motif',    label:'Motifs' },
-      { k:'theme',    label:'Themes' },
+      { k:'activity', label:'Activities' },
       { k:'value',    label:'Values' },
       { k:'color',    label:'Colors' },
       { k:'figure',   label:'Iconic Figures' },
@@ -841,6 +976,27 @@ async function openDetail(name) {
     </div>`;
 
     content.innerHTML = html;
+
+    /* async image load — fills placeholder without blocking render */
+    if (wikiUrl) {
+      const pageTitle = wikiUrl.split('/wiki/')[1];
+      if (pageTitle) {
+        fetchWikiImage(pageTitle).then(src => {
+          const wrap = document.getElementById('d-img-wrap');
+          if (!wrap) return;
+          if (src) {
+            wrap.innerHTML = `<img src="${esc(src)}" alt="${esc(name)}">`;
+          } else {
+            wrap.remove();
+          }
+        });
+      } else {
+        document.getElementById('d-img-wrap')?.remove();
+      }
+    } else {
+      document.getElementById('d-img-wrap')?.remove();
+    }
+
   } catch(e) {
     content.innerHTML = `<div class="d-name">${esc(name)}</div>${errBox(e)}`;
   }
@@ -941,25 +1097,25 @@ async function loadCharts() {
   const state = document.getElementById('charts-state');
   const grid  = document.getElementById('charts-grid');
   try {
-    const [subs, brands, influence, motifs, values, themes] = await Promise.all([
+    const [subs, brands, influence, motifs, values, activities] = await Promise.all([
       sparql(`SELECT ?name (COUNT(?sub) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:name ?name ; ae:hasSubgenre ?sub . } GROUP BY ?name ORDER BY DESC(?c) LIMIT 12`),
-      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasRelatedBrand ?b . ?b rdfs:label ?lbl . } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
+      sparql(`SELECT (SAMPLE(?lbl) AS ?lbl) (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasRelatedBrand ?b . ?b rdfs:label ?lbl . } GROUP BY ?b ORDER BY DESC(?c) LIMIT 12`),
       sparql(`SELECT ?name (COUNT(DISTINCT ?d) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:name ?name . ?a ae:precedes+ ?d . } GROUP BY ?name ORDER BY DESC(?c) LIMIT 10`),
       /* normalise: lowercase → replace non-alphanumeric runs with space → collapse spaces → trim edges */
       sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Motif ; rdfs:label ?raw . BIND(REPLACE(REPLACE(REPLACE(LCASE(STR(?raw)),"[^a-z0-9]+"," ")," +"," "),"^ | $","") AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
       sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Value ; rdfs:label ?raw . BIND(REPLACE(REPLACE(REPLACE(LCASE(STR(?raw)),"[^a-z0-9]+"," ")," +"," "),"^ | $","") AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
-      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasMember ?m . ?m a ae:Theme ; rdfs:label ?raw . BIND(REPLACE(REPLACE(REPLACE(LCASE(STR(?raw)),"[^a-z0-9]+"," ")," +"," "),"^ | $","") AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
+      sparql(`SELECT ?lbl (COUNT(DISTINCT ?a) AS ?c) WHERE { ?a a ae:Aesthetic ; ae:hasAssociatedActivity ?act . ?act rdfs:label ?raw . BIND(REPLACE(REPLACE(REPLACE(LCASE(STR(?raw)),"[^a-z0-9]+"," ")," +"," "),"^ | $","") AS ?lbl) } GROUP BY ?lbl ORDER BY DESC(?c) LIMIT 12`),
     ]);
     chartsLoaded = true;
     state.style.display = 'none';
     grid.style.display = '';
     grid.innerHTML =
-      barChart('Most Subgenres',           subs,      'name', 'c', true)  +
-      barChart('Most-Referenced Brands',   brands,    'lbl',  'c', false) +
-      barChart('Longest Influence Chains', influence, 'name', 'c', true)  +
-      barChart('Most Common Motifs',       motifs,    'lbl',  'c', false) +
-      barChart('Most Common Values',       values,    'lbl',  'c', false) +
-      barChart('Most Common Themes',       themes,    'lbl',  'c', false);
+      barChart('Most Subgenres',           subs,       'name', 'c', true)  +
+      barChart('Most-Referenced Brands',   brands,     'lbl',  'c', false) +
+      barChart('Longest Influence Chains', influence,  'name', 'c', true)  +
+      barChart('Most Common Motifs',       motifs,     'lbl',  'c', false) +
+      barChart('Most Common Values',       values,     'lbl',  'c', false) +
+      barChart('Most Common Activities',   activities, 'lbl',  'c', false);
   } catch(e) {
     state.innerHTML = errBox(e);
     state.style.display = '';
@@ -1045,39 +1201,43 @@ async function loadNetwork() {
   }
 }
 
+/* Stateful network — kept alive so dblclick can add nodes without redrawing */
+let _net = null;
+
 function drawForceGraph(center, rows) {
   const svgEl = document.getElementById('net-svg');
   svgEl.innerHTML = '';
-
-  const W = svgEl.getBoundingClientRect().width  || svgEl.offsetWidth  || 800;
-  const H = svgEl.getBoundingClientRect().height || svgEl.offsetHeight || 540;
-
-  const nodeMap = new Map();
-  nodeMap.set(center, { id: center, isCenter: true });
-  const links = [];
-
-  for (const r of rows) {
-    const other = v(r,'other'), rel = v(r,'rel');
-    if (!other) continue;
-    if (!nodeMap.has(other)) nodeMap.set(other, { id: other, isCenter: false });
-    links.push({ source: center, target: other, rel });
-  }
-  const nodes = [...nodeMap.values()];
+  _net = null;
 
   if (typeof d3 === 'undefined') {
     svgEl.innerHTML = `<text x="20" y="30" fill="#9ca3af" font-size="13">D3.js not loaded — check your internet connection.</text>`;
     return;
   }
 
-  const svg  = d3.select(svgEl);
+  const W = svgEl.getBoundingClientRect().width  || svgEl.offsetWidth  || 800;
+  const H = svgEl.getBoundingClientRect().height || svgEl.offsetHeight || 540;
+
+  const nodeMap = new Map();
+  nodeMap.set(center, { id: center, isCenter: true });
+  const linksArr = [];
+
+  for (const r of rows) {
+    const other = v(r,'other'), rel = v(r,'rel');
+    if (!other) continue;
+    if (!nodeMap.has(other)) nodeMap.set(other, { id: other, isCenter: false });
+    linksArr.push({ source: center, target: other, rel });
+  }
+
+  const svg = d3.select(svgEl);
   const defs = svg.append('defs');
 
-  /* center node gradient */
   const cg = defs.append('radialGradient').attr('id','_cg');
   cg.append('stop').attr('offset','0%').attr('stop-color','#c084fc');
   cg.append('stop').attr('offset','100%').attr('stop-color','#7c3aed');
+  const eg = defs.append('radialGradient').attr('id','_eg');
+  eg.append('stop').attr('offset','0%').attr('stop-color','#fbcfe8');
+  eg.append('stop').attr('offset','100%').attr('stop-color','#be185d');
 
-  /* arrowhead per relation type */
   Object.entries(REL_COLORS).forEach(([rel, color]) => {
     defs.append('marker')
       .attr('id','arr-'+rel).attr('viewBox','0 -4 8 8')
@@ -1090,47 +1250,115 @@ function drawForceGraph(center, rows) {
   const g = svg.append('g');
   svg.call(d3.zoom().scaleExtent([0.25, 4]).on('zoom', e => g.attr('transform', e.transform)));
 
-  const sim = d3.forceSimulation(nodes)
-    .force('link',    d3.forceLink(links).id(d => d.id).distance(110))
+  const linkG = g.append('g');
+  const nodeG = g.append('g');
+
+  const sim = d3.forceSimulation()
+    .force('link',    d3.forceLink().id(d => d.id).distance(110))
     .force('charge',  d3.forceManyBody().strength(-280))
     .force('center',  d3.forceCenter(W / 2, H / 2))
     .force('collide', d3.forceCollide(38));
 
-  const link = g.append('g').selectAll('line').data(links).join('line')
+  _net = { nodeMap, linksArr, sim, linkG, nodeG, expanded: new Set([center]) };
+  _netRefresh();
+}
+
+function _netRefresh() {
+  if (!_net) return;
+  const { nodeMap, linksArr, sim, linkG, nodeG } = _net;
+  const nodes = [...nodeMap.values()];
+
+  sim.nodes(nodes);
+  sim.force('link').links(linksArr);
+
+  const link = linkG.selectAll('line')
+    .data(linksArr, d => `${d.source?.id ?? d.source}→${d.target?.id ?? d.target}:${d.rel}`)
+    .join('line')
     .attr('stroke',         d => REL_COLORS[d.rel] || '#ccc')
     .attr('stroke-width',   1.5)
     .attr('stroke-opacity', 0.65)
     .attr('marker-end',     d => `url(#arr-${d.rel})`);
 
-  const node = g.append('g').selectAll('g').data(nodes).join('g')
-    .style('cursor','pointer')
-    .call(d3.drag()
-      .on('start', (e,d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
-      .on('drag',  (e,d) => { d.fx=e.x; d.fy=e.y; })
-      .on('end',   (e,d) => { if (!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; })
-    )
-    .on('click', (_e, d) => openDetail(d.id));
+  const node = nodeG.selectAll('g.net-node')
+    .data(nodes, d => d.id)
+    .join(enter => {
+      const g = enter.append('g').attr('class','net-node').style('cursor','pointer');
+      g.append('circle');
+      g.append('text');
+      return g;
+    });
 
-  node.append('circle')
-    .attr('r',            d => d.isCenter ? 18 : 10)
-    .attr('fill',         d => d.isCenter ? 'url(#_cg)' : '#f7f8fa')
-    .attr('stroke',       d => d.isCenter ? '#7c3aed' : '#9ca3af')
-    .attr('stroke-width', d => d.isCenter ? 2 : 1);
+  node.select('circle')
+    .attr('r',            d => d.isCenter ? 18 : d.isExpanded ? 13 : 10)
+    .attr('fill',         d => d.isCenter ? 'url(#_cg)' : d.isExpanded ? 'url(#_eg)' : '#f7f8fa')
+    .attr('stroke',       d => d.isCenter ? '#7c3aed' : d.isExpanded ? '#be185d' : '#9ca3af')
+    .attr('stroke-width', d => d.isCenter ? 2 : d.isExpanded ? 1.5 : 1);
 
-  node.append('text')
+  node.select('text')
     .attr('text-anchor', 'middle')
-    .attr('dy',          d => d.isCenter ? 32 : 22)
-    .attr('font-size',   d => d.isCenter ? '11px' : '9.5px')
+    .attr('dy',          d => d.isCenter ? 32 : d.isExpanded ? 26 : 22)
+    .attr('font-size',   d => d.isCenter ? '11px' : d.isExpanded ? '10px' : '9.5px')
     .attr('font-family', "'Space Grotesk', sans-serif")
-    .attr('fill',        d => d.isCenter ? '#111827' : '#4b5563')
-    .attr('font-weight', d => d.isCenter ? '600' : '400')
+    .attr('fill',        d => d.isCenter ? '#111827' : d.isExpanded ? '#9f1239' : '#4b5563')
+    .attr('font-weight', d => (d.isCenter || d.isExpanded) ? '600' : '400')
     .text(d => d.id.length > 20 ? d.id.slice(0,18)+'…' : d.id);
+
+  node.call(d3.drag()
+    .on('start', (e,d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; })
+    .on('drag',  (e,d) => { d.fx=e.x; d.fy=e.y; })
+    .on('end',   (e,d) => { if (!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; })
+  )
+  .on('click',  (_e, d) => openDetail(d.id))
+  .on('dblclick', (e, d) => { e.stopPropagation(); expandNetNode(d.id); });
 
   sim.on('tick', () => {
     link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
         .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
     node.attr('transform', d => `translate(${d.x},${d.y})`);
   });
+
+  sim.alpha(0.3).restart();
+}
+
+async function expandNetNode(name) {
+  if (!_net || _net.expanded.has(name)) return;
+  _net.expanded.add(name);
+  if (_net.nodeMap.has(name)) _net.nodeMap.get(name).isExpanded = true;
+
+  const safe = sq(name);
+  try {
+    const rows = await sparql(`
+      SELECT ?rel ?other WHERE {
+        ?ae a ae:Aesthetic ; ae:name ?aname .
+        FILTER(LCASE(STR(?aname)) = LCASE("${safe}"))
+        {
+          ?ae ae:hasSubgenre  ?o . ?o ae:name ?other . BIND("subgenre" AS ?rel)
+        } UNION {
+          ?p  ae:hasSubgenre  ?ae . ?p ae:name ?other . BIND("parent"   AS ?rel)
+        } UNION {
+          ?ae ae:relatedTo    ?o . ?o ae:name ?other . BIND("related"  AS ?rel)
+        } UNION {
+          ?ae ae:overlapsWith ?o . ?o ae:name ?other . BIND("overlaps" AS ?rel)
+        } UNION {
+          ?ae ae:precedes     ?o . ?o ae:name ?other . BIND("precedes" AS ?rel)
+        } UNION {
+          ?ae ae:follows      ?o . ?o ae:name ?other . BIND("follows"  AS ?rel)
+        }
+      } LIMIT 80
+    `);
+    for (const r of rows) {
+      const other = v(r,'other'), rel = v(r,'rel');
+      if (!other) continue;
+      if (!_net.nodeMap.has(other)) _net.nodeMap.set(other, { id: other, isCenter: false });
+      const src = name, tgt = other;
+      const dup = _net.linksArr.some(l => {
+        const ls = l.source?.id ?? l.source, lt = l.target?.id ?? l.target;
+        return ls === src && lt === tgt && l.rel === rel;
+      });
+      if (!dup) _net.linksArr.push({ source: name, target: other, rel });
+    }
+    _netRefresh();
+  } catch(e) { console.warn('expand failed', e); }
 }
 
 
