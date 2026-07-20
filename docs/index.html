@@ -584,49 +584,125 @@
     .site-footer {
       border-top: 1px solid var(--border);
       background: var(--surface);
-      padding: 28px 24px;
+      padding: 18px 24px;
       margin-top: 40px;
     }
-    .footer-inner {
-      max-width: 900px;
+    .footer-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .footer-title { font-size: 0.82rem; font-weight: 600; color: var(--text2); margin: 0 0 4px; }
+    .footer-affiliations { font-size: 0.72rem; color: var(--text3); margin: 0; }
+    .footer-link-btn {
+      background: none; border: none; padding: 0; cursor: pointer;
+      color: var(--accent); font-size: inherit; font-family: inherit;
+      text-decoration: underline;
+    }
+    .footer-link-btn:hover { opacity: 0.8; }
+
+    /* ── ABOUT TAB ── */
+    .about-wrap {
+      max-width: 780px;
       margin: 0 auto;
-      text-align: center;
+      padding: 32px 16px 60px;
     }
-    .footer-title {
-      font-size: 0.95rem;
-      font-weight: 600;
+    .about-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+    }
+    .about-section h2 {
+      font-size: 1rem;
+      font-weight: 700;
       color: var(--text1);
-      margin: 0 0 4px;
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .footer-venue {
-      font-size: 0.8rem;
-      color: var(--accent);
-      font-style: italic;
+    .about-section p, .about-section li {
+      font-size: 0.87rem;
+      color: var(--text2);
+      line-height: 1.7;
       margin: 0 0 10px;
     }
-    .footer-authors {
+    .about-section a { color: var(--accent); text-decoration: none; }
+    .about-section a:hover { text-decoration: underline; }
+    .about-btn {
+      display: inline-block;
+      padding: 8px 18px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.83rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      margin: 4px 6px 4px 0;
+    }
+    .about-btn:hover { opacity: 0.85; text-decoration: none; }
+    .about-btn-secondary {
+      background: var(--bg3);
+      color: var(--text1);
+      border: 1px solid var(--border);
+    }
+    .author-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+      color: var(--text2);
+    }
+    .author-table td {
+      padding: 5px 10px 5px 0;
+      vertical-align: top;
+    }
+    .author-table tr:not(:last-child) td {
+      border-bottom: 1px solid var(--border);
+    }
+    .author-table a { color: var(--accent); text-decoration: none; font-size: 0.78rem; }
+    .about-affil {
+      font-size: 0.78rem;
+      color: var(--text3);
+      margin-top: 12px !important;
+    }
+    .about-note {
+      font-size: 0.78rem;
+      color: var(--text3);
+      font-style: italic;
+    }
+    .credit-tag {
+      font-size: 0.65rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .credit-list { padding-left: 18px; margin: 0; }
+    .credit-list li { margin-bottom: 6px; }
+    .bibtex {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
       font-size: 0.78rem;
       color: var(--text2);
-      line-height: 1.8;
-      margin: 0 0 8px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0 0 10px;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
     }
-    .footer-affiliations {
-      font-size: 0.72rem;
-      color: var(--text3);
-      line-height: 1.7;
-      margin: 0;
+    .copy-bibtex {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      color: var(--text2);
+      cursor: pointer;
     }
-    .footer-affiliations a, .footer-authors a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .footer-affiliations a:hover, .footer-authors a:hover {
-      color: var(--accent);
-    }
-    .orcid {
-      font-size: 0.7rem;
-      color: var(--text3);
-    }
+    .copy-bibtex:hover { border-color: var(--accent); color: var(--accent); }
   </style>
 </head>
 <body>
@@ -638,6 +714,7 @@
   <button class="tab" data-tab="browse"  onclick="switchTab(this,'browse')">Browse</button>
   <button class="tab" data-tab="network" onclick="switchTab(this,'network')">Network</button>
   <button class="tab" data-tab="charts"  onclick="switchTab(this,'charts')">Charts</button>
+  <button class="tab" data-tab="about"   onclick="switchTab(this,'about')">About</button>
   <div class="spacer"></div>
   <div class="live-badge"><div class="live-dot"></div>Live endpoint</div>
 </nav>
@@ -718,6 +795,125 @@
 <div id="charts-view" class="view">
   <div id="charts-state" class="state-msg"><span class="spinner"></span> Loading charts…</div>
   <div id="charts-grid" class="charts-grid" style="display:none"></div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<div id="about-view" class="view">
+  <div class="about-wrap">
+
+    <section class="about-section">
+      <h2>About this project</h2>
+      <p>
+        <strong>Aesthetics-KG</strong> is a knowledge graph of 1,031 internet aesthetics, capturing motifs, vibes,
+        cultural context, and connections between aesthetic communities. It was built from the
+        <a href="https://aesthetics.fandom.com" target="_blank">Aesthetics Wiki</a> using RML mappings
+        and is served as Linked Open Data via a SPARQL endpoint.
+      </p>
+      <p>
+        The project was presented at <strong>ISWC 2026</strong> as:<br>
+        <em>Vibes Lore Core: the Aesthetics Knowledge Graph</em>
+      </p>
+      <p>
+        <a class="about-btn" href="https://github.com/dersuchendee/aesthetics-kg/issues/new" target="_blank">
+          ✦ Suggest a feature or report an issue
+        </a>
+        <a class="about-btn about-btn-secondary" href="https://github.com/dersuchendee/aesthetics-kg" target="_blank">
+          View on GitHub
+        </a>
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>Authors</h2>
+      <table class="author-table">
+        <tr>
+          <td>Silvia Cappa</td>
+          <td><sup>1</sup></td>
+          <td><a href="https://orcid.org/0009-0000-5581-2215" target="_blank">0009-0000-5581-2215</a></td>
+          <td><a href="mailto:silvia.cappa@istc.cnr.it">silvia.cappa@istc.cnr.it</a></td>
+        </tr>
+        <tr>
+          <td>Anna Sofia Lippolis</td>
+          <td><sup>1</sup></td>
+          <td><a href="https://orcid.org/0000-0002-0266-3452" target="_blank">0000-0002-0266-3452</a></td>
+          <td><a href="mailto:annasofia.lippolis@istc.cnr.it">annasofia.lippolis@istc.cnr.it</a></td>
+        </tr>
+        <tr>
+          <td>Anouk Flinkert</td>
+          <td><sup>2</sup></td>
+          <td><a href="https://orcid.org/0009-0001-6190-8595" target="_blank">0009-0001-6190-8595</a></td>
+          <td><a href="mailto:anouk.flinkert@studio.unibo.it">anouk.flinkert@studio.unibo.it</a></td>
+        </tr>
+        <tr>
+          <td>Ekaterina Krasnova</td>
+          <td><sup>2</sup></td>
+          <td><a href="https://orcid.org/0009-0005-3588-5093" target="_blank">0009-0005-3588-5093</a></td>
+          <td><a href="mailto:ekaterina.krasnova2@studio.unibo.it">ekaterina.krasnova2@studio.unibo.it</a></td>
+        </tr>
+        <tr>
+          <td>Shiho Nakamura</td>
+          <td><sup>2</sup></td>
+          <td><a href="https://orcid.org/0009-0001-8829-8643" target="_blank">0009-0001-8829-8643</a></td>
+          <td><a href="mailto:shiho.nakamura@studio.unibo.it">shiho.nakamura@studio.unibo.it</a></td>
+        </tr>
+        <tr>
+          <td>Andrea Giovanni Nuzzolese</td>
+          <td><sup>1</sup></td>
+          <td><a href="https://orcid.org/0000-0003-2928-9496" target="_blank">0000-0003-2928-9496</a></td>
+          <td><a href="mailto:andrea.nuzzolese@istc.cnr.it">andrea.nuzzolese@istc.cnr.it</a></td>
+        </tr>
+        <tr>
+          <td>Aldo Gangemi</td>
+          <td><sup>2</sup></td>
+          <td><a href="https://orcid.org/0000-0001-5568-2684" target="_blank">0000-0001-5568-2684</a></td>
+          <td><a href="mailto:aldo.gangemi@unibo.it">aldo.gangemi@unibo.it</a></td>
+        </tr>
+      </table>
+      <p class="about-affil">
+        <sup>1</sup> Institute of Cognitive Sciences and Technologies, National Research Council of Italy (ISTC-CNR), Italy<br>
+        <sup>2</sup> University of Bologna, Bologna, Italy
+      </p>
+      <p class="about-note">S.C. and A.S.L. contributed equally to this work.</p>
+    </section>
+
+    <section class="about-section">
+      <h2>Author contributions <span class="credit-tag">CRediT</span></h2>
+      <ul class="credit-list">
+        <li><strong>Conceptualization</strong> — S.C. and A.S.L.</li>
+        <li><strong>Methodology and ontology development</strong> — S.C., A.S.L., A.F., E.K., and S.N.</li>
+        <li><strong>Knowledge graph creation and data curation</strong> — A.S.L.</li>
+        <li><strong>Evaluation</strong> — S.C., A.S.L., A.F., E.K., and S.N.</li>
+        <li><strong>Website development</strong> — A.S.L.</li>
+        <li><strong>Writing — original draft</strong> — S.C. and A.S.L.</li>
+        <li><strong>Writing — review and editing</strong> — all authors.</li>
+        <li><strong>Supervision</strong> — A.G.N. and A.G.</li>
+      </ul>
+    </section>
+
+    <section class="about-section">
+      <h2>Cite this work</h2>
+      <pre class="bibtex">@inproceedings{aestheticskg2026,
+  title     = {Vibes Lore Core: the Aesthetics Knowledge Graph},
+  author    = {Cappa, Silvia and Lippolis, Anna Sofia and Flinkert, Anouk
+               and Krasnova, Ekaterina and Nakamura, Shiho
+               and Nuzzolese, Andrea Giovanni and Gangemi, Aldo},
+  booktitle = {International Semantic Web Conference (ISWC)},
+  year      = {2026}
+}</pre>
+      <button class="copy-bibtex" onclick="copyBibtex()">Copy BibTeX</button>
+    </section>
+
+    <section class="about-section">
+      <h2>License &amp; data</h2>
+      <p>
+        The knowledge graph is available as Linked Open Data. The underlying textual content is derived from the
+        <a href="https://aesthetics.fandom.com" target="_blank">Aesthetics Wiki</a> (CC BY-SA).
+        SPARQL endpoint:
+        <code>https://semantics.istc.cnr.it/aesthetics-kg/graphdb/repositories/aesthetics</code>
+      </p>
+    </section>
+
+  </div>
 </div>
 
 <!-- ─── DETAIL DRAWER ─── -->
@@ -814,7 +1010,7 @@ window.addEventListener('popstate', e => {
 /* restore tab from URL hash on first load */
 (function() {
   const hash = location.hash.replace('#','');
-  const valid = ['explore','browse','network','charts'];
+  const valid = ['explore','browse','network','charts','about'];
   if (valid.includes(hash)) goToTab(hash, false);
   else history.replaceState({ tab: 'explore' }, '', '#explore');
 })();
@@ -1466,32 +1662,24 @@ function colorHex(name) {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+
+function copyBibtex() {
+  const txt = document.querySelector('.bibtex').textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.querySelector('.copy-bibtex');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy BibTeX', 2000);
+  });
+}
 </script>
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <p class="footer-title">Vibes Lore Core: the Aesthetics Knowledge Graph</p>
-    <p class="footer-venue">ISWC 2026</p>
-    <p class="footer-authors">
-      Silvia Cappa<sup>1</sup> <span class="orcid"><a href="https://orcid.org/0009-0000-5581-2215" target="_blank">0009-0000-5581-2215</a></span>,
-      Anna Sofia Lippolis<sup>1</sup> <span class="orcid"><a href="https://orcid.org/0000-0002-0266-3452" target="_blank">0000-0002-0266-3452</a></span>,
-      Anouk Flinkert<sup>2</sup> <span class="orcid"><a href="https://orcid.org/0009-0001-6190-8595" target="_blank">0009-0001-6190-8595</a></span>,
-      Ekaterina Krasnova<sup>2</sup> <span class="orcid"><a href="https://orcid.org/0009-0005-3588-5093" target="_blank">0009-0005-3588-5093</a></span>,
-      Shiho Nakamura<sup>2</sup> <span class="orcid"><a href="https://orcid.org/0009-0001-8829-8643" target="_blank">0009-0001-8829-8643</a></span>,
-      Andrea Giovanni Nuzzolese<sup>1</sup> <span class="orcid"><a href="https://orcid.org/0000-0003-2928-9496" target="_blank">0000-0003-2928-9496</a></span>,
-      Aldo Gangemi<sup>2</sup> <span class="orcid"><a href="https://orcid.org/0000-0001-5568-2684" target="_blank">0000-0001-5568-2684</a></span>
-    </p>
+    <p class="footer-title">Vibes Lore Core: the Aesthetics Knowledge Graph &mdash; ISWC 2026</p>
     <p class="footer-affiliations">
-      <sup>1</sup> Institute of Cognitive Sciences and Technologies, National Research Council of Italy (ISTC-CNR) —
-      <a href="mailto:silvia.cappa@istc.cnr.it">silvia.cappa</a>,
-      <a href="mailto:annasofia.lippolis@istc.cnr.it">annasofia.lippolis</a>,
-      <a href="mailto:andrea.nuzzolese@istc.cnr.it">andrea.nuzzolese</a>@istc.cnr.it
-      &nbsp;·&nbsp;
-      <sup>2</sup> University of Bologna —
-      <a href="mailto:anouk.flinkert@studio.unibo.it">anouk.flinkert</a>,
-      <a href="mailto:ekaterina.krasnova2@studio.unibo.it">ekaterina.krasnova2</a>,
-      <a href="mailto:shiho.nakamura@studio.unibo.it">shiho.nakamura</a>@studio.unibo.it,
-      <a href="mailto:aldo.gangemi@unibo.it">aldo.gangemi@unibo.it</a>
+      Cappa · Lippolis · Flinkert · Krasnova · Nakamura · Nuzzolese · Gangemi &nbsp;·&nbsp;
+      ISTC-CNR &amp; University of Bologna &nbsp;·&nbsp;
+      <button class="footer-link-btn" data-goto-tab="about">About &amp; cite ↗</button>
     </p>
   </div>
 </footer>
