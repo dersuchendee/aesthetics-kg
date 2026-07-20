@@ -56,6 +56,8 @@
       margin-right: 20px;
       white-space: nowrap;
       letter-spacing: 0.01em;
+      cursor: pointer;
+      user-select: none;
     }
 
     .tab {
@@ -577,13 +579,61 @@
 
     /* ── EXPANDED NETWORK NODES ── */
     .net-hint { font-size: 0.75rem; color: var(--text3); }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 28px 24px;
+      margin-top: 40px;
+    }
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .footer-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text1);
+      margin: 0 0 4px;
+    }
+    .footer-venue {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-style: italic;
+      margin: 0 0 10px;
+    }
+    .footer-authors {
+      font-size: 0.78rem;
+      color: var(--text2);
+      line-height: 1.8;
+      margin: 0 0 8px;
+    }
+    .footer-affiliations {
+      font-size: 0.72rem;
+      color: var(--text3);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .footer-affiliations a, .footer-authors a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .footer-affiliations a:hover, .footer-authors a:hover {
+      color: var(--accent);
+    }
+    .orcid {
+      font-size: 0.7rem;
+      color: var(--text3);
+    }
   </style>
 </head>
 <body>
 
 <!-- ─── NAV ─── -->
 <nav>
-  <div class="logo">✦ Aesthetics-KG</div>
+  <div class="logo" data-goto-tab="explore">✦ Aesthetics-KG</div>
   <button class="tab active" data-tab="explore" onclick="switchTab(this,'explore')">Explore</button>
   <button class="tab" data-tab="browse"  onclick="switchTab(this,'browse')">Browse</button>
   <button class="tab" data-tab="network" onclick="switchTab(this,'network')">Network</button>
@@ -744,7 +794,7 @@ function switchTab(btn, tab) {
   if (tab === 'charts') loadCharts();
 }
 
-function goToTab(tab) {
+function goToTab(tab, pushHistory = true) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(el => {
     el.classList.toggle('active', el.dataset.tab === tab);
@@ -753,7 +803,21 @@ function goToTab(tab) {
   document.getElementById('hero').style.display = tab === 'explore' ? '' : 'none';
   if (tab === 'browse') initBrowse();
   if (tab === 'charts') loadCharts();
+  if (pushHistory) history.pushState({ tab }, '', '#' + tab);
 }
+
+window.addEventListener('popstate', e => {
+  const tab = e.state?.tab || 'explore';
+  goToTab(tab, false);
+});
+
+/* restore tab from URL hash on first load */
+(function() {
+  const hash = location.hash.replace('#','');
+  const valid = ['explore','browse','network','charts'];
+  if (valid.includes(hash)) goToTab(hash, false);
+  else history.replaceState({ tab: 'explore' }, '', '#explore');
+})();
 
 
 /* ═══ EXPLORE / SEARCH ════════════════════════════════════════════════ */
@@ -1203,6 +1267,7 @@ async function loadNetwork() {
 
 /* Stateful network — kept alive so dblclick can add nodes without redrawing */
 let _net = null;
+let _netClickTimer = null;
 
 function drawForceGraph(center, rows) {
   const svgEl = document.getElementById('net-svg');
@@ -1308,8 +1373,15 @@ function _netRefresh() {
     .on('drag',  (e,d) => { d.fx=e.x; d.fy=e.y; })
     .on('end',   (e,d) => { if (!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; })
   )
-  .on('click',  (_e, d) => openDetail(d.id))
-  .on('dblclick', (e, d) => { e.stopPropagation(); expandNetNode(d.id); });
+  .on('click', (_e, d) => {
+    clearTimeout(_netClickTimer);
+    _netClickTimer = setTimeout(() => openDetail(d.id), 220);
+  })
+  .on('dblclick', (e, d) => {
+    e.stopPropagation();
+    clearTimeout(_netClickTimer);
+    expandNetNode(d.id);
+  });
 
   sim.on('tick', () => {
     link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
@@ -1395,5 +1467,33 @@ function colorHex(name) {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
 </script>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="footer-title">Vibes Lore Core: the Aesthetics Knowledge Graph</p>
+    <p class="footer-venue">ISWC 2026</p>
+    <p class="footer-authors">
+      Silvia Cappa<sup>1</sup> <span class="orcid"><a href="https://orcid.org/0009-0000-5581-2215" target="_blank">0009-0000-5581-2215</a></span>,
+      Anna Sofia Lippolis<sup>1</sup> <span class="orcid"><a href="https://orcid.org/0000-0002-0266-3452" target="_blank">0000-0002-0266-3452</a></span>,
+      Anouk Flinkert<sup>2</sup> <span class="orcid"><a href="https://orcid.org/0009-0001-6190-8595" target="_blank">0009-0001-6190-8595</a></span>,
+      Ekaterina Krasnova<sup>2</sup> <span class="orcid"><a href="https://orcid.org/0009-0005-3588-5093" target="_blank">0009-0005-3588-5093</a></span>,
+      Shiho Nakamura<sup>2</sup> <span class="orcid"><a href="https://orcid.org/0009-0001-8829-8643" target="_blank">0009-0001-8829-8643</a></span>,
+      Andrea Giovanni Nuzzolese<sup>1</sup> <span class="orcid"><a href="https://orcid.org/0000-0003-2928-9496" target="_blank">0000-0003-2928-9496</a></span>,
+      Aldo Gangemi<sup>2</sup> <span class="orcid"><a href="https://orcid.org/0000-0001-5568-2684" target="_blank">0000-0001-5568-2684</a></span>
+    </p>
+    <p class="footer-affiliations">
+      <sup>1</sup> Institute of Cognitive Sciences and Technologies, National Research Council of Italy (ISTC-CNR) —
+      <a href="mailto:silvia.cappa@istc.cnr.it">silvia.cappa</a>,
+      <a href="mailto:annasofia.lippolis@istc.cnr.it">annasofia.lippolis</a>,
+      <a href="mailto:andrea.nuzzolese@istc.cnr.it">andrea.nuzzolese</a>@istc.cnr.it
+      &nbsp;·&nbsp;
+      <sup>2</sup> University of Bologna —
+      <a href="mailto:anouk.flinkert@studio.unibo.it">anouk.flinkert</a>,
+      <a href="mailto:ekaterina.krasnova2@studio.unibo.it">ekaterina.krasnova2</a>,
+      <a href="mailto:shiho.nakamura@studio.unibo.it">shiho.nakamura</a>@studio.unibo.it,
+      <a href="mailto:aldo.gangemi@unibo.it">aldo.gangemi@unibo.it</a>
+    </p>
+  </div>
+</footer>
 </body>
 </html>
