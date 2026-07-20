@@ -1,0 +1,76 @@
+name: Wiki New Aesthetics Monitor
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # every Monday at 9:00 UTC
+  workflow_dispatch:        # allow manual run anytime
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+
+    steps:
+      - name: Fetch new wiki pages from the last 7 days
+        id: wiki
+        run: |
+          python3 << 'PYEOF'
+          import urllib.request, json, datetime, os, sys
+
+          seven_days_ago = datetime.datetime.utcnow() - datetime.timedelta(days=7)
+
+          url = (
+            'https://aesthetics.fandom.com/api.php'
+            '?action=query&list=recentchanges&rctype=new&rcnamespace=0'
+            '&rcprop=title%7Ctimestamp&rclimit=500&format=json'
+          )
+          with urllib.request.urlopen(url, timeout=15) as r:
+            data = json.loads(r.read())
+
+          new_pages = []
+          for rc in data.get('query', {}).get('recentchanges', []):
+            ts_str = rc['timestamp'].replace('Z', '+00:00')
+            ts = datetime.datetime.fromisoformat(ts_str).replace(tzinfo=None)
+            if ts > seven_days_ago:
+              new_pages.append(rc['title'])
+
+          if not new_pages:
+            print('No new pages this week.')
+            with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write('has_new=false\n')
+          else:
+            print(f'{len(new_pages)} new page(s) found.')
+            lines = '\n'.join(
+              f'- [{p}](https://aesthetics.fandom.com/wiki/{p.replace(" ", "_")})'
+              for p in new_pages
+            )
+            body = (
+              f'## {len(new_pages)} new aesthetic page(s) on the wiki this week\n\n'
+              + lines
+              + '\n\n_Check which ones need to be added to the KG._'
+            )
+            with open('/tmp/issue_body.txt', 'w') as f:
+              f.write(body)
+            with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write('has_new=true\n')
+              f.write(f'count={len(new_pages)}\n')
+          PYEOF
+
+      - name: Open GitHub issue if new pages found
+        if: steps.wiki.outputs.has_new == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('/tmp/issue_body.txt', 'utf8');
+            const today = new Date().toISOString().split('T')[0];
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🆕 New wiki aesthetics — ${today}`,
+              body,
+              labels: ['wiki-update']
+            });
