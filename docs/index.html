@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aesthetics-KG · Explore Internet Aesthetics</title>
+  <link rel="icon" type="image/png" href="logo-favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
   <script data-goatcounter="https://aslippolis.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <style>
@@ -46,18 +47,30 @@
     }
 
     .logo {
-      font-family: 'UnifrakturMaguntia', serif;
-      font-size: 1.35rem;
-      font-weight: 400;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-right: 20px;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .logo-eye {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+    .logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      background: linear-gradient(135deg, #c084fc 0%, #a855f7 25%, #7c3aed 45%, #db2777 65%, #818cf8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-right: 20px;
       white-space: nowrap;
-      letter-spacing: 0.01em;
-      cursor: pointer;
-      user-select: none;
     }
 
     .tab {
@@ -103,18 +116,49 @@
       margin: 0 auto;
     }
 
+    @keyframes metal-shimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .hero h1 {
       font-family: 'UnifrakturMaguntia', serif;
       font-size: clamp(2.4rem, 6vw, 4.5rem);
       font-weight: 400;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 70%);
+      background: linear-gradient(105deg,
+        #d4b8f0 0%, #a855f7 15%, #7c3aed 30%,
+        #c084fc 45%, #db2777 58%,
+        #a855f7 72%, #818cf8 85%, #d4b8f0 100%);
+      background-size: 220% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      animation: metal-shimmer 5s linear infinite;
       line-height: 1.15;
       margin-bottom: 12px;
       letter-spacing: 0.01em;
     }
+
+    .btn-surprise {
+      background: linear-gradient(105deg,
+        #c084fc 0%, #a855f7 20%, #7c3aed 40%,
+        #c084fc 60%, #818cf8 80%, #c084fc 100%);
+      background-size: 220% auto;
+      animation: metal-shimmer 4s linear infinite;
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.81rem;
+      font-weight: 600;
+      padding: 9px 18px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.18);
+    }
+    .btn-surprise:hover { opacity: 0.85; }
 
     .hero p {
       color: var(--text2);
@@ -731,7 +775,10 @@
 
 <!-- ─── NAV ─── -->
 <nav>
-  <div class="logo" data-goto-tab="explore">✦ Aesthetics-KG</div>
+  <div class="logo" data-goto-tab="explore">
+    <img src="logo-nav.png" class="logo-eye" alt="">
+    <span class="logo-text">AE-KG</span>
+  </div>
   <button class="tab active" data-tab="explore" onclick="switchTab(this,'explore')">Explore</button>
   <button class="tab" data-tab="browse"  onclick="switchTab(this,'browse')">Browse</button>
   <button class="tab" data-tab="network" onclick="switchTab(this,'network')">Network</button>
@@ -753,7 +800,7 @@
     <input id="search-input" type="text" placeholder="Search aesthetics…" autocomplete="off"
       oninput="onSearchInput(this.value)"
       onkeydown="if(event.key==='Enter')doSearch(this.value.trim())">
-    <button class="btn" onclick="loadRandom()">Surprise me ✦</button>
+    <button class="btn-surprise" onclick="loadRandom()">Surprise me ✦</button>
   </div>
   <div class="cq-wrap">
     <span class="cq-label">Try:</span>
