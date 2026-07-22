@@ -17,10 +17,10 @@ Alex uses these queries to build his recommendation clusters:
 ```sparql
 SELECT ?subgenreName
 WHERE {
-  ?aesthetic a vibe:Aesthetic ;
-             vibe:name ?aestheticName ;
-             vibe:hasSubgenre ?sub .
-  ?sub vibe:name ?subgenreName .
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasSubgenre ?sub .
+  ?sub ae-ont:name ?subgenreName .
   FILTER(str(?aestheticName) = "Punk")
 }
 ORDER BY ?subgenreName
@@ -29,22 +29,22 @@ ORDER BY ?subgenreName
 ```sparql
 SELECT ?influencerName
 WHERE {
-  ?aesthetic a vibe:Aesthetic ;
-             vibe:name ?n .
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?n .
   FILTER(str(?n) = "DIY Punk")
-  ?aesthetic vibe:follows ?influencer .
-  ?influencer vibe:name ?influencerName .
+  ?aesthetic ae-ont:follows ?influencer .
+  ?influencer ae-ont:name ?influencerName .
 }
 ```
 3. **CQ3:** Which aesthetics are related to a given one and share at least one value?
 ```sparql
 SELECT DISTINCT ?relatedName ?relationType WHERE {
-  ?source a vibe:Aesthetic ; vibe:name ?sourceName .
+  ?source a ae-ont:Aesthetic ; ae-ont:name ?sourceName .
   FILTER(str(?sourceName) = "Memphis Lite")
-  { ?source vibe:hasSubgenre ?related . BIND("subgenre" AS ?relationType) }
-  UNION { ?source vibe:follows ?related . BIND("follows" AS ?relationType) }
-  UNION { ?source vibe:precedes ?related . BIND("precedes" AS ?relationType) }
-  UNION { ?source vibe:relatedTo ?related . BIND("relatedTo" AS ?relationType) }
-  ?related vibe:name ?relatedName .
+  { ?source ae-ont:hasSubgenre ?related . BIND("subgenre" AS ?relationType) }
+  UNION { ?source ae-ont:follows ?related . BIND("follows" AS ?relationType) }
+  UNION { ?source ae-ont:precedes ?related . BIND("precedes" AS ?relationType) }
+  UNION { ?source ae-ont:relatedTo ?related . BIND("relatedTo" AS ?relationType) }
+  ?related ae-ont:name ?relatedName .
 } ORDER BY ?relationType
 ```
