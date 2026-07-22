@@ -17,10 +17,10 @@ Matteo uses the ontology to find answer to these questions:
 ```sparql
 SELECT ?aestheticName
 WHERE {
-  ?aesthetic a vibe:Aesthetic ;
-             vibe:name ?aestheticName ;
-             vibe:hasMember ?color .
-  ?color a vibe:Color ;
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasMember ?color .
+  ?color a ae-ont:Color ;
          rdfs:label "black"@en .
 }
 ORDER BY ?aestheticName
@@ -30,10 +30,10 @@ LIMIT 30
 ```sparql
 SELECT ?motifLabel
 WHERE {
-  ?aesthetic a vibe:Aesthetic ;
-             vibe:name ?aestheticName ;
-             vibe:hasMember ?motif .
-  ?motif a vibe:Motif ;
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasMember ?motif .
+  ?motif a ae-ont:Motif ;
          rdfs:label ?motifLabel .
   FILTER(str(?aestheticName) = "Gothic")
 }
@@ -43,9 +43,9 @@ ORDER BY ?motifLabel
 ```sparql
 SELECT ?brandLabel
 WHERE {
-  ?aesthetic a vibe:Aesthetic ;
-             vibe:name ?aestheticName ;
-             vibe:hasRelatedBrand ?brand .
+  ?aesthetic a ae-ont:Aesthetic ;
+             ae-ont:name ?aestheticName ;
+             ae-ont:hasRelatedBrand ?brand .
   ?brand rdfs:label ?brandLabel .
   FILTER(str(?aestheticName) = "Preppy")
 }
@@ -54,12 +54,12 @@ ORDER BY ?brandLabel
 4. **CQ4:** Which aesthetics are visually or stylistically related to a given one?
 ```sparql
 SELECT ?relatedName ?relationType WHERE {
-  ?aesthetic a vibe:Aesthetic ; vibe:name ?aestheticName .
+  ?aesthetic a ae-ont:Aesthetic ; ae-ont:name ?aestheticName .
   FILTER(str(?aestheticName) = "Cottagecore")
-  { ?aesthetic vibe:relatedTo ?related . BIND("relatedTo" AS ?relationType) }
-  UNION { ?aesthetic vibe:hasSubgenre ?related . BIND("hasSubgenre" AS ?relationType) }
-  UNION { ?aesthetic vibe:follows ?related . BIND("follows" AS ?relationType) }
-  UNION { ?aesthetic vibe:precedes ?related . BIND("precedes" AS ?relationType) }
-  ?related vibe:name ?relatedName .
+  { ?aesthetic ae-ont:relatedTo ?related . BIND("relatedTo" AS ?relationType) }
+  UNION { ?aesthetic ae-ont:hasSubgenre ?related . BIND("hasSubgenre" AS ?relationType) }
+  UNION { ?aesthetic ae-ont:follows ?related . BIND("follows" AS ?relationType) }
+  UNION { ?aesthetic ae-ont:precedes ?related . BIND("precedes" AS ?relationType) }
+  ?related ae-ont:name ?relatedName .
 } ORDER BY ?relationType ?relatedName
 ```
