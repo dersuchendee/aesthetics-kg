@@ -16,7 +16,7 @@
 | Property | Value |
 |---|---|
 | Aesthetic entities | 1,031 |
-| Total triples | 150,297 |
+| Total triples | 151,012 |
 | Ontology | [Vibe Ontology](https://w3id.org/vibe-ontology/) |
 | Source | [Aesthetics Wiki](https://aesthetics.fandom.com/wiki/Aesthetics_Wiki) |
 | SPARQL endpoint | [Query interface](https://semantics.istc.cnr.it/aesthetics-kg/query/) |
