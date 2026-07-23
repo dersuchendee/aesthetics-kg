@@ -17,9 +17,9 @@ Lily uses the ontology to answer the following research questions:
 ```sparql
 SELECT ?workTitle ?workType
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasRelatedWork ?work .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasRelatedWork ?work .
   ?work a ?workType ;
         rdfs:label ?workTitle .
   FILTER(str(?aestheticName) = "Dark Academia")
@@ -31,10 +31,10 @@ ORDER BY ?workType ?workTitle
 ```sparql
 SELECT ?aestheticName (COUNT(?work) AS ?filmCount)
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasRelatedWork ?work .
-  ?work a ae-ont:Film .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasRelatedWork ?work .
+  ?work a vibe:Film .
 }
 GROUP BY ?aestheticName
 ORDER BY DESC(?filmCount)
@@ -44,9 +44,9 @@ LIMIT 20
 ```sparql
 SELECT ?aestheticName ?locationLabel
 WHERE {
-  ?aesthetic a ae-ont:Aesthetic ;
-             ae-ont:name ?aestheticName ;
-             ae-ont:hasLocationOfOrigin ?location .
+  ?aesthetic a vibe:Aesthetic ;
+             vibe:name ?aestheticName ;
+             vibe:hasLocationOfOrigin ?location .
   ?location rdfs:label ?locationLabel .
   FILTER(CONTAINS(LCASE(str(?locationLabel)), "japan"))
 }
